@@ -1,0 +1,17 @@
+#summary Notes on the installation of Fedora Commons to Tomcat on andsdb-server
+#labels FedoraCommons,Installguidelog
+
+= Introduction =
+
+A list of steps taken so far, and immediate requirements.
+
+
+= Details =
+
+ * got Fedora Commons jar installer 
+  * ( fcrepo-installer-3.4.2.jar @ /home/ands-shared/ )
+ * Need to add Envvars to root and tomcat (++?)
+  * JAVA_HOME
+  * FEDORA_HOME
+  * PATH (add $FEDORA_HOME/server/bin, $FEDORA_HOME/client/bin and $JAVA_HOME/bin. )
+  * CATALINA_HOME
