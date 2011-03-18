@@ -1,0 +1,10 @@
+#summary Notes on installation of XMLCalabash
+
+= XML Calabash installation =
+
+As per http://xmlcalabash.com/docs/
+
+Download calabash distro from http://xmlcalabash.com/download/calabash-0.9.32.zip
+unzipped to /ands/calabash-0.9.32
+
+The Saxon library now appears to be bundled with Calabash, so nothing more to do
