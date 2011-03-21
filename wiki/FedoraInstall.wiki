@@ -10,8 +10,19 @@ A list of steps taken so far, and immediate requirements.
 
  * got Fedora Commons jar installer 
   * ( fcrepo-installer-3.4.2.jar @ /home/ands-shared/ )
- * Need to add Envvars to root and tomcat (++?)
+ * Need to add Envvars to tomcat (in this case, /usr/shared/tomcat6/.bashrc)
   * JAVA_HOME
   * FEDORA_HOME
   * PATH (add $FEDORA_HOME/server/bin, $FEDORA_HOME/client/bin and $JAVA_HOME/bin. )
   * CATALINA_HOME
+
+ * modified mysql database
+  * added fedora user
+  * added fedora3 database
+  * modified permissions, etc
+
+ * ran installer (./java -jar fcrepo-installer-3.4.2.jar)
+
+ NOTE: Was missing /usr/share/tomcat6/common/lib/mysql-connector-java-5.1.6.jar for JDBC connector. Located and added manually.
+
+ NOTE: target dir should be owned by the designated fedora user. Dir will be chmodded 766 by the installer.
