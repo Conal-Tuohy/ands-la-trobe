@@ -15,13 +15,16 @@ A list of steps taken so far, and immediate requirements.
   * PATH (add $FEDORA_HOME/server/bin, $FEDORA_HOME/client/bin and $JAVA_HOME/bin. )
   * CATALINA_HOME
 
- * modified mysql database
+ * modified mysql database -  why can't the installer handle this?
   * added fedora user
   * added fedora3 database
+  * added authority database
   * modified permissions, etc
 
  * ran installer (./java -jar fcrepo-installer-3.4.2.jar)
 
  NOTE: Was missing /usr/share/tomcat6/common/lib/mysql-connector-java-5.1.6.jar for JDBC connector. Located and added manually.
+
+ ADDENDUM: Was ACTUALLY missing apache packages commons-dbcp-1.4 and commons-pool-1.5.5 as well. These should be placed in the same directory as the mysql-connector-java.jar and this path should be reported in the appropriate place when running the fcrepo installer.
 
  NOTE: target dir should be owned by the designated fedora user. Dir will be chmodded 766 by the installer.
