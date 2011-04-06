@@ -1,1 +1,4 @@
-http://en.wikibooks.org/wiki/XForms/Suggesting_Items
+=autocomplete/suggest=
+
+* http://en.wikibooks.org/wiki/XForms/Suggesting_Items
+* http://wiki.orbeon.com/forms/doc/developer-guide/xbl-components/autocomplete
