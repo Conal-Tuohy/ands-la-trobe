@@ -2,6 +2,10 @@
 
 http://en.wikibooks.org/wiki/XForms
 
+==implementations==
+  * http://www.agencexml.com/xsltforms.htm
+  * http://www.mozilla.org/projects/xforms/
+
 ==autocomplete/suggest==
 
   * http://en.wikibooks.org/wiki/XForms/Suggesting_Items
