@@ -1,0 +1,10 @@
+#summary Notes about Fedora, especially interfaces
+
+Fedora uses Apache ActiveMQ for messaging.
+
+ActiveMQ supports a number of protocols including a supposedly "RESTful" HTTP interface that would be useable from XProc.
+
+
+http://activemq.apache.org/rest.html
+
+A bogus aspect of it is that the GET method is neither safe nor idempotent. So in fact it's not a REST interface at all.
