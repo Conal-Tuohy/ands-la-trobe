@@ -3,6 +3,7 @@
 =XForms=
 
   * http://en.wikibooks.org/wiki/XForms
+  * http://www.scholarslab.org/digital-libraries/on-xforms/
   * [http://journal.code4lib.org/articles/3916 XForms for Libraries]
   * [http://library.brown.edu/its/software/metadata/ XForms MODS editor]
 
