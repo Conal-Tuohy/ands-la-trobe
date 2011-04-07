@@ -1,7 +1,10 @@
+#summary Notes about XForms and particularly library applications
+
 =XForms=
 
-http://en.wikibooks.org/wiki/XForms
-[http://journal.code4lib.org/articles/3916 XForms for Libraries]
+  * http://en.wikibooks.org/wiki/XForms
+  * [http://journal.code4lib.org/articles/3916 XForms for Libraries]
+  * [http://library.brown.edu/its/software/metadata/ XForms MODS editor]
 
 ==implementations==
   * http://www.agencexml.com/xsltforms.htm
