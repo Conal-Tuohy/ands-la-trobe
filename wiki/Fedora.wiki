@@ -2,6 +2,8 @@
 
 Fedora uses Apache ActiveMQ for messaging.
 
+We may want to use this as a way to listen for edits of the RIF-CS data in Fedora and keep a separate search index up to date.
+
 ActiveMQ supports a number of protocols including a supposedly "RESTful" HTTP interface that would be useable from XProc.
 
 
