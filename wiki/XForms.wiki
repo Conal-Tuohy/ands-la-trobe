@@ -1,6 +1,7 @@
 =XForms=
 
 http://en.wikibooks.org/wiki/XForms
+[http://journal.code4lib.org/articles/3916 XForms for Libraries]
 
 ==implementations==
   * http://www.agencexml.com/xsltforms.htm
