@@ -1,5 +1,19 @@
 #summary Notes about Fedora, especially interfaces
 
+= Fedora (interfaces) =
+
+See http://fedora-commons.org/documentation/3.3/REST%20API.html
+
+== Ingest ==
+
+Normally we would aim to create items with SWORD, but we can also create by POSTing to /objects/new or /objects/{pid} (to create with a specific PID), with text/xml content
+
+== RIF-CS updates ==
+
+Can create (POST), read (GET) and update (PUT) RIF-CS datastreams at:
+/objects/{pid}/datastreams/{dsID}
+
+== Notifications ==
 Fedora uses Apache ActiveMQ for messaging.
 
 We may want to use this as a way to listen for edits of the RIF-CS data in Fedora and keep a separate search index up to date.
