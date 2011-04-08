@@ -7,9 +7,10 @@ As per http://xmlcalabash.com/docs/
 Download calabash distro from http://xmlcalabash.com/download/calabash-0.9.32.zip
 unzipped to /ands/calabash
 
-Wrote shell script `/ands/calabash/calabash.sh` to launch calabash:
+Wrote shell script `/ands/xproc-test/calabash.sh` to launch calabash:
 
----- 
+ ---- 
 #!/bin/sh
+
 java -Xmx1024m -cp /ands/calabash/calabash.jar:/ands/calabash/lib/commons-codec-1.3.jar:/ands/calabash/lib/commons-logging-1.1.1.jar:/ands/calabash/lib/commons-httpclient-3.1.jar:/ands/calabash/lib/saxon9he.jar com.xmlcalabash.drivers.Main $*
----- 
+ ---- 
