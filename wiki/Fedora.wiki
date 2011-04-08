@@ -13,6 +13,8 @@ Normally we would aim to create items with SWORD, but we can also create by POST
 Can create (POST), read (GET) and update (PUT) RIF-CS datastreams at:
 /objects/{pid}/datastreams/{dsID}
 
+If we use the same name for all rif-cs datastreams (e.g. "rif-cs") then we can create an httpd proxy which proxies from {{{/rif-cs/{pid}}}} to {{{/objects/{pid}/datastreams/rif-cs}}} which will then let us treat the values of rif-cs keys as (relative) URIs, and provide a RESTful access layer to just the rif-cs.
+
 == Notifications ==
 Fedora uses Apache ActiveMQ for messaging.
 
