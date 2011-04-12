@@ -1,0 +1,8 @@
+#summary Information on the installation of the SWORD package for Fedora
+
+= Introduction =
+
+SWORD is a submission tool that allows users to add objects to a fedora repository with relative ease. It currently only supports PUSH operations, but is still in development.
+
+
+= Details =
