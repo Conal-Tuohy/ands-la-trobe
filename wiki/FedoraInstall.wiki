@@ -2,7 +2,7 @@
 
 = Introduction =
 
-A list of steps taken so far, and immediate requirements.
+Fedora Commons is a repository system which we are using to store RIF-CS and other objects and Metadata.
 
 
 = Details =
