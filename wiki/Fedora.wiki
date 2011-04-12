@@ -13,7 +13,9 @@ Normally we would aim to create items with SWORD, but we can also create by POST
 Can create (POST), read (GET) and update (PUT) RIF-CS datastreams at:
 /objects/{pid}/datastreams/{dsID}
 
-If we use the same name for all rif-cs datastreams (e.g. "rif-cs") then we can create an httpd proxy which proxies from {{{/rif-cs/{pid}}}} to {{{/objects/{pid}/datastreams/rif-cs}}} which will then let us treat the values of rif-cs keys as (relative) URIs, and provide a RESTful access layer to just the rif-cs.
+NB We can use PUT to create and update streams so we don't ever need POST. NB the GET method on the above URI will return metadata about the stream; to obtain the stream itself we need to append `/content` to the URI. This is a bug in the Fedora API, really, but it can be worked around in a proxy: whenever the proxy receives a GET request for a URI with that pattern, it can append `/content`, but for other methods it won't need to.
+
+If we use the same name for all rif-cs datastreams (e.g. "rif-cs") then we can create an httpd proxy which proxies from `/rif-cs/{pid}` to `/objects/{pid}/datastreams/rif-cs` which will then let us treat the values of rif-cs keys as (relative) URIs, and provide a RESTful access layer to just the rif-cs.
 
 == Notifications ==
 Fedora uses Apache ActiveMQ for messaging.
