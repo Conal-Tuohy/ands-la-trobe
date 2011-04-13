@@ -1,0 +1,5 @@
+#summary Technologies we've looked at but aren't using in our projects
+
+=Squire=
+[http://smartech.gatech.edu/handle/1853/28459 Squire poster]
+Squire is a user interface for depositing and editing object datastreams and metadata.
