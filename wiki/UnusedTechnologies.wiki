@@ -2,4 +2,6 @@
 
 =Squire=
 [http://smartech.gatech.edu/handle/1853/28459 Squire poster]
-Squire is a user interface for depositing and editing object datastreams and metadata.
+[http://code.google.com/p/valet/wiki/ARROW_Contribution?tm=6 VALET/Squire @ Google Code]
+
+Squire is a user interface for depositing and editing object datastreams and metadata. It's a Java version of VALET, provided to the ARROW project as a contribution from VTLS.
