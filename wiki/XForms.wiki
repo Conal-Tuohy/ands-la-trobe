@@ -2,6 +2,17 @@
 
 =XForms=
 
+==plan==
+
+  * install Mozilla xforms client - done
+  * create (edit e.g. name only) basic rif-cs editor with a fixed resource in the fedora back-end
+  * develop editor into full rif-cs handler
+   * all registryObject types
+   * authority file lookups with autocomplete
+  * deploy a transform to wrap the Fedora rif-cs resource in an xform
+
+==reference==
+
   * http://en.wikibooks.org/wiki/XForms
   * http://www.scholarslab.org/digital-libraries/on-xforms/
   * [http://journal.code4lib.org/articles/3916 XForms for Libraries]
