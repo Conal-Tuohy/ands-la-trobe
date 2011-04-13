@@ -10,6 +10,7 @@
    * all registryObject types
    * authority file lookups with autocomplete
   * deploy a transform to wrap the Fedora rif-cs resource in an xform
+   * integrate XSLTForms or failing that, Orbeon
 
 ==reference==
 
