@@ -1,7 +1,12 @@
 #summary Technologies we've looked at but aren't using in our projects
 
 =Squire=
-[http://smartech.gatech.edu/handle/1853/28459 Squire poster]
-[http://code.google.com/p/valet/wiki/ARROW_Contribution?tm=6 VALET/Squire @ Google Code]
 
 Squire is a user interface for depositing and editing object datastreams and metadata. It's a Java version of VALET, provided to the ARROW project as a contribution from VTLS.
+
+In our system deposit/ingest is to be performed using a custom SWORD client talking to Fedora's SWORD server.
+
+Metadata editing is to be done using a few custom XForms reading and writing XML data from Fedora's RESTful web service interface.
+
+  * [http://smartech.gatech.edu/handle/1853/28459 Squire poster]
+  * [http://code.google.com/p/valet/wiki/ARROW_Contribution?tm=6 VALET/Squire @ Google Code]
