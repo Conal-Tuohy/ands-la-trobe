@@ -29,3 +29,8 @@
 
   * http://en.wikibooks.org/wiki/XForms/Suggesting_Items
   * http://wiki.orbeon.com/forms/doc/developer-guide/xbl-components/autocomplete
+
+==Notes==
+
+  * Firefox 4 does not play well with XSLTForms < build 499 due to xPath problems.
+  * Internet Explorer does not implement the application/xhtml+xml mime time.
