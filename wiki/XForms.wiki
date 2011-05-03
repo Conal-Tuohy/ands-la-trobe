@@ -25,6 +25,7 @@
   * http://www.agencexml.com/xsltforms.htm
   * http://www.mozilla.org/projects/xforms/
   * http://wiki.orbeon.com/forms/doc
+  * http://www.w3.org/MarkUp/Forms/#implementations
 
 ==autocomplete/suggest==
 
