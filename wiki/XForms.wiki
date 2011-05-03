@@ -23,7 +23,6 @@
 
 ==implementations==
   * http://www.agencexml.com/xsltforms.htm
-   * http://en.wikibooks.org/wiki/XSLTForms
   * http://www.mozilla.org/projects/xforms/
   * http://wiki.orbeon.com/forms/doc
 
