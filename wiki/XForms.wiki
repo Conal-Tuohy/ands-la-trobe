@@ -6,6 +6,7 @@
 
   * install Mozilla xforms client - done
   * create (edit e.g. name only) basic rif-cs editor with a fixed resource in the fedora back-end - done
+   * http://andsdb-dc19-dev.latrobe.edu.au/xforms/rif-cs.xhtml
   * develop editor into full rif-cs handler
    * all registryObject types
    * authority file lookups with autocomplete
