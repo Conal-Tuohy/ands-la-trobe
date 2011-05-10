@@ -34,6 +34,9 @@
   * http://wiki.orbeon.com/forms/doc/developer-guide/xbl-components/autocomplete
   * http://internet-apps.blogspot.com/2005/04/xforms-patterns-incremental-and-google.html
 
+==creating hyperlinks to external resources==
+  * http://www.ibm.com/developerworks/forums/thread.jspa?messageID=13967161
+
 ==Notes==
 
   * Firefox 4 does not play well with XSLTForms < build 499 due to xPath problems.
