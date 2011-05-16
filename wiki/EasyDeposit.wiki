@@ -12,6 +12,6 @@ EasyDeposit is an application for making custom SWORD interfaces. It is designed
  * modified easydeposit/application/config/config.php
    * $config[‘base_url’] = “http://andsdb-dc19-dev.etc/easydeposit”;
 
- Ran into some issues with the RewriteRule in .htaccess - it never fired. Added $config[‘index_page’] = 'index.php'; which uglifies the url, but resolves the issue.
+ Ran into some issues with the {{{RewriteRule}}} in .htaccess - it never fired. Added $config[‘index_page’] = 'index.php'; which uglifies the url, but resolves the issue.
 
 Note that default Username/Password are easydepositadmin/easydepositadmin
