@@ -1,0 +1,5 @@
+#summary One-sentence summary of this page.
+
+Need to install and configure it to index Fedora objects by selected properties of their "rif-cs" datastream so that we can search for registry objects by type and by name, and by key.
+
+https://wiki.duraspace.org/display/FCSVCS/Generic+Search+Service+2.2#GenericSearchService2.2-new22
