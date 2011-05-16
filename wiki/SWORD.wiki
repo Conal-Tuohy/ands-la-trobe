@@ -19,3 +19,10 @@ SWORD is a submission tool that allows users to add objects to a fedora reposito
       * modified accepted data types
         * pending more info from conal. Sadly this must be done at compile at the moment.
   * ran ant dist, installed into Tomcat6
+
+NB when reinstalling, it appears necessary to run:
+ant clean
+and also
+rm -r -f /usr/share/tomcat/webapps/sword
+before
+ant dist
