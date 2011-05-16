@@ -12,11 +12,17 @@ SWORD is a submission tool that allows users to add objects to a fedora reposito
   * untar to /ands/files/SWORD-fedora-1.1/
   * modified config
     * conf/properties.xml
-      * modified pid_namespace
+      * modified pid_namespace (e.g andsdb-dc19)
+      * modified temp_dir (e.g /usr/share/tomcat6/temp)
       * modified all uri locations
-        * repository_uri
-        * deposit_uri
+        * external_obj_url (e.g http://andsdb-dc19-dev.latrobe.edu.au/fedora/get/##PID## )
+        * external_ds_url (e.g http://andsdb-dc19-dev.latrobe.edu.au/fedora/get/##PID##/##DS## )
+        * repository_uri (e.g http://andsdb-dc19-dev.latrobe.edu.au/sword )
+        * deposit_url (e.g http://andsdb-dc19-dev.latrobe.edu.au/sword/##COLLECTION_PID## ) 
       * modified accepted data types
+        * e.g:
+          * {{{<accept>image/jpg</accept>}}}
+          * {{{<accept>application/x-zip-compressed</accept>}}}
         * pending more info from conal. Sadly this must be done at compile at the moment.
   * ran ant dist, installed into Tomcat6
 
