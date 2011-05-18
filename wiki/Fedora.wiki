@@ -21,6 +21,9 @@ If we use the same name for all rif-cs datastreams (e.g. "rif-cs") then we can c
 The XForms UI can look up related Fedora objects using this API:
 
 http://fedora-commons.org/documentation/3.0b1/userdocs/server/webservices/apialite/index.html#findObjects
+
+e.g. http://andsdb-dc19-dev.latrobe.edu.au/fedora/search?pid=true&xml=true&creator=true&description=true&terms=JISC&query=&maxResults=20
+
 == Notifications ==
 Fedora uses Apache ActiveMQ for messaging.
 
