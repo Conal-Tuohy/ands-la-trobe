@@ -22,7 +22,7 @@ https://wiki.duraspace.org/display/FCSVCS/Generic+Search+Service+2.2#GenericSear
 
 == Configuration ==
 
-  After installation, configuration details can be viewed at the deployment location (e.g andsdb-dc19-dev.latrobe.edu.au/fedoragsearch).
+  After installation, configuration details can be viewed at the deployment location http://andsdb-dc19-dev.latrobe.edu.au/fedoragsearch/
 
   
 
