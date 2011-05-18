@@ -22,7 +22,7 @@ The XForms UI can look up related Fedora objects using this API:
 
 http://fedora-commons.org/documentation/3.0b1/userdocs/server/webservices/apialite/index.html#findObjects
 
-e.g. http://andsdb-dc19-dev.latrobe.edu.au/fedora/search?pid=true&xml=true&creator=true&description=true&terms=JISC&query=&maxResults=20
+e.g. http://andsdb-dc19-dev.latrobe.edu.au/fedora/search?pid=true&title=true&terms=&query=title~JISC&maxResults=80&xml=true
 
 == Notifications ==
 Fedora uses Apache ActiveMQ for messaging.
