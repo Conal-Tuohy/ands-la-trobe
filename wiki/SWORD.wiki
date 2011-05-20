@@ -32,3 +32,75 @@ and also
 `rm -r -f /usr/share/tomcat/webapps/sword`
 before
 `ant dist`
+
+= Notes =
+
+SWORD will ingest .xml files present with a deposit and use metadata from them if they are in an appropriate format (e.g rif-cs.xml, DC.xml). However, DC.xml appears to break the deposit process, as SWORD will generate a default DC record with no extracted information when generating the initial internal FoxML record, and then attempt to append the real DC data in a subsequent block. This violates the OAI_DC schema, causing an exception and terminating the process.
+
+For example, the following internally generated code:
+{{{
+<?xml version="1.0" encoding="UTF-8"?>^M
+<foxml:digitalObject xmlns:foxml="info:fedora/fedora-system:def/foxml#" PID="andsdb-dc19:13" VERSION="1.1">^M
+  <foxml:objectProperties>^M
+    <foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active" />^M
+    <foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Object created through the SWORD deposit system" />^M
+    <foxml:property NAME="info:fedora/fedora-system:def/model#ownerId" VALUE="sword" />^M
+    <foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2011-05-20T03:01:37.381Z" />^M
+    <foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2011-05-20T03:01:37.381Z" />^M
+  </foxml:objectProperties>^M
+  <foxml:datastream ID="DC" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">^M
+    <foxml:datastreamVersion ID="DC.0" LABEL="Dublin Core Metadata" MIMETYPE="text/xml">^M
+      <foxml:contentDigest TYPE="DISABLED" DIGEST="none" />^M
+      <foxml:xmlContent>^M
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/">^M
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Uploaded by the JISC funded SWORD project</dc:title>^M
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">sword</dc:creator>^M
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">application/zip</dc:format>^M
+        </oai_dc:dc>^M
+      </foxml:xmlContent>^M
+    </foxml:datastreamVersion>^M
+  </foxml:datastream>^M
+  <foxml:datastream ID="RELS-EXT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">^M
+    <foxml:datastreamVersion ID="RELS-EXT.0" LABEL="Relationships to other objects" MIMETYPE="text/xml">^M
+      <foxml:contentDigest TYPE="DISABLED" DIGEST="none" />^M
+      <foxml:xmlContent>^M
+        <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">^M
+          <rdf:Description rdf:about="info:fedora/andsdb-dc19:13">^M
+            <rel:isMemberOf xmlns:rel="info:fedora/fedora-system:def/relations-external#" rdf:resource="info:fedora/collection:open" />^M
+          </rdf:Description>^M
+        </rdf:RDF>^M
+      </foxml:xmlContent>^M
+    </foxml:datastreamVersion>^M
+  </foxml:datastream>^M
+  <foxml:datastream ID="group" STATE="A" CONTROL_GROUP="M" VERSIONABLE="true">^M
+    <foxml:datastreamVersion ID="group.0" LABEL="SWORD Generic File Upload" MIMETYPE="application/zip">^M
+      <foxml:contentDigest TYPE="DISABLED" DIGEST="none" />^M
+      <foxml:contentLocation TYPE="URL" REF="uploaded://33" />^M
+    </foxml:datastreamVersion>^M
+  </foxml:datastream>^M
+  <foxml:datastream ID="DC" STATE="A" CONTROL_GROUP="M" VERSIONABLE="true">^M
+    <foxml:datastreamVersion ID="DC.0" LABEL="SIP-sample-group/DC.xml" MIMETYPE="text/xml">^M
+      <foxml:contentDigest TYPE="DISABLED" DIGEST="none" />^M
+      <foxml:contentLocation TYPE="URL" REF="uploaded://34" />^M
+    </foxml:datastreamVersion>^M
+  </foxml:datastream>^M
+  <foxml:datastream ID="rif-cs" STATE="A" CONTROL_GROUP="M" VERSIONABLE="true">^M
+    <foxml:datastreamVersion ID="rif-cs.0" LABEL="SIP-sample-group/rif-cs.xml" MIMETYPE="text/xml">^M
+      <foxml:contentDigest TYPE="DISABLED" DIGEST="none" />^M
+      <foxml:contentLocation TYPE="URL" REF="uploaded://35" />^M
+    </foxml:datastreamVersion>^M
+  </foxml:datastream>^M
+</foxml:digitalObject>^M
+}}}
+
+Generates the following: 
+{{{
+13:01:37,488 ERROR [org.purl.sword.server.fedora.fedoraObjects.FedoraObject] Had problems adding the object to the repository; org.fcrepo.server.errors.ObjectValidityException: DOValidatorXMLSchema returned validation exception.
+The underlying exception was a org.xml.sax.SAXException.
+The message was "URI=null Line=40: cvc-id.2: There are multiple occurrences of ID value 'DC'."
+org.purl.sword.base.SWORDException: Had problems adding the object to the repository;
+    at org.purl.sword.server.fedora.fedoraObjects.FedoraObject.ingest(FedoraObject.java:288)
+<snip />
+}}}
+
+However, the DC data is useful in that it is automatically indexed by fedora's search system. Thus we have decided to automatically update the DC record after submission using a combination of SWORD and JMI listeners.
