@@ -41,7 +41,7 @@ There's a related "AJAX" interface as well which appears to use HTTP POST:
 http://activemq.apache.org/ajax.html
 
 
-Using the JMS listener, we can listen for calls to API-M methods. Listening to "topic.apim.*" we are notified of:
+Using the JMS listener, we can listen for calls to API-M methods. Listening to `topic.apim.*` we are notified of:
 
 getDatastream
 {{{
