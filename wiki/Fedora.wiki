@@ -39,3 +39,70 @@ A bogus aspect of it is that the GET method is neither safe nor idempotent. So i
 There's a related "AJAX" interface as well which appears to use HTTP POST:
 
 http://activemq.apache.org/ajax.html
+
+
+Using the JMS listener, we can listen for calls to API-M methods. Listening to "topic.apim.*" we are notified of:
+
+modifyDatastreamByValue and getDatastream
+{{{
+Message received: <?xml version="1.0" encoding="UTF-8"?>
+<entry xmlns="http://www.w3.org/2005/Atom" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:fedora-types="http://www.fedora.info/definitions/1/0/types/">
+  <id>urn:uuid:2ba87e43-d159-4bcb-8a7a-aa85b21d0581</id>
+  <updated>2011-05-24T01:37:02.897Z</updated>
+  <author>
+    <name>fedoraAdmin</name>
+    <uri>http://andsdb-dc19-dev.latrobe.edu.au:80/fedora</uri>
+  </author>
+  <title type="text">getDatastream</title>
+  <category term="andsdb-dc19:4" scheme="fedora-types:pid" label="xsd:string"></category>
+  <category term="rif-cs" scheme="fedora-types:dsID" label="xsd:string"></category>
+  <category term="null" scheme="fedora-types:asOfDateTime" label="xsd:string"></category>
+  <summary type="text">andsdb-dc19:4</summary>
+  <content type="text">[OMITTED]</content>
+  <category term="3.4.2" scheme="info:fedora/fedora-system:def/view#version"></category>
+  <category term="info:fedora/fedora-system:ATOM-APIM-1.0" scheme="http://www.fedora.info/definitions/1/0/types/formatURI"></category>
+</entry> from client UpdateListener
+Message received: <?xml version="1.0" encoding="UTF-8"?>
+<entry xmlns="http://www.w3.org/2005/Atom" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:fedora-types="http://www.fedora.info/definitions/1/0/types/">
+  <id>urn:uuid:d06a6623-472f-4135-947b-0aa53b7efd56</id>
+  <updated>2011-05-24T01:37:02.897Z</updated>
+  <author>
+    <name>fedoraAdmin</name>
+    <uri>http://andsdb-dc19-dev.latrobe.edu.au:80/fedora</uri>
+  </author>
+  <title type="text">modifyDatastreamByValue</title>
+  <category term="andsdb-dc19:4" scheme="fedora-types:pid" label="xsd:string"></category>
+  <category term="rif-cs" scheme="fedora-types:dsID" label="xsd:string"></category>
+  <category term="" scheme="fedora-types:altIDs" label="fedora-types:ArrayOfString"></category>
+  <category term="null" scheme="fedora-types:dsLabel" label="xsd:string"></category>
+  <category term="null" scheme="fedora-types:formatURI" label="xsd:string"></category>
+  <category term="[OMITTED]" scheme="fedora-types:dsContent" label="xsd:base64Binary"></category>
+  <category term="null" scheme="fedora-types:checksumType" label="xsd:string"></category>
+  <category term="null" scheme="fedora-types:checksum" label="xsd:string"></category>
+  <category term="null" scheme="fedora-types:logMessage" label="xsd:string"></category>
+  <summary type="text">andsdb-dc19:4</summary>
+  <content type="text">2011-05-24T01:37:02.896Z</content>
+  <category term="3.4.2" scheme="info:fedora/fedora-system:def/view#version"></category>
+  <category term="info:fedora/fedora-system:ATOM-APIM-1.0" scheme="http://www.fedora.info/definitions/1/0/types/formatURI"></category>
+</entry> from client UpdateListener
+}}}
+
+ingest:
+{{{
+Message received: <?xml version="1.0" encoding="UTF-8"?>
+<entry xmlns="http://www.w3.org/2005/Atom" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:fedora-types="http://www.fedora.info/definitions/1/0/types/">
+  <id>urn:uuid:1a05ff6f-04a1-49dc-a226-65cb01ce82ed</id>
+  <updated>2011-05-24T01:58:04.882Z</updated>
+  <author>
+    <name>sword</name>
+    <uri>http://andsdb-dc19-dev.latrobe.edu.au:80/fedora</uri>
+  </author>
+  <title type="text">ingest</title>
+  <category term="ingested by the sword program" scheme="fedora-types:logMessage" label="xsd:string"></category>
+  <category term="info:fedora/fedora-system:FOXML-1.1" scheme="fedora-types:format" label="xsd:string"></category>
+  <summary type="text">andsdb-dc19:14</summary>
+  <content type="text">andsdb-dc19:14</content>
+  <category term="3.4.2" scheme="info:fedora/fedora-system:def/view#version"></category>
+  <category term="info:fedora/fedora-system:ATOM-APIM-1.0" scheme="http://www.fedora.info/definitions/1/0/types/formatURI"></category>
+</entry> from client UpdateListener
+}}}
