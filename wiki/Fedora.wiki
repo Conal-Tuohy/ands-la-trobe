@@ -41,28 +41,7 @@ There's a related "AJAX" interface as well which appears to use HTTP POST:
 http://activemq.apache.org/ajax.html
 
 
-Using the JMS listener, we can listen for calls to API-M methods. Listening to `topic.apim.*` we are notified of:
-
-getDatastream
-{{{
-<?xml version="1.0" encoding="UTF-8"?>
-<entry xmlns="http://www.w3.org/2005/Atom" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:fedora-types="http://www.fedora.info/definitions/1/0/types/">
-  <id>urn:uuid:2ba87e43-d159-4bcb-8a7a-aa85b21d0581</id>
-  <updated>2011-05-24T01:37:02.897Z</updated>
-  <author>
-    <name>fedoraAdmin</name>
-    <uri>http://andsdb-dc19-dev.latrobe.edu.au:80/fedora</uri>
-  </author>
-  <title type="text">getDatastream</title>
-  <category term="andsdb-dc19:4" scheme="fedora-types:pid" label="xsd:string"></category>
-  <category term="rif-cs" scheme="fedora-types:dsID" label="xsd:string"></category>
-  <category term="null" scheme="fedora-types:asOfDateTime" label="xsd:string"></category>
-  <summary type="text">andsdb-dc19:4</summary>
-  <content type="text">[OMITTED]</content>
-  <category term="3.4.2" scheme="info:fedora/fedora-system:def/view#version"></category>
-  <category term="info:fedora/fedora-system:ATOM-APIM-1.0" scheme="http://www.fedora.info/definitions/1/0/types/formatURI"></category>
-</entry>
-}}}
+Using the JMS listener, we can listen for calls to API-M methods. Listening to `topic.apim.update` we are notified of:
 
 modifyDatastreamByValue
 {{{
