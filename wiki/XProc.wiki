@@ -1,0 +1,9 @@
+#summary Notes about XProc
+
+= XProc =
+
+XProc is the W3C's XML Pipeline Language.
+
+http://www.w3.org/TR/xproc/
+
+http://xprocbook.com/book/book-1.html
