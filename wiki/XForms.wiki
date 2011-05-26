@@ -26,6 +26,7 @@
   * http://www.agencexml.com/xsltforms.htm
   * http://www.mozilla.org/projects/xforms/
   * http://wiki.orbeon.com/forms/doc
+    * [http://orbeon-forms-ops-users.24843.n4.nabble.com/Newbie-Question-Authentication-td38649.html Orbeon quirk of not passing the HTTP authentication challenge from a server back to the client]
   * http://www.w3.org/MarkUp/Forms/#implementations
 
 ==autocomplete/suggest==
