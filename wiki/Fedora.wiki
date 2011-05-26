@@ -89,3 +89,5 @@ ingest:
   <category term="info:fedora/fedora-system:ATOM-APIM-1.0" scheme="http://www.fedora.info/definitions/1/0/types/formatURI"></category>
 </entry>
 }}}
+
+We need to ensure that the JMS listener is resilient - when Fedora restarts, the JMS listener must continue to receive messages. It should probably make a periodic check to make sure its JMS session is still alive. If it pokes some part of the Fedora APIM every few minutes, and doesn't receive a notification of that within a certain short period, then it should assume its JMS session is disconnected, and attempt to reconnect. If the reconnection fails, it should keep trying.
