@@ -1,0 +1,8 @@
+#summary Notes on the installation of Orbeon Xforms processor
+
+= Introduction =
+
+Orbeon has some little quirks.
+
+
+= Details =
