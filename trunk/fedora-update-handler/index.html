@@ -10,10 +10,11 @@
 		<p>The Fedora Update Handler may be used to keep other information systems up to date with the latest information present in the Fedora repository. For instance, the updated content may be indexed in a discovery system or replicated into another repository. The updated content might be validated or checksummed, or cross-walked or otherwise transformed. For instance, a data stream might be cross-walked into another format and the resulting document written back to the Fedora object as another datastream.</p>
 		<h2>How it works</h2>
 		<p>When a datastream in the repository is changed, Fedora sends a message, in the form of an Atom document, to the Fedora Update Handler application. In turn, the Fedora Update Handler application executes a user-specified external program, and passes the Atom message to that program via its standard input stream. The Fedora Update Handler is therefore a bridge between JMS and arbitrary console applications.</p>
-		<h2>How to build the application</h2>
-		<p>First you will need to have installed Java 1.5 or later, and Apache Ant. </p>
+		<h2>How to get the application</h2>
 		<p>Check out the Fedora Update Handler source code from the Subversion repository:</p>
 		<p><kbd>svn checkout http://ands-la-trobe.googlecode.com/svn/trunk/fedora-update-handler fedora-update-handler</kbd></p>
+		<h2>How to build the application</h2>
+		<p>First you will need to have installed Java 1.5 or later, and Apache Ant. </p>
 		<p>Navigate into the folder and invoke the Ant tool to build the application:</p>
 		<p><kbd>cd fedora-update-handler</kbd></p>
 		<p><kbd>ant</kbd></p>
