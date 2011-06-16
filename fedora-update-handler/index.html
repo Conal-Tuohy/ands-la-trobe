@@ -2,6 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 	<head>
 		<title>Fedora Update Handler</title>
+		<style type="text/css">
+			h1, h2 {
+				font-family: sans-serif;
+			}
+
+			h2 {
+				font-weight: normal;
+			}
+			
+			div.commands {
+				background-color: LightSlateGray;
+			}
+			
+		</style>
 	</head>
 	<body>
 		<h1>Fedora Update Handler</h1>
@@ -16,8 +30,10 @@
 		<h2>How to build the application</h2>
 		<p>First you will need to have installed <a href="http://www.java.com/en/download/manual.jsp">Java</a> version 1.5 or later, and <a href="http://ant.apache.org/bindownload.cgi">Apache Ant</a>. </p>
 		<p>Navigate into the folder and invoke the Ant tool to build the application:</p>
-		<p><kbd>cd fedora-update-handler</kbd></p>
-		<p><kbd>ant</kbd></p>
+		<div class="commands">
+			<p><kbd>cd fedora-update-handler</kbd></p>
+			<p><kbd>ant</kbd></p>
+		</div>
 		<p>Ant will execute the <code>build.xml</code> file to build the application, which will be output to <code>build/fedora-update-handler.jar</code></p>
 		<h2>How to run the application</h2>
 		<p>The application should be run on the same host as the Fedora service itself. </p>
