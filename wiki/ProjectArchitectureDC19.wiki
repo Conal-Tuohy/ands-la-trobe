@@ -1,7 +1,7 @@
 #summary General overview of component interactions.
 
 = Components =
-[http://ands-la-trobe.googlecode.com/svn/trunk/dc19-docs/images/dc19-architecture-diagram.png http://ands-la-trobe.googlecode.com/svn/trunk/dc19-docs/images/dc19-architecture-diagram.png]
+http://ands-la-trobe.googlecode.com/svn/trunk/dc19-docs/images/dc19-architecture-diagram.png
 
 = Introduction =
 
