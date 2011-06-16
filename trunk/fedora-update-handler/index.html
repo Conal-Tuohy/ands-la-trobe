@@ -4,15 +4,39 @@
 		<title>Fedora Update Handler</title>
 		<style type="text/css">
 			h1, h2 {
+				margin-top: 1.2em;
+				margin-bottom: 0.6em;
 				font-family: sans-serif;
+				color: #405469;
 			}
 
 			h2 {
 				font-weight: normal;
 			}
 			
-			div.commands {
-				background-color: LightSlateGray;
+			a {
+				color: #1464B7;
+				text-decoration: none;
+				border-bottom-style: dotted;
+				border-bottom-width: 1px;
+				border-bottom-color: #1464B7;
+			}
+			
+			a:visited {
+				color: #172A73;
+				border-bottom-color: #172A73; 
+			}
+			
+			.command {
+				padding-top: 0.5em;
+				padding-bottom: 0.5em;
+				padding-left: 1em;
+				padding-right: 1em;
+				background-color: #D0DFEE;
+				border-style: solid;
+				border-width: 1px;
+				border-color: #405469;
+				width: 50em;
 			}
 			
 		</style>
@@ -26,11 +50,11 @@
 		<p>When the Fedora Update Handler program starts, it connects to Fedora and subscribes to notification messages via the <a href="http://en.wikipedia.org/wiki/Java_Message_Service">Java Message Service (JMS)</a>. Then, whenever a datastream in the repository is changed, Fedora sends a message, in the form of an <a href="http://en.wikipedia.org/wiki/Atom_%28standard%29">Atom</a> XML document, to the Fedora Update Handler application. In turn, the Fedora Update Handler application executes a user-specified external program, and passes the Atom message to that program via its standard input stream. The Fedora Update Handler is therefore a bridge between JMS and arbitrary console applications.</p>
 		<h2>How to get the application</h2>
 		<p>Use <a href="http://subversion.apache.org/">Subversion</a> to check out the Fedora Update Handler source code from the project's source code repository:</p>
-		<p><kbd>svn checkout http://ands-la-trobe.googlecode.com/svn/trunk/fedora-update-handler fedora-update-handler</kbd></p>
+		<p class="command"><kbd>svn checkout http://ands-la-trobe.googlecode.com/svn/trunk/fedora-update-handler fedora-update-handler</kbd></p>
 		<h2>How to build the application</h2>
 		<p>First you will need to have installed <a href="http://www.java.com/en/download/manual.jsp">Java</a> version 1.5 or later, and <a href="http://ant.apache.org/bindownload.cgi">Apache Ant</a>. </p>
 		<p>Navigate into the folder and invoke the Ant tool to build the application:</p>
-		<div class="commands">
+		<div class="command">
 			<p><kbd>cd fedora-update-handler</kbd></p>
 			<p><kbd>ant</kbd></p>
 		</div>
@@ -40,9 +64,9 @@
 		<p>You will need to <a href="https://wiki.duraspace.org/display/FCR30/Messaging#Messaging-config">enable Fedora's message service</a>.</p>
 		<p>You will need to copy the <code>fedora-update-handler.jar</code> into a folder along with all the jars in the <code>lib</code> folder.</p>
 		<p>To run the application:</p>
-		<p><kbd>java -jar fedora-update-handler.jar</kbd> <var>command-line to execute to handle message</var></p>
+		<p class="command"><kbd>java -jar fedora-update-handler.jar</kbd> <var>command-line to execute to handle message</var></p>
 		<p>The fedora-update-handler application will connect to Fedora and subscribe to update notifications. When a notification message is received, the application will execute the specified command, and pass the notification message to it as the standard input stream.</p>
 		<p>For instance, to forward the notifications by email, using the <var>email</var> program, you might enter the following command:</p>
-		<p><kbd>java -jar fedora-update-handler.jar</kbd> <var>mail -s 'Fedora Update Notification' address@example.com</var></p>
+		<p class="command"><kbd>java -jar fedora-update-handler.jar</kbd> <var>mail -s 'Fedora Update Notification' address@example.com</var></p>
 	</body>
 </html>
