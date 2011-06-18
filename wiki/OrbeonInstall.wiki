@@ -6,3 +6,5 @@ Orbeon has some little quirks.
 
 
 = Details =
+
+The authentication mechanism is tangled up with the Orbeon server. If your xforms model has (HTTP) authentication challenge, that doesn't get handled and made available to the browser.
