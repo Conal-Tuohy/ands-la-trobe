@@ -30,7 +30,7 @@ Fedora Commons is a repository system which we are using to store RIF-CS and oth
   * added fedora user
   * added fedora3 database
   * added authority database
-  * modified permissions, etc
+  * Gave relevant permissions over these dbs to fedora user
 
  * ran installer (./java -jar fcrepo-installer-3.4.2.jar)
 
