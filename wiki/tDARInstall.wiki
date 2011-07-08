@@ -1,4 +1,5 @@
 #summary Installation of the Digital Archaeological Record
+=tDAR Install=
 
 tDAR is a Java app, built with Maven. To install Maven using yum I added the jpackage repository to the list of yum repositories, as specified here: http://stackoverflow.com/questions/6298865/how-to-install-maven-into-red-hat-linux-enterprise-addition-6
 
