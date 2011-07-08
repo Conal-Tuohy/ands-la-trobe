@@ -1,6 +1,11 @@
 #summary Installation of the Digital Archaeological Record
 =tDAR Install=
 
+Source code. Adam Brin provided a tarball of the `src` folder of the `eolian` branch, but didn't include the pom.xml (Maven build file), so I downloaded it separately from their repository:
+{{{
+wget http://dev.tdar.org/fisheye/browse/~raw,r=2432/tDAR/branches/eolian/pom.xml
+}}}
+
 tDAR is a Java app, built with Maven. To install Maven using yum I added the jpackage repository to the list of yum repositories, as specified here: http://stackoverflow.com/questions/6298865/how-to-install-maven-into-red-hat-linux-enterprise-addition-6
 
 {{{
@@ -20,3 +25,5 @@ Got build error from Maven:
 [INFO] ------------------------------------------------------------------------
 [INFO] Error resolving version for 'org.apache.maven.plugins:maven-javadoc-plugin': Plugin requires Maven version 2.0.9
 }}}
+
+So we seem to need a newer version of Maven. :-(
