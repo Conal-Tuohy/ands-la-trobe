@@ -8,6 +8,15 @@ yum update
 yum install maven2
 }}}
 
-Followed instructions at: http://dev.tdar.org/confluence/display/TDAR/deploying+tDAR up to and including the step of running the maven build.
+Followed instructions at: http://dev.tdar.org/confluence/display/TDAR/deploying+tDAR up to and including the step of running the Maven build.
 
 (When renaming the .production files, I moved any files which would have been overwritten into a "backup" folder).
+
+Got build error from Maven:
+
+{{{
+[INFO] ------------------------------------------------------------------------
+[ERROR] BUILD ERROR
+[INFO] ------------------------------------------------------------------------
+[INFO] Error resolving version for 'org.apache.maven.plugins:maven-javadoc-plugin': Plugin requires Maven version 2.0.9
+}}}
