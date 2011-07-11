@@ -6,24 +6,17 @@ Source code. Adam Brin provided a tarball of the `src` folder of the `eolian` br
 wget http://dev.tdar.org/fisheye/browse/~raw,r=2432/tDAR/branches/eolian/pom.xml
 }}}
 
-tDAR is a Java app, built with Maven. To install Maven using yum I added the jpackage repository to the list of yum repositories, as specified here: http://stackoverflow.com/questions/6298865/how-to-install-maven-into-red-hat-linux-enterprise-addition-6
+tDAR is a Java app, built with Maven. 
 
-{{{
-yum update
-yum install maven2
-}}}
+Installed Maven from download. - Details: Daniel?
 
 Followed instructions at: http://dev.tdar.org/confluence/display/TDAR/deploying+tDAR up to and including the step of running the Maven build.
 
 (When renaming the .production files, I moved any files which would have been overwritten into a "backup" folder).
 
-Got build error from Maven:
+==Crowd==
+tDAR uses Atlassian "Crowd" for authentication:
 
-{{{
-[INFO] ------------------------------------------------------------------------
-[ERROR] BUILD ERROR
-[INFO] ------------------------------------------------------------------------
-[INFO] Error resolving version for 'org.apache.maven.plugins:maven-javadoc-plugin': Plugin requires Maven version 2.0.9
-}}}
+http://confluence.atlassian.com/display/CROWD/Installing+Crowd+and+CrowdID
 
-So we seem to need a newer version of Maven. :-(
+http://dev.tdar.org/fisheye/browse/tDAR/branches/eolian/src/main/resources/crowd.properties.production?r=2188&r=2188
