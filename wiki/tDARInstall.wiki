@@ -23,4 +23,4 @@ Configuring tDAR:
 http://dev.tdar.org/fisheye/browse/tDAR/branches/eolian/src/main/resources/crowd.properties.production?r=2188&r=2188
 
 The Crowd groups which tDAR expects are defined in an enum here:
-http://dev.tdar.org/fisheye/browse/~br=trunk/tDAR/trunk/src/main/java/org/tdar/core/service/CrowdService.java?r=2134
+http://dev.tdar.org/fisheye/browse/tDAR/branches/eolian/src/main/java/org/tdar/core/service/CrowdService.java?hb=true#to47
