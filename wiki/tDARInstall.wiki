@@ -8,6 +8,8 @@ wget http://dev.tdar.org/fisheye/browse/~raw,r=2432/tDAR/branches/eolian/pom.xml
 
 tDAR is a Java app, built with Maven. 
 
+
+
 ==Maven==
 
 Yum appears (as of 12/7/11) to only have an ancient build of Maven available (2.0.8), and this is earlier than the minimun required version.
@@ -28,13 +30,8 @@ These have been changed as follows:
   * Replaced Adam Brin's email with Daniel's and Conal's.
   * Replaced file appender path /logs/tdar.log with /var/log/tdar/tdar.log
 
-===/ands/tDAR-install/src/main/resources/tdar.properties===
-  * changed file.store.location to /home/tdar/filestore
-  * changed personal.file.store.location to /home/tdar/personal-filestore
-
 ===/ands/tDAR-install/src/main/resources/hibernate.properties===
 
-  * changed javax.persistence.jdbc.user to tomcat due to postgre ident (can be changed later).
   * added javax.persistence.jdbc.password
   * changed hibernate.search.default.indexBase to /home/tdar/indexes
 
@@ -61,13 +58,3 @@ altered /WEB-INF/classes/crowd.properties to reflect actual WAR location (/ands/
 Created /usr/share/tomcat6/conf/Catalina/localhost/crowd.xml with the following info: 
 
 {{{<Context path="/crowd" docBase="/ands/crowd" reloadable="false"/>}}}
-
-==tDAR==
-http://dev.tdar.org/fisheye/browse/tDAR/branches/eolian/src/main/resources/crowd.properties.production?r=2188&r=2188
-
-
-
-The Crowd groups which tDAR expects are defined in an enum here:
-http://dev.tdar.org/fisheye/browse/tDAR/branches/eolian/src/main/java/org/tdar/core/service/CrowdService.java?hb=true#to47
-
-Daniel has installed Crowd. Daniel: please document that here.
