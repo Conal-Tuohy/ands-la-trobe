@@ -1,6 +1,16 @@
 #summary Installation of the Digital Archaeological Record
 =tDAR Install=
 
+==Postgresql==
+tDAR uses Postgresql for storage. 
+
+{{{
+yum install postgresql-server
+chkconfig postgresql on
+}}}
+
+==tDAR build and deployment==
+
 Source code. Adam Brin provided a tarball of the `src` folder of the `eolian` branch, but didn't include the pom.xml (Maven build file), so I downloaded it separately from their repository:
 {{{
 wget http://dev.tdar.org/fisheye/browse/~raw,r=2432/tDAR/branches/eolian/pom.xml
@@ -16,17 +26,35 @@ Downloaded Maven 2.2.1 from http://www.apache.org/dyn/closer.cgi/maven/binaries/
 
 Followed instructions at: http://dev.tdar.org/confluence/display/TDAR/deploying+tDAR up to and including the step of running the Maven build.
 
-(When renaming the .production files, I moved any files which would have been overwritten into a "backup" folder).
+Added script created /ands/tDAR-install/build.sh to call maven build process
+
+==Tomcat config for tDAR==
+
+To simplify repeated deployment, I wrote a Tomcat Context XML file at /usr/share/tomcat6/conf/Catalina/localhost/ROOT.xml to load the web application from /ands/tDAR-install/target/ROOT:
+{{{
+<Context docBase="/ands/tDAR-install/target/ROOT"/>
+}}}
 
 ==tDAR configuration==
 
 tDAR is configured with a bunch of property files.
 
+(When renaming the .production files, I moved any files which would have been overwritten into a "backup" folder).
+
 These have been changed as follows: 
 
-===/ands/tDAR-install/src/main/resources/log4j.properties===
+===src/main/resources/log4j.properties===
 Replaced Adam Brin's email with Daniel's and Conal's.
 Replaced file appender path /logs/tdar.log with /var/log/tdar/tdar.log
+
+===src/main/resources/tdar.properties===
+changed file.store.location and personal.file.store.location:
+
+file.store.location=/ands/tdar/filestore
+personal.file.store.location=/ands/tdar/personal-filestore
+web.root=src/main/webapp
+file.store.class=org.tdar.filestore.PairtreeFilestore
+run.periodic.events=true
 
 ==Crowd==
 tDAR uses Atlassian "Crowd" for authentication:
