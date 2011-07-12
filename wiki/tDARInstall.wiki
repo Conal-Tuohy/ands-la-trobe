@@ -29,13 +29,14 @@ Replaced Adam Brin's email with Daniel's and Conal's.
 Replaced file appender path /logs/tdar.log with /var/log/tdar/tdar.log
 
 ===/ands/tDAR-install/src/main/resources/tdar.properties===
-changed file.store.location to /ands/tdar/filestore
-changed personal.file.store.location to /ands/tdar/personal-filestore
+changed file.store.location to /home/tdar/filestore
+changed personal.file.store.location to /home/tdar/personal-filestore
 
 ===/ands/tDAR-install/src/main/resources/hibernate.properties===
 
 changed javax.persistence.jdbc.user to tomcat due to postgre ident (can be changed later).
 added javax.persistence.jdbc.password
+changed hibernate.search.default.indexBase to /home/tdar/indexes
 
 
 ==Crowd==
