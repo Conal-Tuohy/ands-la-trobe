@@ -8,7 +8,11 @@ wget http://dev.tdar.org/fisheye/browse/~raw,r=2432/tDAR/branches/eolian/pom.xml
 
 tDAR is a Java app, built with Maven. 
 
-Installed Maven from download. - Details: Daniel?
+==Maven==
+
+Yum appears (as of 12/7/11) to only have an ancient build of Maven available (2.0.8), and this is earlier than the minimun required version.
+
+Downloaded Maven 2.2.1 from http://www.apache.org/dyn/closer.cgi/maven/binaries/apache-maven-2.2.1-bin.tar.gz and installed manually (ln -s /bin -> usr/bin, /lib -> /var/lib/, etc).
 
 Followed instructions at: http://dev.tdar.org/confluence/display/TDAR/deploying+tDAR up to and including the step of running the Maven build.
 
