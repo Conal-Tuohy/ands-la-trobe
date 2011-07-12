@@ -34,7 +34,34 @@ These have been changed as follows:
 
   * added javax.persistence.jdbc.password
   * changed hibernate.search.default.indexBase to /home/tdar/indexes
+ 
+==httpd config for tDAR==
 
+{{{
+yum install httpd
+chkconfig httpd on
+}}
+
+Added a proxy configuration file at `cat /etc/httpd/conf.d/proxy.conf` to proxy from port 80 to port 8080 (where Tomcat is listening):
+{{{
+<Location />
+ProxyPass        http://localhost:8080/   
+ProxyPassReverse http://localhost:8080/   
+</Location>
+}}} 
+
+==Tomcat config for tDAR==
+ 
+To simplify repeated deployment, I wrote a Tomcat Context XML file at /usr/share/tomcat6/conf/Catalina/localhost/ROOT.xml to load the web application directly from /ands/tDAR-install/target/ROOT:
+
+{{{
+<Context docBase="/ands/tDAR-install/target/ROOT"/>
+}}}
+
+Changed tomcat user to run as "tdar" user:
+
+ * edited /etc/tomcat6/tomcat6.conf to change TOMCAT_USER="tomcat" to TOMCAT_USER="tdar"
+ * chowned /usr/share/tomcat6/* to tdar:tdar
 
 ==Crowd==
 tDAR uses Atlassian "Crowd" for authentication:
