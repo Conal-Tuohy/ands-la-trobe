@@ -40,7 +40,7 @@ These have been changed as follows:
 {{{
 yum install httpd
 chkconfig httpd on
-}}
+}}}
 
 Added a proxy configuration file at `cat /etc/httpd/conf.d/proxy.conf` to proxy from port 80 to port 8080 (where Tomcat is listening):
 {{{
