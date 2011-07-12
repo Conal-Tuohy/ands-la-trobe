@@ -18,6 +18,16 @@ Followed instructions at: http://dev.tdar.org/confluence/display/TDAR/deploying+
 
 (When renaming the .production files, I moved any files which would have been overwritten into a "backup" folder).
 
+==tDAR configuration==
+
+tDAR is configured with a bunch of property files.
+
+These have been changed as follows: 
+
+===/ands/tDAR-install/src/main/resources/log4j.properties===
+Replaced Adam Brin's email with Daniel's and Conal's.
+Replaced file appender path /logs/tdar.log with /var/log/tdar/tdar.log
+
 ==Crowd==
 tDAR uses Atlassian "Crowd" for authentication:
 
@@ -28,3 +38,5 @@ http://dev.tdar.org/fisheye/browse/tDAR/branches/eolian/src/main/resources/crowd
 
 The Crowd groups which tDAR expects are defined in an enum here:
 http://dev.tdar.org/fisheye/browse/tDAR/branches/eolian/src/main/java/org/tdar/core/service/CrowdService.java?hb=true#to47
+
+Daniel has installed Crowd. Daniel: please document that here.
