@@ -33,7 +33,7 @@ tDAR uses Atlassian "Crowd" for authentication:
 
 http://confluence.atlassian.com/display/CROWD/Installing+Crowd+and+CrowdID
 
-Installed Postgres-server via Yum.
+Installed Postgres-server via Yum, and added the Postgre JDBC driver from http://jdbc.postgresql.org/download/postgresql-8.4-701.jdbc4.jar to /usr/share/tomcat6/lib
 
 Followed directions at http://confluence.atlassian.com/display/CROWD/PostgreSQL for setting up database: Added user crowduser (with createdb and createuser) and database crowddb. Gave access to crowddb.`*` to crowduser.
 
