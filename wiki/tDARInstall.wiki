@@ -35,7 +35,7 @@ http://confluence.atlassian.com/display/CROWD/Installing+Crowd+and+CrowdID
 
 Installed Postgres-server via Yum.
 
-Followed directions at http://confluence.atlassian.com/display/CROWD/PostgreSQL for setting up database: Added user crowduser (with createdb and createuser) and database crowddb. Gave access to crowddb.* to crowduser.
+Followed directions at http://confluence.atlassian.com/display/CROWD/PostgreSQL for setting up database: Added user crowduser (with createdb and createuser) and database crowddb. Gave access to crowddb.'*' to crowduser.
 
 added setclasspath.sh (located in apache-tomcat/bin/ to $TOMCAT_HOME/bin (/usr/share/tomcat6/bin) as it is required to be there by apache-tomcat/bin/startup.sh
 
