@@ -78,6 +78,10 @@ altered /WEB-INF/classes/crowd.properties to reflect the WAR location (/ands/cro
 
 Created /usr/share/tomcat6/conf/Catalina/localhost/crowd.xml with the following info: 
 
-{{{<Context path="/crowd" docBase="/ands/crowd" reloadable="false"/>}}}
+{{{
+<Context path="/crowd" docBase="/ands/crowd" reloadable="false"/>
+}}}
 
-added JavaMail (from http://www.oracle.com/technetwork/java/index-138643.html), Java commons logging (from http://commons.apache.org/logging/download_logging.cgi) and the Java Transactional API (1.0.1B, as requested by the app, from http://download.java.net/maven/2/javax/transaction/jta/1.0.1B/) to /usr/share/tomcat6/lib/.
+added Javamail (from http://www.oracle.com/technetwork/java/index-138643.html), Java commons logging (from http://commons.apache.org/logging/download_logging.cgi) and the Java Transactional API (1.0.1B, as requested by the app, from http://download.java.net/maven/2/javax/transaction/jta/1.0.1B/) to /usr/share/tomcat6/lib/.
+
+Access setup wizard via http://andsdb-sc18-dev.latrobe.edu.au/crowd/
