@@ -66,22 +66,18 @@ Changed tomcat user to run as "tdar" user:
 ==Crowd==
 tDAR uses Atlassian "Crowd" for authentication:
 
-http://confluence.atlassian.com/display/CROWD/Installing+Crowd+and+CrowdID
+http://confluence.atlassian.com/display/CROWD/Installing+Crowd+and+CrowdID OR http://confluence.atlassian.com/display/CROWD/Installing+Crowd+WAR+Distribution
 
 Installed Postgres-server via Yum, and added the Postgre JDBC driver from http://jdbc.postgresql.org/download/postgresql-8.4-701.jdbc4.jar to /usr/share/tomcat6/lib
 
 Followed directions at http://confluence.atlassian.com/display/CROWD/PostgreSQL for setting up database: Added user crowduser (with createdb and createuser) and database crowddb. Gave access to crowddb.`*` to crowduser.
 
-added setclasspath.sh (located in apache-tomcat/bin/ to $TOMCAT_HOME/bin (/usr/share/tomcat6/bin) as it is required to be there by apache-tomcat/bin/startup.sh
+Got WAR dist from http://www.atlassian.com/software/crowd/CrowdDownloadCenter.jspa (use the 'show all' link on the top right of the download banner). 
 
-ran build.sh
-
-ran start_crowd.sh
-
-Discovered that this config is appropriate for standalone installs, we just need the .WAR
-
-altered /WEB-INF/classes/crowd.properties to reflect actual WAR location (/ands/crowd/)
+altered /WEB-INF/classes/crowd.properties to reflect the WAR location (/ands/crowd/crowd-home).
 
 Created /usr/share/tomcat6/conf/Catalina/localhost/crowd.xml with the following info: 
 
 {{{<Context path="/crowd" docBase="/ands/crowd" reloadable="false"/>}}}
+
+added JavaMail (from http://www.oracle.com/technetwork/java/index-138643.html), Java commons logging (from http://commons.apache.org/logging/download_logging.cgi) and the Java Transactional API (1.0.1B, as requested by the app, from http://download.java.net/maven/2/javax/transaction/jta/1.0.1B/) to /usr/share/tomcat6/lib/.
