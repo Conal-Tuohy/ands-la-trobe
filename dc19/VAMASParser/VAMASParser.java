@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package vamasparser;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,7 +32,7 @@ import org.xml.sax.XMLReader;
 
 /**
  *
- * @author DTosello
+ * @author DTosello, CTuohy
  */
 public class VAMASParser implements XMLReader {
 
