@@ -199,6 +199,13 @@ public class VAMASParser implements XMLReader {
             EVlabel.add(lineReader.readLine());
             EVunit.add(lineReader.readLine());    
         }
+        
+        // This next line is a relic of an earlier version of the format.
+        // In that version, this line contained an integer whose value indicated a number of optional features to follow.
+        // In the current version of the standard, these optional features have been removed, so the value should always be 0.
+        // Software which could read the old file format will therefore remain compatible with the new version, but
+        // this VAMASParser will not be able to read the old file format, and must simply throw an exception if the
+        // value is not 0.
         String shouldBeZero = lineReader.readLine();
         if (!shouldBeZero.equals("0")) {
            int errorLine = lineReader.getLineNumber() - 1;
