@@ -34,7 +34,12 @@ These have been changed as follows:
 
   * added javax.persistence.jdbc.password
   * changed hibernate.search.default.indexBase to /home/tdar/indexes
- 
+
+===/ands/tDAR-install/src/main/webapp/includes/googlemaps-api-key.js===
+
+  * generated new googlemaps key at http://code.google.com/intl/en/apis/maps/signup.html
+  * replaced var gmapsKey with new key
+
 ==httpd config for tDAR==
 
 {{{
