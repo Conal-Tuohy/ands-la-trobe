@@ -27,7 +27,19 @@
   </target>
   
   <target name="jar" depends="compile" description="generate the distribution" >
-    <jar jarfile="${build}/vamas-parser.jar" basedir="${build}/classes"/>
+    <jar jarfile="${build}/vamas-parser.jar" basedir="${build}/classes">
+    	<manifest>
+	    	<attribute name="Main-Class" value="au.edu.latrobe.cmss.vamas.VAMASParser"/>
+	    </manifest>
+    </jar>
+  </target>
+  
+  <target name="get-samples" depends="jar" description="convert samples">
+  	<property name="samples" location="${build}/samples"/>
+  	<mkdir dir="${samples}"/>
+  	<get src="http://www.npl.co.uk/science-+-technology/nanoscience/surface-+-nanoanalysis/vamas-specimens" dest="vamas-specimens.zip"/>
+  	<mkdir dir="${samples}/vamas-specimens"/>
+  	<unzip src="vamas-specimens.zip" dest="${samples}/vamas-specimens" overwrite="false"/>
   </target>
 
 </project>
