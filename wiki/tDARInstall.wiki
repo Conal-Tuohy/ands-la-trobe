@@ -74,7 +74,7 @@ Followed directions at http://confluence.atlassian.com/display/CROWD/PostgreSQL 
 
 Got WAR dist from http://www.atlassian.com/software/crowd/CrowdDownloadCenter.jspa (use the 'show all' link on the top right of the download banner). 
 
-altered /WEB-INF/classes/crowd.properties to reflect the WAR location (/ands/crowd/crowd-home).
+altered /WEB-INF/classes/crowd.properties to reflect the WAR location (/ands/crowd/crowd-home). Note that this directory SHOULD NOT be the same as the WAR root.
 
 Created /usr/share/tomcat6/conf/Catalina/localhost/crowd.xml with the following info: 
 
