@@ -52,10 +52,10 @@ ProxyPassReverse http://localhost:8080/
 
 ==Tomcat config for tDAR==
  
-To simplify repeated deployment, I wrote a Tomcat Context XML file at /usr/share/tomcat6/conf/Catalina/localhost/ROOT.xml to load the web application directly from /ands/tDAR-install/target/ROOT:
+To simplify repeated deployment, I wrote a Tomcat Context XML file at /usr/share/tomcat6/conf/Catalina/localhost/ROOT.xml to load the web application directly from /home/tdar/app/ROOT.war:
 
 {{{
-<Context docBase="/ands/tDAR-install/target/ROOT"/>
+<Context docBase="/home/tdar/app/ROOT.war"/>
 }}}
 
 Changed tomcat user to run as "tdar" user:
