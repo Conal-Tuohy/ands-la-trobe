@@ -1,0 +1,33 @@
+<project name="vamas-parser" default="jar" basedir=".">
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="lib" location="lib"/>
+  <property name="build" location="build"/>
+  
+  <path id="base.path">
+      <pathelement location="${build}/classes"/>
+<!--
+<fileset dir="${lib}">
+        <include name="**/*.jar"/>
+      </fileset>
+-->
+</path>
+
+  <target name="init">
+    <tstamp/>
+    <mkdir dir="${build}/classes"/>
+  </target>
+
+  <target name="compile" depends="init" description="compile the source" >
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac compiler="javac1.5" srcdir="${src}" destdir="${build}/classes" classpathref="base.path" nowarn="yes" debug="on" debuglevel="lines,vars,source">
+		 <compilerarg value="-Xlint:unchecked"/> 
+		 <compilerarg value="-Xlint:deprecation"/> 
+	 </javac>
+  </target>
+  
+  <target name="jar" depends="compile" description="generate the distribution" >
+    <jar jarfile="${build}/vamas-parser.jar" basedir="${build}/classes"/>
+  </target>
+
+</project>
