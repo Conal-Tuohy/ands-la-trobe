@@ -1,5 +1,5 @@
 /*  Simple parser for ISO14976 VAMAS format. Converts to XML.
-    Copyright (C) 2011, Daniel Tosello & Conal Touhy
+    Copyright (C) 2011, Daniel Tosello & Conal Tuohy
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ import org.xml.sax.XMLReader;
 public class VAMASParser implements XMLReader {
 
     // The VAMAS-XML namespace
-    final static String ns = "";
+    final static String ns = "http://hdl.handle.net/102.100.100/6919";
     
     private ContentHandler handler = null;
     
@@ -61,7 +61,7 @@ public class VAMASParser implements XMLReader {
      * @param args the command line arguments
      */
     public static void main(String[] args){
-        // TODO parse the document specified on the command line
+        // TODO generate usage message if run without a parameter
         try {
             // The SAXTransformerFactory is a factory for transformers. Here we get the default factory.
             SAXTransformerFactory tf = (SAXTransformerFactory) SAXTransformerFactory.newInstance();
@@ -147,8 +147,6 @@ public class VAMASParser implements XMLReader {
 
     @Override
     public void parse(InputSource input) throws IOException, SAXException {
-        // TODO
-        // actually parse the fucking file!!
         InputStream byteStream = input.getByteStream();
         Reader reader = new InputStreamReader(byteStream);
         LineNumberReader lineReader = new LineNumberReader(reader);
