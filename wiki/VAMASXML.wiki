@@ -1,0 +1,9 @@
+#summary Namespace document for VAMAS-XML produced by the VAMAS parser
+
+This is the namespace document for VAMAS-XML.
+
+The VAMAS-XML format is produced by a simple parser of files in the VAMAS data exchange format; a plain text format used in materials science.
+
+VAMAS-XML is designed to make it easier to handle VAMAS files using modern XML-based tools, e.g. using XSLT to generate graphs, or perform metadata extraction for a data repository.
+
+The VAMAS-XML element vocabulary is drawn simplistically from the ISO specification for the VAMAS exchange format. VAMAS-XML does not use XML attributes.
