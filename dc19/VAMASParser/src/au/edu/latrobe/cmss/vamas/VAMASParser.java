@@ -15,7 +15,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package vamasparser;
+package au.edu.latrobe.cmss.vamas;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -209,13 +210,14 @@ public class VAMASParser implements XMLReader {
             );
         }
        
-        
+        // list any manually entered items
         int numberOfManuallyEnteredItems = Integer.parseInt(lineReader.readLine());
         Vector<String> manuallyEnteredItems = new Vector<String>();
         for (int i = 1; i <= numberOfManuallyEnteredItems; i++) {
             manuallyEnteredItems.add(lineReader.readLine());             
         }
         
+        // list any future experiment upgrade entries
         int numberOfFutureExperimentUpgradeEntries = Integer.parseInt(lineReader.readLine());
         int numberOfFutureUpgradeBlockEntries = Integer.parseInt(lineReader.readLine());
         
@@ -229,6 +231,7 @@ public class VAMASParser implements XMLReader {
             
         }
         
+        // list the actual blocks
         int numberOfBlocks = Integer.parseInt(lineReader.readLine());
         
         for( int i = 0; i < numberOfBlocks; i++){
@@ -236,7 +239,7 @@ public class VAMASParser implements XMLReader {
             element("blockIdentifier", lineReader.readLine());
             element("sampleIdentifier", lineReader.readLine());
             
-            // date
+            // Read date fields and construct an ISO 8601 date
             int year = readInt(lineReader);
             int month = readInt(lineReader) - 1;
             int day = readInt(lineReader);
@@ -443,10 +446,11 @@ public class VAMASParser implements XMLReader {
             endElement("block");
         }
         
-        // read until eof
+        // The file is finished
         while (line != null) {
             // read the next line
             line = lineReader.readLine();
+            // element("comment", line);
         }
         endElement("dataset");       
         handler.endDocument();
