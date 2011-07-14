@@ -85,3 +85,8 @@ Created /usr/share/tomcat6/conf/Catalina/localhost/crowd.xml with the following 
 added Javamail (from http://www.oracle.com/technetwork/java/index-138643.html), Java commons logging (from http://commons.apache.org/logging/download_logging.cgi) and the Java Transactional API (1.0.1B, as requested by the app, from http://download.java.net/maven/2/javax/transaction/jta/1.0.1B/) to /usr/share/tomcat6/lib/.
 
 Access setup wizard via http://andsdb-sc18-dev.latrobe.edu.au/crowd/
+
+Note: on running the JDBC setup, Crowd reported that the correct name for the crowd database is simply 'crowd'. I logged back in to postgres and did: 
+{{{
+alter table crowddb rename to crowd
+}}}
