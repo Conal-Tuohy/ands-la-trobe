@@ -95,3 +95,8 @@ Note: on running the JDBC setup, Crowd reported that the correct name for the cr
 {{{
 alter table crowddb rename to crowd
 }}}
+
+tDAR should be configured as a generic application in the crowd applications panel within the crowd administration console. Ensure that the username and password match those in the /ands/tDAR-install/src/main/resources/crowd.properties file, and that the appropriate _application.login.url_ and _crowd.server.url_ locations are assigned (_application.login.url_ in our case is: http://andsdb-dc19-dev.latrobe.edu.au/login and _crowd.server.url_ is: http://andsdb-sc18-dev.latrobe.edu.au/crowd/services/ )
+
+
+tDAR has two groups that must be created within crowd: _tdar-users_ and _tdar-admins_. Users who register through tDAR will automatically be added to the _tdar-users_ group. Those who need admin privs should be added to the _tdar-admins_ group manually via the crowd admin console.
