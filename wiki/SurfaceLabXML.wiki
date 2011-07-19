@@ -1,0 +1,3 @@
+#summary Namespace document for the SurfaceLab XML produced by our SurfaceLab XML exporter
+
+TODO - describe the markup language here; provide samples; link to SurfaceLab docs; if possible link to a schema; etc.
