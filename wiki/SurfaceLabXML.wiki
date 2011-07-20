@@ -7,6 +7,6 @@ The SurfaceLabXML output given by our exporter script is currently in the follow
 <parameterName>StringValue</parameterName>
 }}}
 
-Note that SurfaceLab6 potentially stores every variable 3 times, each in a String, Real and Integer format. We currently only export the String value. It is (surprisingly) more accurate than the others (Real is in truncated format with a short mantissa, Int is as precise as you'd expect, and any param that is a string will have a value of 0 for both the Real and Int.
+Note that SurfaceLab6 potentially stores every variable 3 times, each in a String, Real and Integer format. We currently only export the String value. It is (surprisingly) more accurate than the others: real is in truncated format with a short mantissa, int is (of course) only precise to whole integers, and any param that is primarily a string will store a value of 0 for both the real and int.
 
 Because the params are dynamically populated based on available metadata for the current experiment, an exhaustive list is not available.
