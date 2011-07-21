@@ -13,6 +13,11 @@
   * deploy a transform to wrap the Fedora rif-cs resource in an xform
    * integrate XSLTForms or failing that, Orbeon
 
+==CSS==
+
+[http://en.wikibooks.org/wiki/XSLTForms/CSS Discussion of CSS in XSLTForms]
+
+
 ==reference==
 
   * http://en.wikibooks.org/wiki/XForms
