@@ -15,8 +15,8 @@
 
 ==CSS==
 
-[http://en.wikibooks.org/wiki/XSLTForms/CSS Discussion of CSS in XSLTForms]
-[http://xformsinstitute.com/essentials/browse/ch09.php "Styling XForms" chapter from O'Reilly "XForms Essentials" book]
+  * [http://en.wikibooks.org/wiki/XSLTForms/CSS Discussion of CSS in XSLTForms]
+  * [http://xformsinstitute.com/essentials/browse/ch09.php "Styling XForms" chapter from O'Reilly "XForms Essentials" book]
 
 ==reference==
 
