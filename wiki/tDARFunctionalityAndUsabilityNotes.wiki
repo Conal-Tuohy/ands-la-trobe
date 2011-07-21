@@ -1,3 +1,5 @@
+#summary Notes about the functionality and usability of tDAR - what is covered already and what changes would we want to make?
+
 Creating project:
   * Site based (research projects might want to approach it differently?); 
   * each site should have it’s own ID but be able to be grouped by project: check;
