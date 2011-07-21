@@ -1,12 +1,12 @@
 #summary Namespace document for the SurfaceLab XML produced by our SurfaceLab XML exporter
 
-SurfaceLab6 is ION-TOF's TOF-SIMS control and analysis software suite, and consists of two separate packages with a common interface: FPanel control suite and Measurement Explorer. These packages populate a shared data structure with measurements, analytical data and metadata.
+Surfacelab6 is ION-TOF's TOF-SIMS control and analysis software suite, and consists of two separate packages with a common interface: FPanel control suite and Measurement Explorer. These packages populate a shared data structure with measurements, analytical data and metadata.
 
 The SurfaceLabXML output given by our exporter script is currently in the following format:
 {{{
 <parameterName>StringValue</parameterName>
 }}}
 
-Note that SurfaceLab6 potentially stores every variable 3 times, each in a String, Real and Integer format. We currently only export the String value. It is (surprisingly) more accurate than the others: real is in truncated format with a short mantissa, int is (of course) only precise to whole integers, and any param that is primarily a string will store a value of 0 for both the real and int.
+Note that Surfacelab6 potentially stores every variable 3 times, each in a String, Real and Integer format. We currently only export the String value. It is (surprisingly) more accurate than the others: real is in truncated format with a short mantissa, int is (of course) only precise to whole integers, and any param that is primarily a string will store a value of 0 for both the real and int.
 
 Because the params are dynamically populated based on available metadata for the current experiment, an exhaustive list is not available.
