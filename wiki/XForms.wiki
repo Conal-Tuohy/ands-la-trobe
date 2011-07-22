@@ -34,6 +34,9 @@
     * [http://orbeon-forms-ops-users.24843.n4.nabble.com/Newbie-Question-Authentication-td38649.html Orbeon quirk of not passing the HTTP authentication challenge from a server back to the client]
   * http://www.w3.org/MarkUp/Forms/#implementations
 
+==rich text==
+  * http://extxsltforms.sourceforge.net/sitKubera/examples/rich-text-editors/TinyMCE-rich-text-editor.xml
+
 ==autocomplete/suggest==
 
   * http://en.wikibooks.org/wiki/XForms/Suggesting_Items
