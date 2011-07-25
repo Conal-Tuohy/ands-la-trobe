@@ -25,6 +25,18 @@ Followed instructions at: http://dev.tdar.org/confluence/display/TDAR/deploying+
 tDAR is configured with a bunch of property files.
 
 These have been changed as follows: 
+===/ands/tDAR-install/src/main/resources/tdar.properties
+Should look a little like this:
+{{{
+file.store.location=/home/tdar/filestore
+personal.file.store.location=/home/tdar/personal-filestore
+web.root=src/main/webapp
+file.store.class=org.tdar.filestore.PairtreeFilestore
+run.periodic.events=true
+smtp.host=localhost
+sysadmin.email=root@localhost
+}}}
+
 
 ===/ands/tDAR-install/src/main/resources/log4j.properties===
   * Replaced Adam Brin's email with Daniel's and Conal's.
