@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+This is a sample RIF-CS instance, used only for convenient testing of the RIF-CS Xform (which refers to an instance with the relative URI reference "rif-cs").
+In production, the RIF-CS XForm will be accessed with a URI ending in "rif-cs", via an HTTPD proxy which uses content negotiation to return either the XForm
+or the RIF-CS instance. When the browser requests the URI, it will get the form; when the form requests the URI, it will get the RIF-CS instance.
+-->
 <registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/1.2.0/schema/registryObjects.xsd">
     <registryObject group="La Trobe University">
         <key>latrobe:dummy</key>
