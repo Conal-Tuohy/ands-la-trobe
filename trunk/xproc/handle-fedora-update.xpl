@@ -76,8 +76,8 @@
 				<p:input port="template">
 					<p:inline exclude-inline-prefixes="atom">
 						<c:request method="put"
-							username="{$username}"
-							password="{$password}"
+							username="{$fedora-username}"
+							password="{$fedora-password}"
 							auth-method="{$auth-method}"
 							href="{concat($fedora-base-uri, 'objects/', $uri-encoded-identifier, '/datastreams/DC')}">
 							<c:body content-type="text/xml">{/*}</c:body>
