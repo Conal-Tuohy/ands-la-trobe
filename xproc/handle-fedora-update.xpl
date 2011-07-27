@@ -66,7 +66,7 @@
 			<!-- transform the rif-cs into dc -->
 			<p:xslt>
 				<p:input port="parameters"><p:empty/></p:input>
-				<p:input port="stylesheet"><p:document href="rif-cs-to-oai_dc.xsl"/></p:input>
+				<p:input port="stylesheet"><p:document href="../xslt/rif-cs-to-oai_dc.xsl"/></p:input>
 			</p:xslt>
 			<!--
 			<p:store href="file:///tmp/dc.xml"/>
