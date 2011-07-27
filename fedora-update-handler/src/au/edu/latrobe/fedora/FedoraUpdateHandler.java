@@ -8,8 +8,10 @@ import java.util.Properties;
 import javax.naming.Context;
 import org.fcrepo.server.messaging.JMSManager;
 import org.fcrepo.server.errors.MessagingException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.IOException;
 
 public class FedoraUpdateHandler implements MessagingListener {
 	
@@ -63,6 +65,31 @@ public class FedoraUpdateHandler implements MessagingListener {
     	 messagingClient.stop(false);
     	 System.out.println("Messaging Client stopped.");
 	 }
+	
+	 
+	private class StreamCopier implements Runnable {
+		private InputStream in;
+		private OutputStream out;
+		public StreamCopier(InputStream in, OutputStream out) {
+			this.in = in;
+			this.out = out;
+		}
+		public void run() {
+			try {
+				PrintStream p = new PrintStream(out);
+				p.println("Stream content:");
+				p.flush();
+				byte[] buffer = new byte[1024];
+				int len = in.read(buffer);
+				while (len != -1) {
+					 out.write(buffer, 0, len);
+					 len = in.read(buffer);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	 
     public void onMessage(String clientId, Message message) {
         String messageText = "";
@@ -81,8 +108,17 @@ public class FedoraUpdateHandler implements MessagingListener {
 					  System.out.print(args[i]);
 				  }
 				  System.out.println();
-	
+				  	  	  
 				  Process messageHandler = Runtime.getRuntime().exec(args);
+				  // read the output of the messageHandler and copy it to standard output
+				  new Thread(
+				  	  new StreamCopier(messageHandler.getInputStream(), System.out) 
+				  ).start();
+				  // read the error output of the messageHandler and copy it to standard error
+				  new Thread(
+				  	  new StreamCopier(messageHandler.getErrorStream(), System.err) 
+				  ).start();
+				  // write Fedora's Atom message to the messageHandler's standard input stream
 				  PrintStream messageStream = new PrintStream(messageHandler.getOutputStream());
 				  messageStream.print(messageText);
 				  messageStream.close();
