@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/1.2.0/schema/registryObjects.xsd">
+    <registryObject group="La Trobe University">
+        <key>latrobe:cmss</key>
+        <originatingSource>https://services.ands.org.au/sandbox/orca</originatingSource>
+        <party type="group">
+            <name type="abbreviated">
+                <namePart>CMSS</namePart>
+            </name>
+            <name type="abbreviated">
+                <namePart>C.M.S.S.</namePart>
+            </name>
+            <name type="primary">
+                <namePart>Centre for Materials and Surface Science</namePart>
+            </name>
+            <location>
+                <address>
+                    <electronic type="url">
+                        <value>http://www.latrobe.edu.au/surface/</value>
+                    </electronic>
+                </address>
+                <address>
+                    <electronic type="email">
+                        <value>cmss@latrobe.edu.au</value>
+                    </electronic>
+                </address>
+                <address>
+                    <physical>
+                        <addressPart type="faxNumber">+61-3-94791552</addressPart>
+                    </physical>
+                </address>
+                <address>
+                    <physical>
+                        <addressPart type="telephoneNumber">+61-3-94793031</addressPart>
+                    </physical>
+                </address>
+                <address>
+                    <physical type="postalAddress">
+                        <addressPart type="addressLine">Centre for Materials and Surface Science</addressPart>
+                        <addressPart type="addressLine">Department of Physics</addressPart>
+                        <addressPart type="addressLine">La Trobe University</addressPart>
+                        <addressPart type="addressLine">Victoria 3086</addressPart>
+                        <addressPart type="addressLine">Australia</addressPart>
+                    </physical>
+                </address>
+                <address>
+                    <physical type="streetAddress">
+                        <addressPart type="addressLine">Centre for Materials and Surface Science</addressPart>
+                        <addressPart type="addressLine">Room 303, Physical Sciences Building 1</addressPart>
+                        <addressPart type="addressLine">La Trobe University</addressPart>
+                        <addressPart type="addressLine">Kingsbury Drive</addressPart>
+                        <addressPart type="addressLine">Bundoora</addressPart>
+                        <addressPart type="addressLine">Victoria 3083</addressPart>
+                        <addressPart type="addressLine">Australia</addressPart>
+                    </physical>
+                </address>
+            </location>
+            <relatedObject>
+                <key>latrobe:r.jones</key>
+                <relation type="hasMember"/>
+            </relatedObject>
+            <subject type="anzsrc-for">020406</subject>
+            <subject type="anzsrc-for">030603</subject>
+            <subject type="anzsrc-for">030301</subject>
+            <description type="brief">The Centre for Materials and Surface Science is an interdisciplinary research centre involving staff from the departments of Physics, Chemistry, Electronic Engineering and Pharmacy.  CMSS research activities are predominantly within the areas of materials and surface science involving significant interaction with both local and international industrial and academic research organisations.</description>
+            <relatedInfo>
+                <identifier type="uri">http://www.latrobe.edu.au/surface/contact.html</identifier>
+            </relatedInfo>
+            <relatedInfo>
+                <identifier type="uri">https://rli.latrobe.edu.au/index.php</identifier>
+            </relatedInfo>
+        </party>
+    </registryObject>
+</registryObjects>
