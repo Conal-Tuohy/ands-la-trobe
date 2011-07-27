@@ -1,0 +1,626 @@
+<?xml-stylesheet href="	/xforms/xsltforms/xsltforms.xsl" type="text/xsl"?>
+<?xsltforms-options debug="yes" lang="en"?>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xf="http://www.w3.org/2002/xforms" 
+	xmlns:ev="http://www.w3.org/2001/xml-events" 
+	xmlns:r="http://ands.org.au/standards/rif-cs/registryObjects"
+	xmlns:srw="http://www.loc.gov/zing/srw/"
+	srw:dummy=""
+	r:dummy="">
+	<head>
+		<title>Edit Metadata</title>
+		<style type="text/css">
+			@namespace xf url(http://www.w3.org/2002/xforms);
+			/* Note that when XSLTForms translates XForms markup into XHTML markup, the structure of the XHTML doesn't */
+			/* exactly reflect that of the XForms, so care has to be taken to ensure the CSS rules apply. */
+			/* In particular: when e.g. an XForms textarea is converted into an XHTML textarea, the output consists of a set of*/
+			/* XHTML spans (one of which has @class="xforms-textarea"), wrapping an XHTML textarea. */
+			/* In the output CSS, the "xf|textarea" */
+			/* selector is mapped to ".xforms-textarea", which means that the rules associated with that selector will apply */
+			/* to the wrapper span, and will be inherited by the inner XHTML textarea only if the XHTML textarea has the */
+			/* value "inherit" for those properties, or "100%" in the case of width, etc. */
+			textarea.xforms-value {
+				width: 100%;
+			}
+			xf|textarea {
+				width: 50em;
+			}
+			body {
+				padding: 1em;
+			}
+		</style>
+		
+		<!-- RIF-CS -->
+		<xf:model id="rif-cs-editor-model">
+
+
+			<xf:instance id="rif-cs" resource="rif-cs"/>
+
+
+
+<!--
+			<xf:instance id="rif-cs"></xf:instance>
+			<xf:action ev:event="xforms-ready">
+				<xf:send submission="load-rif-cs"/>
+			</xf:action>
+
+			<xf:submission id="load-rif-cs" instance="rif-cs" method="get">
+				<xf:resource value="'rif-cs'"/>
+				<xf:header combine="replace">
+					<xf:name>Accept</xf:name>
+					<xf:value>application/xml</xf:value>
+				</xf:header>
+				<xf:resource value="''"/>
+			</xf:submission>
+-->
+			<xf:instance id="rif-cs-template" resource="/xforms/rif-cs-template.xml"/>
+			<xf:bind id="primary-name" nodeset="instance('rif-cs')/r:registryObject/r:party/r:name[@type='primary']/r:namePart" required="true()"/>
+			<xf:bind id="alternate-name" nodeset="instance('rif-cs')/r:registryObject/r:party/r:name[@type='alternate']"/>
+			<xf:submission id="save" instance="rif-cs" action="http://andsdb-dc19-dev.latrobe.edu.au/fedora-objects/andsdb-dc19%3A4/datastreams/rif-cs" method="put" serialization="application/xml" replace="none"/>
+		</xf:model>
+		
+		<!-- Fedora object search -->
+		<xf:model id="fedora-search-model">
+			<!--
+			search for type=group and description=cmss, retrieve pid, title, and description
+			http://andsdb-dc19-dev.latrobe.edu.au/fedora/search?pid=true&title=true&description=true&type=true&terms=&query=type~group+description~cmss&maxResults=20&xml=true
+			-->
+			
+		</xf:model>
+		
+		<!-- ARDC Party Infrastructure search -->
+		<xf:model id="ardcpip-model">
+
+			<!-- ARDC Party Infrastructure -->
+			<!-- what the user enters -->
+			<xf:instance id="ardcpip-query">
+				<request xmlns="">
+					<personal-name></personal-name>
+					<family-name></family-name>
+				</request>
+			</xf:instance>
+			<!-- what is actually sent to the ARDCPIP -->
+			<xf:instance id="ardcpip-request">
+				<request xmlns="">
+					<query>bath.name="Murray, Tim"</query>
+					<version>1.1</version>
+					<operation>searchRetrieve</operation>
+					<recordSchema>http://ands.org.au/standards/rif-cs/registryObjects</recordSchema>
+					<maximumRecords>100</maximumRecords>
+					<startRecord>1</startRecord>
+					<resultSetTTL>300</resultSetTTL>
+					<recordPacking>xml</recordPacking>
+					<recordXPath/>
+					<sortKeys/>
+				</request>
+			</xf:instance>
+			<!-- what is retrieved from the ARDCPIP -->
+			<xf:instance id="ardcpip-response">
+				<srw:searchRetrieveResponse>
+					<srw:numberOfRecords>0</srw:numberOfRecords>
+				</srw:searchRetrieveResponse>
+			</xf:instance>
+			<!-- the ARDCPIP query submission process -->
+			<xf:submission id="ardcpip-submission" 
+				action="/ardcpip/search/peopleaustralia"
+				method="get" separator="&amp;" 
+				ref="instance('ardcpip-request')"
+				replace="instance" instance="ardcpip-response">
+				<!--
+				<xf:action ev:event="xforms-submit">
+					<xf:rebuild/>
+					<xf:refresh/>
+
+					<setvalue ref="diagnosis" value="instance('patientRecord')/malady"/> 
+					<setvalue ref="city" value="instance('patientRecord')/city"/>
+				</xf:action>
+				-->
+
+
+			</xf:submission>
+		</xf:model>
+	</head>
+	<body>
+		<h1>
+			<xf:output bind="primary-name"/>
+			<!-- rif-cs key is the unique identifier -->
+			( <xf:output ref="instance('rif-cs')/r:registryObject/r:key"/> )
+		</h1>
+
+		<!-- other identifiers -->
+		<!--<div>-->
+			<xf:trigger>
+				<xf:label>Add National Library identifier</xf:label>
+				<xf:insert 
+					ev:event="DOMActivate" 
+					origin="instance('rif-cs-template')/r:registryObject/r:party/r:identifier[@type='nla']" 
+					nodeset="instance('rif-cs')/r:registryObject/r:party/r:name" 
+					position="before"/>
+			</xf:trigger>
+			<xf:input model="ardcpip-model" ref="personal-name">
+				<xf:label>Personal Name</xf:label>
+			</xf:input>
+			<xf:input model="ardcpip-model" ref="family-name">
+				<xf:label>Family Name</xf:label>
+			</xf:input>
+			<xf:trigger>
+				<xf:label>Search</xf:label>
+				<xf:send ev:event="DOMActivate" submission="ardcpip-submission"/>
+			</xf:trigger>
+			<xf:output model="ardcpip-model" ref="instance('ardcpip-response')/srw:numberOfRecords"/>
+			<xf:output model="ardcpip-model" ref="instance('ardcpip-response')/srw:records/srw:record/srw:recordData
+						/r:registryObjects/r:registryObject[1]/r:party/r:name[@type='primary']/r:namePart[1]"/>
+			<xf:repeat model="ardcpip-model" nodeset="
+				instance('ardcpip-response')
+					/srw:records/srw:record/srw:recordData
+						/r:registryObjects/r:registryObject/r:party/r:name[@type='primary']">
+				<xf:repeat nodeset="r:namePart"><xf:output ref="."/></xf:repeat>
+			</xf:repeat>
+			<xf:select1 ref="instance('rif-cs')/r:registryObject/r:party/r:identifier">
+				<xf:itemset model="ardcpip-model" nodeset="instance('ardcpip-response')
+					/srw:records/srw:record/srw:recordData
+						/r:registryObjects/r:registryObject">
+					<xf:label ref="r:party/r:name[@type='primary']/r:namePart[1]"/>
+					<xf:value ref="r:key"/>
+				</xf:itemset>
+			</xf:select1>
+		<!--</div>-->
+		
+		<!--<div>-->
+			<xf:input bind="primary-name">
+				<xf:label>Primary name</xf:label>
+			</xf:input>
+		<!--</div>-->
+		<xf:repeat nodeset="instance('rif-cs')/r:registryObject/r:party/r:name[@type='alternate']">
+			<!--<div>-->
+				<xf:input ref="r:namePart">
+					<xf:label>Alternate name (also known as)</xf:label>
+				</xf:input>
+				<xf:trigger>
+					<xf:label>Remove</xf:label>
+					<xf:delete ev:event="DOMActivate" nodeset="."/>
+				</xf:trigger>
+			<!--</div>-->
+		</xf:repeat>
+		<!--<div>-->
+			<xf:trigger>
+				<xf:label>Add alternate name</xf:label>
+				<!-- @ev:event is what triggers the insert -->
+				<!-- @origin is the location of the content to insert -->
+				<!-- @nodeset specifies where the inserted content goes -->
+				<!-- @at specifies at which node in the nodeset to make the insertion --> 
+				<!-- @position says to insert the content before or after the nodeset -->
+				<xf:insert 
+					ev:event="DOMActivate" 
+					origin="instance('rif-cs-template')/r:registryObject/r:party/r:name[@type='alternate']" 
+					nodeset="instance('rif-cs')/r:registryObject/r:party/r:name" 
+					position="after" 
+					at="last()"/>
+			</xf:trigger>
+		<!--</div>-->
+		<xf:repeat nodeset="instance('rif-cs')/r:registryObject/r:party/r:name[@type='abbreviated']">
+			<!--<div>-->
+				<xf:input ref="r:namePart">
+					<xf:label>Abbreviated name</xf:label>
+				</xf:input>
+				<xf:trigger>
+					<xf:label>Remove</xf:label>
+					<xf:delete ev:event="DOMActivate" nodeset="."/>
+				</xf:trigger>
+			<!--</div>-->
+		</xf:repeat>
+		<!--<div>-->
+			<xf:trigger>
+				<xf:label>Add abbreviated name</xf:label>
+				<!-- @ev:event is what triggers the insert -->
+				<!-- @origin is the location of the content to insert -->
+				<!-- @nodeset specifies where the inserted content goes -->
+				<!-- @at specifies at which node in the nodeset to make the insertion --> 
+				<!-- @position says to insert the content before or after the nodeset -->
+				<xf:insert 
+					ev:event="DOMActivate" 
+					origin="instance('rif-cs-template')/r:registryObject/r:party/r:name[@type='abbreviated']" 
+					nodeset="instance('rif-cs')/r:registryObject/r:party/r:name" 
+					position="after" 
+					at="last()"/>
+			</xf:trigger>
+		<!--</div>-->
+		
+		<xf:repeat id="party-location" nodeset="instance('rif-cs')/r:registryObject/r:party/r:location">
+			<xf:group>
+				<h2>Location
+					<xf:trigger>
+						<xf:label>Remove</xf:label>
+						<xf:delete ev:event="DOMActivate" nodeset="."/>
+					</xf:trigger>
+				</h2>
+				<xf:repeat id="address-repeat" nodeset="r:address">
+					<!--<div>-->
+						<xf:repeat id="address-url-repeat" nodeset="r:electronic[@type='url']">
+							<!--<div>-->
+								<xf:input ref="r:value">
+									<xf:label>URL</xf:label>
+								</xf:input>
+								<xf:trigger>
+									<xf:label>Remove</xf:label>
+									<xf:delete ev:event="DOMActivate" nodeset="."/>
+								</xf:trigger>
+							<!--</div>-->
+						</xf:repeat>
+
+						<xf:repeat id="address-email-repeat" nodeset="r:electronic[@type='email']">
+							<!--<div>-->
+								<xf:input ref="r:value">
+									<xf:label>Email</xf:label>
+								</xf:input>
+								<xf:trigger>
+									<xf:label>Remove</xf:label>
+									<xf:delete ev:event="DOMActivate" nodeset="."/>
+								</xf:trigger>
+							<!--</div>-->
+						</xf:repeat>
+						<xf:repeat id="address-other-repeat" nodeset="r:electronic[@type='other']">
+							<!--<div>-->
+								<xf:input ref="r:value">
+									<xf:label>Other electronic address</xf:label>
+								</xf:input>
+								<xf:trigger>
+									<xf:label>Remove</xf:label>
+									<xf:delete ev:event="DOMActivate" nodeset="."/>
+								</xf:trigger>
+							<!--</div>-->
+						</xf:repeat>
+						<xf:repeat id="address-postal-repeat" nodeset="r:physical">
+							<xf:group id="address-postal-group">
+								<h3>Address
+									<xf:trigger>
+										<xf:label>Remove</xf:label>
+										<xf:delete ev:event="DOMActivate" nodeset="."/>
+									</xf:trigger>
+								</h3>
+								<xf:select1 ref="@type" appearance="minimal">
+									<xf:label>Address type</xf:label>
+									<xf:item>
+										<xf:label>Postal</xf:label>
+										<xf:value>postalAddress</xf:value>
+									</xf:item>
+									<xf:item>
+										<xf:label>Street</xf:label>
+										<xf:value>streetAddress</xf:value>
+									</xf:item>
+								</xf:select1>
+								<xf:repeat id="address-line-repeat" nodeset="r:addressPart[@type='addressLine']">
+									<xf:input ref=".">
+										<xf:label>Address line</xf:label>
+									</xf:input>
+									<xf:trigger>
+										<xf:label>Remove</xf:label>
+										<xf:delete ev:event="DOMActivate" nodeset="."/>
+									</xf:trigger>
+								</xf:repeat>
+								<xf:repeat id="address-text-repeat" nodeset="r:addressPart[@type='text']">
+									<xf:textarea ref=".">
+										<xf:label>Text</xf:label>
+									</xf:textarea>
+									<xf:trigger>
+										<xf:label>Remove</xf:label>
+										<xf:delete ev:event="DOMActivate" nodeset="."/>
+									</xf:trigger>
+								</xf:repeat>
+								<xf:repeat id="address-phone-repeat" nodeset="r:addressPart[@type='telephoneNumber']">
+									<xf:input ref=".">
+										<xf:label>Telephone</xf:label>
+									</xf:input>
+									<xf:trigger>
+										<xf:label>Remove</xf:label>
+										<xf:delete ev:event="DOMActivate" nodeset="."/>
+									</xf:trigger>
+								</xf:repeat>
+								<xf:repeat id="address-fax-repeat" nodeset="r:addressPart[@type='faxNumber']">
+									<xf:input ref=".">
+										<xf:label>Fax</xf:label>
+									</xf:input>
+									<xf:trigger>
+										<xf:label>Remove</xf:label>
+										<xf:delete ev:event="DOMActivate" nodeset="."/>
+									</xf:trigger>
+								</xf:repeat>
+							</xf:group>
+						</xf:repeat>
+					<!--</div>-->
+				</xf:repeat>
+				<!--<div>-->
+					<xf:trigger>
+						<xf:label>Add URL</xf:label>
+						<!-- @ev:event is what triggers the insert -->
+						<!-- @origin is the location of the content to insert -->
+						<!-- @nodeset specifies where the inserted content goes (current context is established by the xf:repeat[@id='party-location']) -->
+						<!-- @at specifies at which node in the nodeset to make the insertion --> 
+						<!-- @position says to insert the content before or after the nodeset -->
+						<xf:insert 
+							ev:event="DOMActivate" 
+							origin="instance('rif-cs-template')/r:registryObject/r:party/r:location/r:address[r:electronic/@type='url']" 
+							nodeset="r:address" 
+							position="after" 
+							at="index('address-repeat')"
+						/>
+					</xf:trigger>
+					<xf:trigger>
+						<xf:label>Add Other Electronic</xf:label>
+						<!-- @ev:event is what triggers the insert -->
+						<!-- @origin is the location of the content to insert -->
+						<!-- @context is the evaluation context -->
+						<!-- @nodeset specifies where the inserted content goes (evaluated within @context) -->
+						<!-- @at specifies at which node in the nodeset to make the insertion (evaluated within @context) --> 
+						<!-- @position says to insert the content before or after the nodeset -->
+						<xf:insert 
+							ev:event="DOMActivate" 
+							origin="instance('rif-cs-template')/r:registryObject/r:party/r:location/r:address[r:electronic/@type='other']"
+							nodeset="r:address" 
+							position="after" 
+							at="index('address-repeat')"
+						/>
+					</xf:trigger>
+					<xf:trigger>
+						<xf:label>Add Email</xf:label>
+						<!-- @ev:event is what triggers the insert -->
+						<!-- @origin is the location of the content to insert -->
+						<!-- @nodeset specifies where the inserted content goes (current context is established by the xf:repeat[@id='party-location']) -->
+						<!-- @at specifies at which node in the nodeset to make the insertion --> 
+						<!-- @position says to insert the content before or after the nodeset -->
+						<xf:insert 
+							ev:event="DOMActivate" 
+							origin="instance('rif-cs-template')/r:registryObject/r:party/r:location/r:address[r:electronic/@type='email']" 
+							nodeset="r:address" 
+							position="after" 
+							at="index('address-repeat')"
+						/>
+					</xf:trigger>
+				<!--</div>-->		
+			</xf:group>
+		</xf:repeat>
+		
+		<!--<div>-->
+			<xf:trigger>
+				<xf:label>Add location</xf:label> 
+				<!-- @ev:event is what triggers the insert -->
+				<!-- @origin is the location of the content to insert -->
+				<!-- @context is the evaluation context -->
+				<!-- @nodeset specifies where the inserted content goes (evaluated within @context) -->
+				<!-- @at specifies at which node in the nodeset to make the insertion (evaluated within @context) --> 
+				<!-- @position says to insert the content before or after the nodeset -->
+				<xf:insert 
+					ev:event="DOMActivate" 
+					origin="instance('rif-cs-template')/r:registryObject/r:party/r:location" 
+					position="after" 
+					at="last()"
+					context="instance('rif-cs')/r:registryObject/r:party"
+					nodeset="r:location" 
+				/>
+			</xf:trigger>
+		<!--</div>-->
+		
+		<!--<div>-->
+			<xf:repeat id="related-object-repeat" nodeset="instance('rif-cs')/r:registryObject/r:party/r:relatedObject">
+				<xf:output ref="r:key"/>
+				<xf:output ref="r:relation/@type"/>
+			</xf:repeat>
+		<!--</div>-->
+		
+		<!--<div>-->
+			<xf:repeat id="brief-description-repeat" nodeset="instance('rif-cs')/r:registryObject/r:party/r:description[@type='brief']">
+				<xf:textarea ref=".">
+					<xf:label>Brief description</xf:label>
+				</xf:textarea>
+				<xf:trigger>
+					<xf:label>Remove</xf:label>
+					<xf:delete ev:event="DOMActivate" nodeset="."/>
+				</xf:trigger>
+			</xf:repeat>
+			<!--<div>-->
+				<xf:trigger>
+					<xf:label>Add brief description</xf:label> 
+					<!-- @ev:event is what triggers the insert -->
+					<!-- @origin is the location of the content to insert -->
+					<!-- @context is the evaluation context -->
+					<!-- @nodeset specifies where the inserted content goes (evaluated within @context) -->
+					<!-- @at specifies at which node in the nodeset to make the insertion (evaluated within @context) --> 
+					<!-- @position says to insert the content before or after the nodeset -->
+					<xf:insert 
+						ev:event="DOMActivate" 
+						origin="instance('rif-cs-template')/r:registryObject/r:party/r:description[@type='brief']" 
+						position="after" 
+						at="last()"
+						context="instance('rif-cs')/r:registryObject/r:party"
+						nodeset="r:description" 
+					/>
+				</xf:trigger>
+			<!--</div>-->
+			<xf:repeat id="full-description-repeat" nodeset="instance('rif-cs')/r:registryObject/r:party/r:description[@type='full']">
+				<xf:textarea ref=".">
+					<xf:label>Full description</xf:label>
+				</xf:textarea>
+				<xf:trigger>
+					<xf:label>Remove</xf:label>
+					<xf:delete ev:event="DOMActivate" nodeset="."/>
+				</xf:trigger>
+			</xf:repeat>
+			<!--<div>-->
+				<xf:trigger>
+					<xf:label>Add full description</xf:label> 
+					<!-- @ev:event is what triggers the insert -->
+					<!-- @origin is the location of the content to insert -->
+					<!-- @context is the evaluation context -->
+					<!-- @nodeset specifies where the inserted content goes (evaluated within @context) -->
+					<!-- @at specifies at which node in the nodeset to make the insertion (evaluated within @context) --> 
+					<!-- @position says to insert the content before or after the nodeset -->
+					<xf:insert 
+						ev:event="DOMActivate" 
+						origin="instance('rif-cs-template')/r:registryObject/r:party/r:description[@type='full']" 
+						position="after" 
+						at="last()"
+						context="instance('rif-cs')/r:registryObject/r:party"
+						nodeset="r:description" 
+					/>
+				</xf:trigger>
+			<!--</div>-->
+			<!-- these descriptions are only for collections -->
+			<!--
+			<xf:repeat id="description-repeat" nodeset="instance('rif-cs')/r:registryObject/r:party/r:description[@type='note']">
+				<xf:textarea ref=".">
+					<xf:label>Brief note about the dataset</xf:label>
+				</xf:textarea>
+				<xf:trigger>
+					<xf:label>Remove</xf:label>
+					<xf:delete ev:event="DOMActivate" nodeset="."/>
+				</xf:trigger>
+			</xf:repeat>
+			<xf:repeat id="rights-description-repeat" nodeset="instance('rif-cs')/r:registryObject/r:party/r:description[@type='rights']">
+				<xf:textarea ref=".">
+					<xf:label>Rights: information about rights held in and over the collection</xf:label>
+				</xf:textarea>
+				<xf:trigger>
+					<xf:label>Remove</xf:label>
+					<xf:delete ev:event="DOMActivate" nodeset="."/>
+				</xf:trigger>
+			</xf:repeat>
+			<xf:repeat id="access-rights-description-repeat" nodeset="instance('rif-cs')/r:registryObject/r:party/r:description[@type='accessRights']">
+				<xf:textarea ref=".">
+					<xf:label>Rights: information about rights held in and over the collection</xf:label>
+				</xf:textarea>
+				<xf:trigger>
+					<xf:label>Remove</xf:label>
+					<xf:delete ev:event="DOMActivate" nodeset="."/>
+				</xf:trigger>
+			</xf:repeat>
+			<xf:repeat id="significance-statement-repeat" nodeset="instance('rif-cs')/r:registryObject/r:party/r:description[@type='significanceStatement']">
+				<xf:textarea ref=".">
+					<xf:label>Description of the significance of the collection</xf:label>
+				</xf:textarea>
+				<xf:trigger>
+					<xf:label>Remove</xf:label>
+					<xf:delete ev:event="DOMActivate" nodeset="."/>
+				</xf:trigger>
+			</xf:repeat>
+			-->
+		<!--</div>-->
+		
+		<xf:repeat id="related-website-repeat" nodeset="instance('rif-cs')/r:registryObject/r:party/r:relatedInfo[@type='website']">
+			<h3>Related website: <xf:output ref="r:title"/>
+				<xf:trigger>
+					<xf:label>Remove</xf:label>
+					<xf:delete ev:event="DOMActivate" nodeset="."/>
+				</xf:trigger>
+			</h3>
+			<!-- r:identifier/@type must be "uri" -->
+			<xf:input ref="r:title">
+				<xf:label>Title</xf:label>
+			</xf:input>
+			<xf:input ref="r:identifier">
+				<xf:label>URI</xf:label>
+			</xf:input>
+			<xf:textarea ref="r:notes">
+				<xf:label>Notes</xf:label>
+			</xf:textarea>
+		</xf:repeat>
+		<!--<div>-->
+			<xf:trigger>
+				<xf:label>Add related website</xf:label> 
+				<!-- @ev:event is what triggers the insert -->
+				<!-- @origin is the location of the content to insert -->
+				<!-- @context is the evaluation context -->
+				<!-- @nodeset specifies where the inserted content goes (evaluated within @context) -->
+				<!-- @at specifies at which node in the nodeset to make the insertion (evaluated within @context) --> 
+				<!-- @position says to insert the content before or after the nodeset -->
+				<xf:insert 
+					ev:event="DOMActivate" 
+					origin="instance('rif-cs-template')/r:registryObject/r:party/r:relatedInfo[@type='website']" 
+					position="after" 
+					at="last()"
+					context="instance('rif-cs')/r:registryObject/r:party"
+					nodeset="r:relatedInfo" 
+				/>
+			</xf:trigger>
+		<!--</div>-->		
+		
+		<xf:repeat id="related-publication-repeat" nodeset="instance('rif-cs')/r:registryObject/r:party/r:relatedInfo[@type='publication']">
+			<h3>Related publication: <xf:output ref="r:title"/>
+				<xf:trigger>
+					<xf:label>Remove</xf:label>
+					<xf:delete ev:event="DOMActivate" nodeset="."/>
+				</xf:trigger>
+			</h3>
+			<!-- r:identifier/@type must be "uri" -->
+			<xf:input ref="r:title">
+				<xf:label>Title</xf:label>
+			</xf:input>
+			<xf:input ref="r:identifier">
+				<xf:label>Identifier</xf:label>
+			</xf:input>
+			<xf:select1 ref="r:identifier/@type" appearance="minimal">
+				<xf:label>Type of identifier</xf:label>
+				<xf:item>
+					<xf:value>ark</xf:value>
+					<xf:label>ARK Persistent Identifier Scheme</xf:label>
+				</xf:item>
+				<xf:item>
+					<xf:value>doi</xf:value>
+					<xf:label>Digital Object Identifier</xf:label>
+				</xf:item>
+<!--
+
+TODO
+
+    * ean13: International Article Number
+    * eissn: electronic International Standard Serial Number
+    * handle: HANDLE System Identifier
+    * infoui: 'info' URI scheme
+-->
+				<xf:item>
+					<xf:value>local</xf:value>
+					<xf:label>identifer unique within a local context</xf:label>
+				</xf:item>
+<!--
+    * purl: Persistent Uniform Resource Locator
+    * uri: Uniform Resource Identifier
+    * issn: International Standard Serial Number
+    * isbn: International Standard Book Number
+    * istc: International Standard Text Code. http://www.istc-international.org/html/
+    * lissn
+    * upc: Universal Product Code
+    * urn: Uniform Resource Name
+-->
+			</xf:select1>
+			<xf:textarea ref="r:notes">
+				<xf:label>Notes</xf:label>
+			</xf:textarea>
+		</xf:repeat>
+		<!--<div>-->
+			<xf:trigger>
+				<xf:label>Add related publication</xf:label> 
+				<!-- @ev:event is what triggers the insert -->
+				<!-- @origin is the location of the content to insert -->
+				<!-- @context is the evaluation context -->
+				<!-- @nodeset specifies where the inserted content goes (evaluated within @context) -->
+				<!-- @at specifies at which node in the nodeset to make the insertion (evaluated within @context) --> 
+				<!-- @position says to insert the content before or after the nodeset -->
+				<xf:insert 
+					ev:event="DOMActivate" 
+					origin="instance('rif-cs-template')/r:registryObject/r:party/r:relatedInfo[@type='publication']" 
+					position="after" 
+					at="last()"
+					context="instance('rif-cs')/r:registryObject/r:party"
+					nodeset="r:relatedInfo" 
+				/>
+			</xf:trigger>
+		<!--</div>-->
+		
+		<!--<div>-->
+			<xf:trigger>
+				<xf:label>Save</xf:label>
+				<!-- send data to server (invoking xf:submission[@id='save']) when button pressed (=DOMActivate) -->
+				<xf:send ev:event="DOMActivate" submission="save"/>
+			</xf:trigger>
+		<!--</div>-->
+	</body>
+</html>
