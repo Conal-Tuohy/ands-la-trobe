@@ -1,0 +1,83 @@
+<registryObjects xmlns="http://ands.org.au/standards/rif-cs/registryObjects" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/1.2.0/schema/registryObjects.xsd">
+	<registryObject group="La Trobe University">
+		<key></key>
+		<originatingSource>http://www.latrobe.edu.au/surface/</originatingSource>
+		<party type="group">
+			<name type="primary">
+				<namePart>primary name</namePart>
+			</name>
+			<name type="abbreviated">
+				<namePart>abbreviation</namePart>
+			</name>
+			<name type="alternate">
+				<namePart>also known as</namePart>
+			</name>
+			<identifier type="nla"/>
+			<location>
+				<address>
+					<electronic type="url">
+						<value>http://www.example.com/</value>
+					</electronic>
+				</address>
+				<address>
+					<electronic type="email">
+						<value>example@example.com</value>
+					</electronic>
+				</address>
+				<address>
+					<electronic type="other">
+						<value>Other</value>
+					</electronic>
+				</address>
+				<address>
+					<physical>
+						<addressPart type="faxNumber"></addressPart>
+					</physical>
+				</address>
+				<address>
+					<physical>
+						<addressPart type="telephoneNumber"></addressPart>
+					</physical>
+				</address>
+				<address>
+					<physical type="postalAddress">
+						<addressPart type="addressLine"></addressPart>
+						<addressPart type="addressLine"></addressPart>
+						<addressPart type="addressLine"></addressPart>
+						<addressPart type="addressLine"></addressPart>
+						<addressPart type="addressLine"></addressPart>
+					</physical>
+				</address>
+				<address>
+					<physical type="streetAddress">
+						<addressPart type="addressLine"></addressPart>
+						<addressPart type="addressLine"></addressPart>
+						<addressPart type="addressLine"></addressPart>
+						<addressPart type="addressLine"></addressPart>
+						<addressPart type="addressLine"></addressPart>
+					</physical>
+				</address>
+			</location>
+			<relatedObject>
+				<key></key>
+				<relation type="hasMember"></relation>
+			</relatedObject>
+			<subject type="anzsrc-for">020406</subject>
+			<subject type="anzsrc-for">030603</subject>
+			<subject type="anzsrc-for">030301</subject>
+			<description type="brief"></description>
+			<description type="full"></description>
+			<relatedInfo type="website">
+				<title></title>
+				<identifier type="uri"></identifier>
+				<notes></notes>
+			</relatedInfo>
+			<relatedInfo type="publication">
+				<title></title>
+				<identifier type="local"></identifier>
+				<notes></notes>
+			</relatedInfo>
+		</party>
+	</registryObject>
+</registryObjects>
+
