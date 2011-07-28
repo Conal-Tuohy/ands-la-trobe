@@ -12,7 +12,7 @@ The installation of Solr is only the first step.
  * moved example config to /ands/solr-home/
  * created /ands/solr-home/data
  * moved contents of /ands/solr-home/solr to /ands/solr-home/
- * chown ands-shared:ands-shared * -R
+ * chown ands-shared:ands-shared `*` -R
  * chmod 775 to relevant files and dirs (especially /ands/solr-home/data)
  * added solr-example.xml to /usr/share/tomcat6/conf/Catalina/localhost with the following content: 
 
