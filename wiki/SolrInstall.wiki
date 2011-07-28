@@ -1,0 +1,75 @@
+#summary Notes on the installation and configuration of Solr under Tomcat
+
+= Introduction =
+
+The installation of Solr is only the first step.
+
+
+= Installation =
+
+ * created solr home directory at /ands/solr-home/
+ * extracted solr tar to temp directory (/ands/files/apache-solr-1.4.1/)
+ * moved example config to /ands/solr-home/
+ * created /ands/solr-home/data
+ * moved contents of /ands/solr-home/solr to /ands/solr-home/
+ * chown ands-shared:ands-shared * -R
+ * chmod 775 to relevant files and dirs (especially /ands/solr-home/data)
+ * added solr-example.xml to /usr/share/tomcat6/conf/Catalina/localhost with the following content: 
+
+{{{
+<?xml version="1.0" encoding="utf-8"?>
+<Context docBase="/ands/solr-home/solr.war" debug="0" crossContext="true">
+  <Environment name="solr/home" type="java.lang.String" value="/ands/solr-home" override="true"/>
+</Context>
+}}}
+
+ * added reverse proxy entry to /etc/httpd/conf.d/solr.conf with the following content: 
+
+{{{
+# Settings for accessing Solr
+
+# Don't access HTTP proxy requests
+# (this is a reverse proxy, not a forward proxy)
+ProxyRequests off
+
+# Any user may connect
+<Proxy *>
+Order deny,allow
+Allow from all
+</Proxy>
+
+# Access control for proxying to the admin interface
+<Location /solr/admin>
+AuthType Basic
+AuthName "Solr administration"
+AuthBasicProvider
+AuthUserFile /etc/httpd/.htpasswd
+Require user admin
+ProxyPass        http://localhost:8080/solr-example/admin
+ProxyPassReverse http://localhost:8080/solr-example/admin
+</Location>
+
+# Access control for proxying to the indexing interface
+<Location /solr/update>
+AuthType Basic
+AuthName "Solr indexer"
+AuthBasicProvider
+AuthUserFile /etc/httpd/.htpasswd
+Require user admin
+ProxyPass        http://localhost:8080/solr-example/update
+ProxyPassReverse http://localhost:8080/solr-example/update
+</Location>
+
+# Other parts of the Solr server are open to all
+<Location /solr>
+ProxyPass        http://localhost:8080/solr-example
+ProxyPassReverse http://localhost:8080/solr-example
+</Location>
+}}}
+
+ * generated /etc/conf/httpd/.htpasswd
+ * solr is now accessible via http://andsdb-dc19-dev.latrobe.edu.au/solr/
+
+
+
+= Configuration =
