@@ -94,7 +94,12 @@
 			<p:http-request/>
 		</p:when>
 		<p:otherwise>
-			<p:store href="file:///tmp/fedora-update-handler-ignored-message.xml"/>
+			<p:store name="dump-ignored-message" href="file:///tmp/fedora-update-handler-ignored-message.xml"/>
+			<p:identity>
+				<p:input port="source">
+					<p:pipe port="result" step="dump-ignored-message"/>
+				</p:input>
+			</p:identity>
 		</p:otherwise>
 	</p:choose>
 
