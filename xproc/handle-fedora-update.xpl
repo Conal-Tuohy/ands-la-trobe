@@ -93,6 +93,9 @@
 			-->
 			<p:http-request/>
 		</p:when>
+		<p:otherwise>
+			<p:store href="file:///tmp/fedora-update-handler-ignored-message.xml"/>
+		</p:otherwise>
 	</p:choose>
 
 </p:declare-step>
