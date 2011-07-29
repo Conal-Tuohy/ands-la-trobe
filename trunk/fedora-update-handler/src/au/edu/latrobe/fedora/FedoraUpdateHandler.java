@@ -76,9 +76,6 @@ public class FedoraUpdateHandler implements MessagingListener {
 		}
 		public void run() {
 			try {
-				PrintStream p = new PrintStream(out);
-				p.println("Stream content:");
-				p.flush();
 				byte[] buffer = new byte[1024];
 				int len = in.read(buffer);
 				while (len != -1) {
@@ -122,8 +119,7 @@ public class FedoraUpdateHandler implements MessagingListener {
 				  PrintStream messageStream = new PrintStream(messageHandler.getOutputStream());
 				  messageStream.print(messageText);
 				  messageStream.close();
-				  System.out.print("Message handler returned ");
-				  System.out.println(messageHandler.waitFor());
+				  System.out.println("Message handler returned exit code " + String.valueOf(messageHandler.waitFor()));
 			  } catch (java.io.IOException ioe) {
 				  System.err.println("Error passing message to message handling process. " + ioe.getMessage());
 			  } catch (InterruptedException ie) {
