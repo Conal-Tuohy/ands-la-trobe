@@ -50,13 +50,40 @@ public class FedoraUpdateHandler implements MessagingListener {
 	
     public void start() throws MessagingException {
     	 System.out.println("Messaging Client starting...");
-        Properties properties = new Properties();
-        properties.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
-        properties.setProperty(Context.PROVIDER_URL, "failover://tcp://localhost:61616");
-        properties.setProperty(JMSManager.CONNECTION_FACTORY_NAME, "ConnectionFactory");
-        properties.setProperty("topic.fedora", "fedora.apim.update");
-        messagingClient = new JmsMessagingClient("FedoraUpdateHandler", this, properties, true);
+    	 
+    	 // Define default properties ...
+    	 Properties defaults = new Properties();
+    	 
+    	 // Properties passed to JmsMessagingClient's properties
+        defaults.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
+        defaults.setProperty(Context.PROVIDER_URL, "failover://tcp://localhost:61616");
+        defaults.setProperty(JMSManager.CONNECTION_FACTORY_NAME, "ConnectionFactory");
+        defaults.setProperty("topic.fedora", "fedora.apim.update");
+        
+        // Other properties needed to instantiate the JmsMessagingClient
+        // See http://www.fedora-commons.org/documentation/3.4/javadocs/org/fcrepo/client/messaging/JmsMessagingClient.html#constructor-detail
+        // The name of the client (must be unique - only one client may register with this name at any one time)
+        defaults.setProperty("clientId", "FedoraUpdateHandler"); 
+        
+        // Read properties from XML file to override defaults
+        // TODO read XML config file
+        // need to change command line syntax:
+        // specify config XML and (optionally) either "start" (default action) or "stop" (to cancel durable subscriptions)
+        // java -jar FedoraUpdateHandler.jar handle-minter.xml
+        // java -jar FedoraUpdateHandler.jar crosswalk-rifcs-to-dc.xml
+        // java -jar FedoraUpdateHandler.jar crosswalk-rifcs-to-dc.xml stop
+        
+        Properties properties = new Properties(defaults); 
+        
+        // Start the client
+        messagingClient = new JmsMessagingClient(
+        	  properties.getProperty("clientId"), 
+        	  this, 
+        	  properties, 
+        	  true
+        );
         messagingClient.start();
+        
         System.out.println("Messaging Client started.");
     }
     
