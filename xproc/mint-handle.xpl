@@ -27,13 +27,16 @@
 	-->
 	
 	<!-- check if the updated object has a handle datastream - if not, create it: done -->
-	<p:variable name="handle-datastream-uri" select="concat($fedora-base-uri, 'objects/', $uri-encoded-identifier, '/datastreams/handle/content')"/>
+	<p:variable name="handle-datastream-uri" select="concat($fedora-base-uri, '/objects/', $uri-encoded-identifier, '/datastreams/handle/content')"/>
 	<p:template>
 		<p:input port="template">
 			<p:inline exclude-inline-prefixes="c">
-				<c:request detailed="true" method="HEAD" href="{$handle-datastream-uri}">
+				<c:request detailed="true" method="HEAD" 
+							username="{$fedora-username}"
+							password="{$fedora-password}"
+							auth-method="{$auth-method}"
+							href="{$handle-datastream-uri}">
 					<c:header name="Accept" value="text/xml"/>
-<!--					<c:body content-type="text/xml">{/*}</c:body>-->
 				</c:request>
 			</p:inline>
 		</p:input>
