@@ -27,7 +27,9 @@ e.g. http://andsdb-dc19-dev.latrobe.edu.au/fedora/search?pid=true&title=true&ter
 == Notifications ==
 Fedora uses Apache ActiveMQ for messaging.
 
-We may want to use this as a way to listen for edits of the RIF-CS data in Fedora and keep a separate search index up to date.
+We use this as a way to listen for edits of the datastreams in Fedora and keep a search indexes etc up to date.
+
+https://wiki.duraspace.org/display/FCR30/Messaging
 
 ActiveMQ supports a number of protocols including a supposedly "RESTful" HTTP interface that would be useable from XProc.
 
