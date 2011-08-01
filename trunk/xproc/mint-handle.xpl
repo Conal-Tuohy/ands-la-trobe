@@ -1,4 +1,4 @@
-<p:pipeline xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:fn="http://www.w3.org/2005/xpath-functions" name="mint-handle" version="1.0">
+<p:declare-step xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:fn="http://www.w3.org/2005/xpath-functions" name="mint-handle" version="1.0">
 <!-- 
 	Mint a handle for a dataset 
 -->
@@ -73,5 +73,5 @@
 	<p:http-request/>
 	-->
 
-</p:pipeline>
+</p:declare-step>
 
