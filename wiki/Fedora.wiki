@@ -2,7 +2,7 @@
 
 = Fedora (interfaces) =
 
-See http://fedora-commons.org/documentation/3.3/REST%20API.html
+See http://fedora-commons.org/documentation/3.4/REST%20API.html
 
 == Ingest ==
 
