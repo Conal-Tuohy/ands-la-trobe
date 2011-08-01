@@ -71,13 +71,28 @@ public class FedoraUpdateHandler implements MessagingListener {
 
 	private static void printUsage() {
 			System.out.println("FedoraUpdateHandler listens for Fedora update messages and executes an external program to handle them.");
+			System.out.println("For more information, visit http://code.google.com/p/ands-la-trobe/");
 			System.out.println();
+			System.out.println("FedoraUpdateHandler expects either one or two parameters:");
 			System.out.println("The first parameter is either 'start' or 'stop' to control the listener.");
 			System.out.println("The second (and optional) parameter is the name of a Java properties XML file to configure the listener.");
 			System.out.println("e.g.");
 			System.out.println("java -jar FedoraUpdateHandler.jar start handle-ingest.xml");
 			System.out.println("java -jar FedoraUpdateHandler.jar start handle-dc-update.xml");
 			System.out.println("java -jar FedoraUpdateHandler.jar stop handle-dc-update.xml");
+			System.out.println();
+			System.out.println("The following properties are documented at https://wiki.duraspace.org/display/FCR30/Messaging");
+			System.out.println(" * java.naming.factory.initial)");
+			System.out.println(" * java.naming.provider.url");
+			System.out.println(" * connection.factory.name");
+			System.out.println(" * topic.fedora");
+			System.out.println();
+			System.out.println("The property \"handler.jms.clientid\" identifies the listener to Fedora.");
+			System.out.println("This value must be unique (i.e. each simultaneous client must use a different value for this property).");
+			System.out.println();
+			System.out.println("The property \"handler.command\" specifies the application which the listener will run to handle the event.");
+			System.out.println("FedoraUpdateHandler will execute this application and pipe the Fedora message (an Atom XML document)");
+			System.out.println("to the application's standard input stream. ");
 			System.out.println();
 			System.out.println("Any properties not defined in the properties file will use defaults as shown below:");
 			System.out.println();
