@@ -3,6 +3,7 @@
 	xmlns:p="http://www.w3.org/ns/xproc" 
 	xmlns:c="http://www.w3.org/ns/xproc-step"
 	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:fn="http://www.w3.org/2005/xpath-functions"
 >
 
 	<p:input port="source"/>
@@ -20,9 +21,9 @@
 	<p:variable name="method" select="/atom:entry/atom:title[@type='text']"/>
 	<p:variable name="datastream" select="/atom:entry/atom:category[@scheme='fedora-types:dsID']/@term"/>
 	<p:variable name="identifier" select="/atom:entry/atom:summary[@type='text']"/>
-	<p:variable name="uri-encoded-identifier" select="concat(substring-before($identifier, ':'), '%3A',substring-after($identifier, ':'))"/> 
+	<p:variable name="uri-encoded-identifier" select="fn:encode-for-uri($identifier)"/> 
 	
-	<p:variable name="fedora-base-uri" select="'http://localhost:8080/fedora/'"/>
+	<p:variable name="fedora-base-uri" select="/atom:entry/atom:author/atom:uri"/>
 	
 	<!--
 	methods:
@@ -30,10 +31,11 @@
 		"modifyDatastreamByValue", "modifyDatastreamByReference" (update)
 		"ingest" (create)
 	-->
-	
+
 	<p:choose>
 		<!-- if the event is an ingested object, or a modified rif-cs datastream ... -->
 		<p:when test="	($method = 'ingest') or (($method = 'modifyDatastreamByValue') and ($datastream='rif-cs'))">
+			
 			<!--<p:store href="file:///tmp/atom-message.xml"/>-->
 			<p:in-scope-names name="variables"/>
 			<p:template>
@@ -92,6 +94,8 @@
 			<p:store href="file:///tmp/http-request.xml"/>
 			-->
 			<p:http-request/>
+		</p:when>
+		<p:when>
 		</p:when>
 		<p:otherwise>
 			<p:store name="dump-ignored-message" href="file:///tmp/fedora-update-handler-ignored-message.xml"/>
