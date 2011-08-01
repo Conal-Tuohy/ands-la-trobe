@@ -95,8 +95,6 @@
 			-->
 			<p:http-request/>
 		</p:when>
-		<p:when>
-		</p:when>
 		<p:otherwise>
 			<p:store name="dump-ignored-message" href="file:///tmp/fedora-update-handler-ignored-message.xml"/>
 			<p:identity>
