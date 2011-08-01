@@ -17,6 +17,7 @@
 	<p:variable name="uri-encoded-identifier" select="fn:encode-for-uri($identifier)"/> 
 	
 	<p:variable name="fedora-base-uri" select="/atom:entry/atom:author/atom:uri"/>
+	<p:in-scope-names name="variables"/>
 	
 	<!--
 	methods:
