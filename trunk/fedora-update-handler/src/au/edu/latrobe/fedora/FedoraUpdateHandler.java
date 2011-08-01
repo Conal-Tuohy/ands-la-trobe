@@ -17,12 +17,10 @@ public class FedoraUpdateHandler implements MessagingListener {
 	
 	/* The Fedora MessagingClient used to listen to the Fedora JMS server */
     private org.fcrepo.client.messaging.MessagingClient messagingClient;
-    /* The command line to run in response to an event received from Fedora */
-    private String[] args;
+    /* configuration of the FedoraUpdateHandler */
+    Properties properties;
 	
 	private FedoraUpdateHandler(String[] args) {
-		/* Record the command line to run when an event is received */
-		this.args = args;
 		if (args.length == 0) {
 			/* no message-handling command specified - stop listening */
 			try {
@@ -45,12 +43,11 @@ public class FedoraUpdateHandler implements MessagingListener {
 	};
 	
 	public static void main(String[] args) {
-		FedoraUpdateHandler fuh = new FedoraUpdateHandler(args);
-	}
-	
-    public void start() throws MessagingException {
-    	 System.out.println("Messaging Client starting...");
-    	 
+		/* Parse and handle the command-line arguments */
+		if (args.length == 0) {
+			/* no command-line arguments - print a usage message and exit */
+			// qaz
+		} else {
     	 // Define default properties ...
     	 Properties defaults = new Properties();
     	 
@@ -73,7 +70,15 @@ public class FedoraUpdateHandler implements MessagingListener {
         // java -jar FedoraUpdateHandler.jar crosswalk-rifcs-to-dc.xml
         // java -jar FedoraUpdateHandler.jar crosswalk-rifcs-to-dc.xml stop
         
-        Properties properties = new Properties(defaults); 
+        properties = new Properties(defaults); 
+        properties.loadFromXML(args[0]);
+        FedoraUpdateHandler fuh = new FedoraUpdateHandler(properties);
+		}
+	}
+	
+    public void start() throws MessagingException {
+    	 System.out.println("Messaging Client starting...");
+    	 
         
         // Start the client
         messagingClient = new JmsMessagingClient(
