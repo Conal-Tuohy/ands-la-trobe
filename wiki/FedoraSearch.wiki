@@ -3,8 +3,8 @@
 
 We are using fedora's native search (over Dublin Core metadata) to output an xml list with 4 possible Type values: dataset, person, group and project.
 
-The following url returns and xml Dataset list from our test server:
-http://andsdb-dc19-dev.latrobe.edu.au/fedora/search?pid=true&label=true&state=true&ownerId=true&cDate=true&mDate=true&dcmDate=true&title=true&creator=true&subject=true&description=true&publisher=true&contributor=true&date=true&format=true&identifier=true&source=true&language=true&relation=true&coverage=true&rights=true&terms=&query=type~dataset&maxResults=100&xml=true
+The following url returns and xml Dataset list from a fedora test server:
+http://host/fedora/search?pid=true&label=true&state=true&ownerId=true&cDate=true&mDate=true&dcmDate=true&title=true&creator=true&subject=true&description=true&publisher=true&contributor=true&date=true&format=true&identifier=true&source=true&language=true&relation=true&coverage=true&rights=true&terms=&query=type~dataset&maxResults=100&xml=true
 
 This is too ungainly for end users. Lets make it neater.
 
