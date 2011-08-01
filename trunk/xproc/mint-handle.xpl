@@ -66,7 +66,11 @@
 		<p:template>
 			<p:input port="template">
 				<p:inline exclude-inline-prefixes="c">
-					<c:request detailed="true" method="POST" href="{$pids-uri}/mint?type=URL&amp;value={fn:encode-for-uri($public-item-uri)}">
+					<c:request detailed="true" method="POST" 
+							username="{$fedora-username}"
+							password="{$fedora-password}"
+							auth-method="{$auth-method}"
+							href="{$pids-uri}/mint?type=URL&amp;value={fn:encode-for-uri($public-item-uri)}">
 						<c:header name="Accept" value="text/xml"/>
 						<c:body content-type="text/xml">{/*}</c:body>
 					</c:request>
