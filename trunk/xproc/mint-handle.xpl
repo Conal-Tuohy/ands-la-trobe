@@ -3,7 +3,7 @@
 	xmlns:c="http://www.w3.org/ns/xproc-step" 
 	xmlns:fn="http://www.w3.org/2005/xpath-functions" 
 	xmlns:atom="http://www.w3.org/2005/Atom" 
-	name="mint-handle" version="1.0">
+	name="mint-handle-for-fedora-object" version="1.0">
 <!-- 
 	Mint a handle for a dataset 
 -->
@@ -63,21 +63,27 @@
 	<p:for-each name="item-missing-handle">
 		<p:iteration-source select="/c:response[@status='404']"/>
 		<!-- mint a handle -->
+	</p:for-each>
+	
+	<p:declare-step name="mint-handle">
+		<p:option name="pids-identity-file" required="true"/>
+		<p:option name="pids-uri" required="true"/>
+		<p:option name="uri" required="true"/>
+		<p:load name="load-pids-identity-file">
+			<p:with-option name="href" select="$pids-identity-file"/>
+		</p:load>
 		<p:template>
 			<p:input port="template">
 				<p:inline exclude-inline-prefixes="c">
 					<c:request detailed="true" method="POST" 
-							username="{$fedora-username}"
-							password="{$fedora-password}"
-							auth-method="{$auth-method}"
-							href="{$pids-uri}/mint?type=URL&amp;value={fn:encode-for-uri($public-item-uri)}">
+							href="{$pids-uri}/mint?type=URL&amp;value={fn:encode-for-uri($uri)}">
 						<c:header name="Accept" value="text/xml"/>
 						<c:body content-type="text/xml">{/*}</c:body>
 					</c:request>
 				</p:inline>
 			</p:input>
 			<p:input port="source">
-				<p:pipe step="mint-handle" port="source"/>
+				<p:pipe step="load-pids-identity-file" port="result"/>
 			</p:input>
 			<p:input port="parameters">
 				<p:pipe step="variables" port="result"/>
@@ -86,7 +92,7 @@
 <!--
 		<p:http-request/>
 -->
-	</p:for-each>
+	</p:declare-step>
 
 </p:declare-step>
 
