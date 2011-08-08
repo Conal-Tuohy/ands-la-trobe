@@ -60,12 +60,4 @@ Configured Tomcat to know that it's being accessed through a proxy, by adding pr
 }}}
 See [http://tomcat.apache.org/tomcat-6.0-doc/proxy-howto.html Tomcat proxy howto]
 
-created a folder /ands to hold ANDS stuff
-
 created /ands/rif-cs to hold RIF-CS data files for ANDS harvester
-
-Harvested RIF-CS from ANDS production into that folder.
-
-TODO
-
-Set up ANDS sandbox harvester to pull from andsdb-dev
