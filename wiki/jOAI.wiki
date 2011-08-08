@@ -61,3 +61,11 @@ Configured Tomcat to know that it's being accessed through a proxy, by adding pr
 See [http://tomcat.apache.org/tomcat-6.0-doc/proxy-howto.html Tomcat proxy howto]
 
 created /ands/rif-cs to hold RIF-CS data files for ANDS harvester
+
+Configured repository through the admin UI:
+
+||Repository name (required):||Centre for Materials and Surface Science (development)||
+||Repository administrator's e-mail (required):||conal.tuohy@versi.edu.au
+||Repository description (optional):||No description specified
+||Repository namespace identifier (optional):||latrobe.edu.au-cmss
+||Repository base URL (non-editable):||http://andsdb-dc19-dev.latrobe.edu.au/oai/provider ||
