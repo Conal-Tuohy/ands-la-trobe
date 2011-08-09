@@ -54,8 +54,8 @@ Configured Tomcat to know that it's being accessed through a proxy, by adding pr
     <Connector port="8080" protocol="HTTP/1.1"
                connectionTimeout="20000"
                redirectPort="8443"
-                proxyName="andsdbdc19-dev.latrobe.edu.au"
-                proxyPort="80"
+               proxyName="andsdb-dc19-dev.latrobe.edu.au"
+               proxyPort="80"
         />
 }}}
 See [http://tomcat.apache.org/tomcat-6.0-doc/proxy-howto.html Tomcat proxy howto]
