@@ -46,16 +46,6 @@
 				<p:with-option name="uri" select="concat($item-base-uri, '/datastreams/rif-cs/content')"/>
 			</lib:http-request>			
 
-			<!-- 
-			<p:xslt>
-				<p:input port="parameters">
-					<p:empty/>
-				</p:input>
-				<p:input port="stylesheet">
-					<p:document href="../xslt/rif-cs-to-oai_dc.xsl"/>
-				</p:input>
-			</p:xslt>
-			-->
 			<lib:crosswalk xslt="../xslt/rif-cs-to-oai_dc.xsl"/>
 			
 			<!-- put the dc stream back into fedora -->
@@ -67,12 +57,8 @@
 
 		</p:when>
 		<p:otherwise>
-			<p:store name="dump-ignored-message" href="file:///tmp/fedora-update-handler-ignored-message.xml"/>
-			<p:identity>
-				<p:input port="source">
-					<p:pipe port="result" step="dump-ignored-message"/>
-				</p:input>
-			</p:identity>
+			<!-- it's not an ingest or the update of a rif-cs stream -->
+			<p:identity name="ignoring-message"/>
 		</p:otherwise>
 	</p:choose>
 
