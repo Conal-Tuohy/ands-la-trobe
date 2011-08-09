@@ -1,4 +1,11 @@
-<p:declare-step name="main" version="1.0" xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:fn="http://www.w3.org/2005/xpath-functions">
+<p:declare-step name="main" version="1.0" 
+	xmlns:p="http://www.w3.org/ns/xproc" 
+	xmlns:c="http://www.w3.org/ns/xproc-step" 
+	xmlns:atom="http://www.w3.org/2005/Atom" 
+	xmlns:fn="http://www.w3.org/2005/xpath-functions"
+	xmlns:lib="http://code.google.com/p/ands-la-trobe/wiki/XProcLibrary">
+	
+	<p:import href="library.xpl"/>
 	
 	<p:input port="source"/>
 	<p:output port="result"/>
@@ -20,6 +27,7 @@
 	<p:variable name="fedora-base-uri" select="/atom:entry/atom:author/atom:uri"/>
 -->
 	<p:variable name="fedora-base-uri" select="'http://localhost:8080/fedora/'"/>	
+	<p:variable name="item-base-uri" select="concat($fedora-base-uri, 'objects/', $uri-encoded-identifier)"/>
 	<!--
 	methods:
 		"purgeObject", "purgeDatastream" (delete)
@@ -32,28 +40,12 @@
 		<p:when test=" ($method = 'ingest') or (($method = 'modifyDatastreamByValue') and ($datastream='rif-cs'))">
 			
 			<!--<p:store href="file:///tmp/atom-message.xml"/>-->
-			<p:in-scope-names name="variables"/>
-			<p:template>
-				<p:input port="template">
-					<p:inline exclude-inline-prefixes="atom">
-						<c:request method="get" href="{ concat( $fedora-base-uri, 'objects/', $uri-encoded-identifier, '/datastreams/rif-cs/content' ) }"/>
-					</p:inline>
-				</p:input>
-				<p:input port="parameters">
-					<p:pipe step="variables" port="result"/>
-				</p:input>
-				<p:input port="source">
-					<p:pipe step="main" port="source"/><!-- actually ignored -->
-				</p:input>
-			</p:template>
-			<!--
-			<p:store href="file:///tmp/http-request.xml"/>
-			-->
-			<p:http-request/>
-			<!--
-			<p:store href="file:///tmp/rif-cs.xml"/>
-			-->
-			<!-- transform the rif-cs into dc -->
+			<lib:http-request method="get">
+				<p:with-option name="username" select="$fedora-username"/>
+				<p:with-option name="password" select="$fedora-password"/>
+				<p:with-option name="uri" select="concat($item-base-uri, '/datastreams/rif-cs/content')"/>
+			</lib:http-request>			
+
 			<p:xslt>
 				<p:input port="parameters">
 					<p:empty/>
@@ -62,26 +54,14 @@
 					<p:document href="../xslt/rif-cs-to-oai_dc.xsl"/>
 				</p:input>
 			</p:xslt>
-			<!--
-			<p:store href="file:///tmp/dc.xml"/>
-			-->
+			
 			<!-- put the dc stream back into fedora -->
-			<p:template>
-				<p:input port="template">
-					<p:inline exclude-inline-prefixes="atom">
-						<c:request method="put" detailed="true" username="{$fedora-username}" password="{$fedora-password}" auth-method="{$auth-method}" href="{concat($fedora-base-uri, 'objects/', $uri-encoded-identifier, '/datastreams/DC')}">
-							<c:body content-type="text/xml">{/*}</c:body>
-						</c:request>
-					</p:inline>
-				</p:input>
-				<p:input port="parameters">
-					<p:pipe step="variables" port="result"/>
-				</p:input>
-			</p:template>
-			<!--
-			<p:store href="file:///tmp/http-request.xml"/>
-			-->
-			<p:http-request/>
+			<lib:http-request method="put">
+				<p:with-option name="username" select="$fedora-username"/>
+				<p:with-option name="password" select="$fedora-password"/>
+				<p:with-option name="uri" select="concat($item-base-uri, '/datastreams/DC')"/>
+			</lib:http-request>
+
 		</p:when>
 		<p:otherwise>
 			<p:store name="dump-ignored-message" href="file:///tmp/fedora-update-handler-ignored-message.xml"/>
