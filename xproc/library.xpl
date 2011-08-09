@@ -1,5 +1,31 @@
 <p:library version="1.0" xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:lib="http://code.google.com/p/ands-la-trobe/wiki/XProcLibrary">
+
+	<!-- shorthand for executing an XSLT crosswalk -->
+	<p:declare-step type="lib:crosswalk" name="crosswalk">
 	
+		<p:input port="source"/>
+		<p:output port="result"/>
+		
+		<p:option name="xslt" required="true"/>
+		
+		<p:load name="stylesheet">
+			<p:with-option name="href" select="$xslt"/>
+		</p:load>
+
+		<p:xslt>
+			<p:input port="source">
+				<p:pipe step="crosswalk" port="source"/>
+			</p:input>
+			<p:input port="parameters">
+				<p:empty/>
+			</p:input>
+			<p:input port="stylesheet">
+          	<p:pipe step="stylesheet" port="result"/>
+          </p:input>
+		</p:xslt>
+		
+	</p:declare-step>
+
 		<!-- 
 			Execute an HTTP request.
 			

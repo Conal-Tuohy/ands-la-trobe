@@ -46,6 +46,7 @@
 				<p:with-option name="uri" select="concat($item-base-uri, '/datastreams/rif-cs/content')"/>
 			</lib:http-request>			
 
+			<!-- 
 			<p:xslt>
 				<p:input port="parameters">
 					<p:empty/>
@@ -54,6 +55,8 @@
 					<p:document href="../xslt/rif-cs-to-oai_dc.xsl"/>
 				</p:input>
 			</p:xslt>
+			-->
+			<lib:crosswalk xslt="../xslt/rif-cs-to-oai_dc.xsl"/>
 			
 			<!-- put the dc stream back into fedora -->
 			<lib:http-request method="put">
