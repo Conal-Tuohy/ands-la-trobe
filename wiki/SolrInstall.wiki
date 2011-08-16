@@ -70,6 +70,67 @@ ProxyPassReverse http://localhost:8080/solr-example
  * generated /etc/conf/httpd/.htpasswd
  * solr is now accessible via http://andsdb-dc19-dev.latrobe.edu.au/solr/
 
-
-
 = Configuration =
+
+Solr has a large scope for customization, including definition of custom datatypes and fields. In future we may make use of these facilities, but at the moment the schema used by solr is similar to the default, with the following changes (from solr-home/conf/schema.xml, line 429 onward): 
+
+{{{
+   <!-- New or retained fields -->
+   <field name="id" type="string" indexed="true" stored="true" required="true" />
+   <field name="title" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="technique" type="string" stored="true" required="true" multiValued="true" />
+   <field name="instrument_model" type="string" stored="true" required="true" />
+   <field name="date" type="date" indexed="true" stored="true" required="true" />
+   <!--Commented out:
+   <field name="sku" type="textTight" indexed="true" stored="true" omitNorms="true"/>
+   <field name="name" type="textgen" indexed="true" stored="true"/>
+   <field name="alphaNameSort" type="alphaOnlySort" indexed="true" stored="false"/>
+   <field name="manu" type="textgen" indexed="true" stored="true" omitNorms="true"/>
+   <field name="cat" type="text_ws" indexed="true" stored="true" multiValued="true" omitNorms="true" />
+   <field name="features" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="includes" type="text" indexed="true" stored="true" 
+      termVectors="true" termPositions="true" termOffsets="true" />
+
+   <field name="weight" type="float" indexed="true" stored="true"/>
+   <field name="price"  type="float" indexed="true" stored="true"/>
+   <field name="popularity" type="int" indexed="true" stored="true" />
+   <field name="inStock" type="boolean" indexed="true" stored="true" />
+   -->
+
+   <!-- Common metadata fields, named specifically to match up with
+     SolrCell metadata when parsing rich documents such as Word, PDF.
+     Some fields are multiValued only because Tika currently may return
+     multiple values for them.
+   -->
+   <!-- Commented out:
+   <field name="title" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="subject" type="text" indexed="true" stored="true"/>
+   <field name="description" type="text" indexed="true" stored="true"/>
+   <field name="comments" type="text" indexed="true" stored="true"/>
+   <field name="author" type="textgen" indexed="true" stored="true"/>
+   <field name="keywords" type="textgen" indexed="true" stored="true"/>
+   <field name="category" type="textgen" indexed="true" stored="true"/>
+   <field name="content_type" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="last_modified" type="date" indexed="true" stored="true"/>
+   <field name="links" type="string" indexed="true" stored="true" multiValued="true"/>
+   -->
+}}}
+
+And the following (at line 538):
+{{{
+   <!-- new or retained -->
+   <copyField source="title" dest="text" />
+   <copyField source="instrument_model" dest="text" />
+   <copyField source="technique" dest="text" />
+   <copyField source="date" dest="text" />
+<!--Commented out:
+   <copyField source="cat" dest="text"/>
+   <copyField source="name" dest="text"/>
+   <copyField source="manu" dest="text"/>
+   <copyField source="features" dest="text"/>
+   <copyField source="includes" dest="text"/>
+   <copyField source="manu" dest="manu_exact"/>
+-->
+
+
+}}}
