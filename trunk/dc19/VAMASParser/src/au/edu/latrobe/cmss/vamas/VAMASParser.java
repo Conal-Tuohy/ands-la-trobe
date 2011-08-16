@@ -18,6 +18,7 @@
 package au.edu.latrobe.cmss.vamas;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -74,7 +75,7 @@ public class VAMASParser implements XMLReader {
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             // We tell the handler to write the result to the standard output stream.
             handler.setResult(new StreamResult(System.out));
-            // We createa  parser and tell it to use the handler defined above.
+            // We create a  parser and tell it to use the handler defined above.
             VAMASParser parser = new VAMASParser();
             parser.setContentHandler(handler);
             // Finally we parse the file indicated on the command line.
@@ -492,7 +493,7 @@ public class VAMASParser implements XMLReader {
 
     @Override
     public void parse(String systemId) throws IOException, SAXException {
-        URL url = new URL(systemId);
+        URL url = new File(systemId).toURI().toURL();
         InputStream byteStream = url.openStream();
         InputSource source = new InputSource(byteStream);
         parse(source);
