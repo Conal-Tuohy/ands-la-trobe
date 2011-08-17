@@ -18,3 +18,5 @@ The original article detailing the VAMAS format specifications:
 Surface and Interface Analysis, Vol. 13, (Nos.2&3), pp. 63-123, (November 1988) (ISSN 0142-2421) - "VAMAS Surface Chemical Analysis Standard Data Transfer Format with Skeleton Decoding Programs" - W. A. Dench, L. B. Hazell, M.P.Seah, and the VAMAS Community
 
 NPL have copies of the (not incredibly well presented) ISO standard document at http://www.npl.co.uk/nanoscience/surface-nanoanalysis/products-and-services/vamas-standard-data-transfer-file-format
+
+<g:plusone size="medium"></g:plusone>
