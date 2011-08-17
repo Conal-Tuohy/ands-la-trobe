@@ -1,7 +1,16 @@
-<p:declare-step xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:ands="http://www.example.org/" name="mint-handle-for-fedora-object" version="1.0">
+<p:declare-step 
+	name="mint-handle-for-fedora-object" version="1.0"
+	xmlns:p="http://www.w3.org/ns/xproc" 
+	xmlns:c="http://www.w3.org/ns/xproc-step" 
+	xmlns:fn="http://www.w3.org/2005/xpath-functions" 
+	xmlns:atom="http://www.w3.org/2005/Atom" 
+	xmlns:ands="http://www.example.org/" 
+	xmlns:lib="http://code.google.com/p/ands-la-trobe/wiki/XProcLibrary">
 <!-- 
 	Mint a handle for a dataset 
 -->
+	<p:import href="library.xpl"/>
+
 	<p:input port="source"/>
 	<p:output port="result"/>
 	
@@ -32,23 +41,12 @@
 		<p:load name="load-pids-identity-file">
 			<p:with-option name="href" select="$pids-identity-file"/>
 		</p:load>
-		<p:template>
-			<p:input port="template">
-				<p:inline exclude-inline-prefixes="c">
-					<c:request detailed="false" method="POST" href="{$pids-uri}/mint?type=URL&amp;value={fn:encode-for-uri($uri)}">
-						<c:header name="Accept" value="text/xml"/>
-						<c:body content-type="text/xml">{/*}</c:body>
-					</c:request>
-				</p:inline>
-			</p:input>
+		<lib:http-request method="post">
+			<p:with-option name="uri" select="concat($pids-uri, '/mint?type=URL&amp;value=', fn:encode-for-uri($uri))"/>
 			<p:input port="source">
 				<p:pipe step="load-pids-identity-file" port="result"/>
 			</p:input>
-			<p:input port="parameters">
-				<p:pipe step="variables" port="result"/>
-			</p:input>
-		</p:template>
-		<p:http-request/>
+		</lib:http-request>
 	</p:declare-step>
 	
 	<p:in-scope-names name="variables"/>
