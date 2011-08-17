@@ -6,7 +6,7 @@ The automated flow of data through the system is driven by a set of events. Fedo
 
 ==Events==
 
-<table>
+<table border="1">
 <thead>
 <tr>
 <th>Event name</th>
