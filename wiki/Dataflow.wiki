@@ -72,9 +72,9 @@ The automated flow of data through the system is driven by a set of events. Fedo
    <td>Extract technical metadata</td>
   </tr>
   <tr>
-   <td>Metadata Entry Handler</td>
-   <td>
-
+   <td>Metadata Update Handler</td>
+   <td>Metadata Updated</td>
+   <td>Update the Solr index and OAI-PMH provider of RIF-CS.</td>
   </tr>
  </tbody>
 </table>
