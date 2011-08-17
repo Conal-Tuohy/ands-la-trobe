@@ -15,7 +15,7 @@ The automated flow of data through the system is driven by a set of events:
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr valign="top">
 <td>Ingest</td>
 <td>Ingestion of package of data and initial metadata from booking system.</td>
 <td>
