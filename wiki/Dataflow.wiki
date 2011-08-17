@@ -17,7 +17,7 @@ The automated flow of data through the system is driven by a set of events. Fedo
 <tbody>
 <tr valign="top">
 <td>Package Ingested</td>
-<td>Ingestion of package of data and initial metadata from booking system.</td>
+<td>A package containing data and initial metadata from booking system has been ingested.</td>
 <td>
 <ul>
 <li>mint and attach PID</li>
@@ -28,17 +28,17 @@ The automated flow of data through the system is driven by a set of events. Fedo
 </tr>
 <tr>
 <td>Metadata Extracted</td>
-<td>Automated extraction of technical metadata from data files</td>
+<td>Technical metadata has been extracted from data files</td>
 <td>Update the Solr index and OAI-PMH provider of RIF-CS.</td>
 </tr>
 <tr>
 <td>Metadata Updated</td>
-<td>Manual entry of metadata using a form</td>
+<td>Metadata has been updated either by a direct data entry, or by conversion of metadata taken from the booking system.</td>
 <td>Update the Solr index and OAI-PMH provider of RIF-CS.</td>
 </tr>
 <tr>
 <td>Data Uploaded</td>
-<td>Manual upload of new data files to an existing record.</td>
+<td>New data files have been uploaded to an existing record.</td>
 <td>Extract technical metadata</td>
 </tr>
 </tbody>
