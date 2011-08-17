@@ -46,7 +46,7 @@ The automated flow of data through the system is driven by a set of events. Fedo
 
 ==Event Handlers==
 
-<table>
+<table border="1">
  <thead>
   <tr>
    <th>Handler Name</th>
