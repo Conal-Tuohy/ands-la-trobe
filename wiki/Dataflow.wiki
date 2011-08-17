@@ -27,13 +27,8 @@ The automated flow of data through the system is driven by a set of events. Fedo
 </td>
 </tr>
 <tr>
-<td>Metadata Extracted</td>
-<td>Technical metadata has been extracted from data files</td>
-<td>Update the Solr index and OAI-PMH provider of RIF-CS.</td>
-</tr>
-<tr>
 <td>Metadata Updated</td>
-<td>Metadata has been updated either by a direct data entry, or by conversion of metadata taken from the booking system.</td>
+<td>Metadata has been updated either by a direct data entry, by conversion of metadata taken from the booking system, or by extraction from data files.</td>
 <td>Update the Solr index and OAI-PMH provider of RIF-CS.</td>
 </tr>
 <tr>
@@ -68,11 +63,6 @@ The automated flow of data through the system is driven by a set of events. Fedo
   <tr>
    <td>Metadata Update Handler</td>
    <td><ul><li>Metadata Updated</li></ul></td>
-   <td><ul><li>Update the Solr index and OAI-PMH provider of RIF-CS.</li></ul></td>
-  </tr>
-  <tr>
-   <td>Metadata Extraction Handler</td>
-   <td><ul><li>Metadata Extracted</li></ul></td>
    <td><ul><li>Update the Solr index and OAI-PMH provider of RIF-CS.</li></ul></td>
   </tr>
  </tbody>
