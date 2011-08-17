@@ -2,9 +2,9 @@
 
 Data is ingested into Fedora using SWORD, edited using XForms, manipulated and cross-walked using XSLT transformations, and exported to an OAI-PMH server and a search engine.
 
-The automated flow of data through the system is driven by a set of events:
+The automated flow of data through the system is driven by a set of events. Fedora emits notifications of these events, and a set of event-handlers receive these notifications and perform processing in response.
 
-=Events=
+==Events==
 
 <table>
 <thead>
@@ -42,4 +42,36 @@ The automated flow of data through the system is driven by a set of events:
 <td>Extract technical metadata</td>
 </tr>
 </tbody>
+</table>
+
+==Event Handlers==
+
+<table>
+ <thead>
+  <tr>
+   <th>Handler Name</th>
+   <th>Events Triggering this Handler</th>
+   <th>Tasks Performed</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td>IngestHandler</td>
+   <td>Ingest</td>
+   <td>
+    <ul>
+     <li>mint and attach PID</li>
+     <li>convert booking system metadata to editable form</li>
+    </ul>
+   </td>
+  </tr>
+  <tr>
+   <td>DataFileUpdateHandler</td>
+   <td><ul>
+    <li>Ingest</li>
+    <li>Data Upload</li>
+   </ul></td>
+   <td>Extract technical metadata</td>
+  </tr>
+ </tbody>
 </table>
