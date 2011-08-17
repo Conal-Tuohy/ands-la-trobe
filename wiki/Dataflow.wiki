@@ -56,7 +56,7 @@ The automated flow of data through the system is driven by a set of events. Fedo
  </thead>
  <tbody>
   <tr>
-   <td>IngestHandler</td>
+   <td>Ingest Handler</td>
    <td>Ingest</td>
    <td>
     <ul>
@@ -66,7 +66,7 @@ The automated flow of data through the system is driven by a set of events. Fedo
    </td>
   </tr>
   <tr>
-   <td>DataFileUpdateHandler</td>
+   <td>Data File Update Handler</td>
    <td><ul>
     <li>Ingest</li>
     <li>Data Upload</li>
