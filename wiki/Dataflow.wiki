@@ -65,14 +65,13 @@ The automated flow of data through the system is driven by a set of events. Fedo
   </tr>
   <tr>
    <td>Data File Update Handler</td>
-   <td><ul><li>Package Ingested</li>
-    <li>Data Uploaded</li></ul></td>
+   <td><ul><li>Package Ingested</li><li>Data Uploaded</li></ul></td>
    <td>Extract technical metadata</td>
   </tr>
   <tr>
    <td>Metadata Update Handler</td>
-   <td>Metadata Updated</td>
-   <td>Update the Solr index and OAI-PMH provider of RIF-CS.</td>
+   <td><ul><li>Metadata Updated</li></ul></td>
+   <td><ul><li>Update the Solr index and OAI-PMH provider of RIF-CS.</li></ul></td>
   </tr>
  </tbody>
 </table>
