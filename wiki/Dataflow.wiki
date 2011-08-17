@@ -11,7 +11,7 @@ The automated flow of data through the system is driven by a set of events. Fedo
 <tr>
 <th>Event name</th>
 <th>Description</th>
-<th>Responses triggered by event</th>
+<th>Tasks triggered by event</th>
 </tr>
 </thead>
 <tbody>
