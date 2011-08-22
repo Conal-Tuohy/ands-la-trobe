@@ -1,0 +1,3 @@
+#summary Fedora security
+
+https://wiki.duraspace.org/display/FEDORA35/Security
