@@ -1,3 +1,5 @@
 #summary Fedora security
 
-https://wiki.duraspace.org/display/FEDORA35/Security
+[https://wiki.duraspace.org/display/FEDORA35/Security Fedora Security]
+
+[http://www.oasis-open.org/committees/download.php/2713/Brief_Introduction_to_XACML.html OASIS intro to XACML]
