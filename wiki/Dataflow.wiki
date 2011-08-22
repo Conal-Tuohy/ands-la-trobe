@@ -1,6 +1,6 @@
 #summary How data flows around the system
 
-Data is ingested into Fedora using SWORD, edited using XForms, manipulated and cross-walked using XSLT transformations, and exported to an OAI-PMH server and a search engine.
+Data is ingested into Fedora using SWORD, edited using XForms, manipulated and cross-walked using XSLT transformations, parsed by metadata extractors, and exported to an OAI-PMH server and a search engine.
 
 The automated flow of data through the system is driven by a set of events. Fedora emits notifications of these events, and a set of event-handlers receive these notifications and perform processing in response.
 
