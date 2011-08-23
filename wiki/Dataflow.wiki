@@ -33,7 +33,7 @@ The automated flow of data through the system is driven by a set of events. Fedo
 </tr>
 <tr valign="top">
 <td>Data Updated</td>
-<td>Data files in a Fedora object have been updated<td>
+<td>Data files in a Fedora object have been updated</td>
 <td>Extract technical metadata and save it to Fedora.</td>
 </tr>
 </tbody>
