@@ -53,7 +53,7 @@ The automated flow of data through the system is driven by a set of events. Fedo
   <tr valign="top">
    <td>Ingest Handler</td>
    <td><ul><li>Package Ingested</li></ul></td>
-   <td><ul><li>mint and attach PID</li><li>convert booking system metadata to editable form</li></ul></td>
+   <td><ul><li>mint and attach PID</li><li>convert booking system metadata to our editable format</li><li>recognise data files and tag them with altID "vamas" or "surfacelab-itm"</li></ul></td>
   </tr>
   <tr valign="top">
    <td>SurfaceLab Update Handler</td>
@@ -68,7 +68,7 @@ The automated flow of data through the system is driven by a set of events. Fedo
   <tr valign="top">
    <td>Metadata Update Handler</td>
    <td><ul><li>Metadata Updated</li></ul></td>
-   <td><ul><li>Update the Solr index and OAI-PMH provider of RIF-CS.</li></ul></td>
+   <td><ul><li>Convert the metadata to Solr schema and update index</li><li>Convert to RIF-CS and update OAI-PMH provider</li><li>Convert to DC and update Fedora</li></ul></td>
   </tr>
  </tbody>
 </table>
