@@ -32,9 +32,9 @@ The automated flow of data through the system is driven by a set of events. Fedo
 <td>Update the Solr index and OAI-PMH provider of RIF-CS.</td>
 </tr>
 <tr valign="top">
-<td>Data Uploaded</td>
-<td>New data files have been uploaded to an existing record.</td>
-<td>Extract technical metadata</td>
+<td>Data Updated</td>
+<td>Data files in a Fedora object have been updated<td>
+<td>Extract technical metadata and save it to Fedora.</td>
 </tr>
 </tbody>
 </table>
@@ -57,12 +57,12 @@ The automated flow of data through the system is driven by a set of events. Fedo
   </tr>
   <tr valign="top">
    <td>SurfaceLab Update Handler</td>
-   <td><ul><li>Package Ingested</li><li>Data Uploaded</li></ul></td>
+   <td><ul><li>Data with altID "surfacelab-itm" Updated</li></ul></td>
    <td><ul><li>Extract technical metadata</li></ul></td>
   </tr>
   <tr valign="top">
    <td>VAMAS Update Handler</td>
-   <td><ul><li>Package Ingested</li><li>Data Uploaded</li></ul></td>
+   <td><ul><li>Data with altID "vamas" Updated</li></ul></td>
    <td><ul><li>Extract technical metadata</li></ul></td>
   </tr>
   <tr valign="top">
