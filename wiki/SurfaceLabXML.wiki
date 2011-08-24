@@ -24,7 +24,8 @@ NOTE: This is tailored to use with XML Calabash as part of an XProc pipeline.
 {{{
 var objFSO = WScript.CreateObject("Scripting.FileSystemObject");
 
-//worst case, the stream we are updating should be blank to avoid false data. Creating temp.xml here and overwriting the previous file should guarantee that.
+//worst case, the stream we are updating should be blank to avoid false data. 
+//Creating temp.xml here and overwriting the previous file should guarantee that.
 objFSO.CreateTextFile('C:\\temp\\temp.xml', true);
 var objDM = WScript.CreateObject("IONTOF.DataManager");
 var objITMStream = WScript.CreateObject("ADODB.Stream");
