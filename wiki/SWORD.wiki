@@ -11,7 +11,7 @@ SWORD is a submission tool that allows users to add objects to a fedora reposito
     * (wget http://sword-app.svn.sourceforge.net/viewvc/sword-app/fedora/trunk.tar.gz?view=tar)
   * untar to /ands/files/SWORD-fedora-1.1/
   * modified config
-    * conf/properties.xml
+    * [http://sword-app.svn.sourceforge.net/viewvc/sword-app/fedora/trunk/conf/properties.xml conf/properties.xml]
       * modified pid_namespace (e.g andsdb-dc19)
       * modified temp_dir (e.g /usr/share/tomcat6/temp)
       * modified all uri locations
