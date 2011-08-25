@@ -162,7 +162,7 @@ The following 3 schema (group, project and dataset) are near-identical, and have
 		<sYear />
 		<Tape />
 		<depthprofilingtable>
-			<profile />
+			<profile>
 				<value />
 				<value />
 				<value />
@@ -174,12 +174,12 @@ The following 3 schema (group, project and dataset) are near-identical, and have
 			</profile>
 		</depthprofilingtable>
 		<sampletable>
-			<sample />
+			<sample>
 				<id />
 				<details />
 				<type />
 			</sample>
-			<sample />
+			<sample>
 				<id />
 				<details />
 				<type />
@@ -191,7 +191,7 @@ The following 3 schema (group, project and dataset) are near-identical, and have
 				<ImA />
 				<VkV />
 			</set>
-			<set />
+			<set>
 				<source />
 				<ImA />
 				<VkV />
