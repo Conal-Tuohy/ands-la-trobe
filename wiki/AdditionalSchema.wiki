@@ -167,7 +167,7 @@ The following 3 schema (group, project and dataset) are near-identical, and have
 				<value />
 				<value />
 			</profile>
-			<profile />
+			<profile>
 				<value />
 				<value />
 				<value />
