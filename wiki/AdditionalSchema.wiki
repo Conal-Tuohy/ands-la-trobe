@@ -248,4 +248,4 @@ The following 3 schema (group, project and dataset) are near-identical, and have
 }}}
 
 === Notes ===
-This schema is based on the JSON delivered from the CMSS RLI Booking system. 
+This schema is based on the JSON delivered from the CMSS RLI Booking system. It does not fully conform due to issues with access to the schema used by the system. This will be rectified when access is available.
