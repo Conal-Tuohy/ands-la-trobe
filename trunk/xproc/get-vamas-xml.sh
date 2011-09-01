@@ -4,6 +4,6 @@
 # $3=vamas URI
 rm /tmp/vamas-xml.xml
 rm /tmp/vamas.vms
-curl -u $1:$2 $3 -o /tmp/vamas.vms
-java -jar vamas-parser.jar /tmp/vamas.vms > /tmp/vamas-xml.xml
+curl -u $1:$2 $3 -o /tmp/vamas.vms > /dev/null
+java -jar /ands/xproc/vamas-parser.jar /tmp/vamas.vms > /tmp/vamas-xml.xml
 

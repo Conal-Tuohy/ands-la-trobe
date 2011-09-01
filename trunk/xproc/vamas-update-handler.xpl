@@ -9,14 +9,9 @@
 	
 	<p:input port="source"/>
 	<p:output port="result"/>
-		
-	<!--
-	<p:store href="file:///tmp/output.xml"/>
-	-->
 	
 	<p:option name="fedora-username"/>
 	<p:option name="fedora-password"/>
-	<p:option name="pids-identity-file"/>
 	
 	<p:variable name="auth-method" select=" 'Basic' "/>
 	<p:variable name="method" select="/atom:entry/atom:title[@type='text']"/>
@@ -28,6 +23,7 @@
 -->
 	<p:variable name="fedora-base-uri" select="'http://localhost:8080/fedora/'"/>	
 	<p:variable name="item-base-uri" select="concat($fedora-base-uri, 'objects/', $uri-encoded-identifier)"/>
+	<p:variable name="uri" select="concat($item-base-uri, '/datastreams/vamas-xml')"/>
 	<!--
 	methods:
 		"purgeObject", "purgeDatastream" (delete)
@@ -36,28 +32,26 @@
 	-->
 	
 	<p:choose>
-		<!-- if the event is an ingested object, or a modified rif-cs datastream ... -->
-		<p:when test=" ($method = 'ingest') or (($method = 'modifyDatastreamByValue') and ($datastream='rif-cs'))">
+		<!-- if the event is an ingested object, or a modified vamas datastream ... -->
+		<p:when test="($method = 'ingest') or ($datastream='vamas')">
 			
-			<!--<p:store href="file:///tmp/atom-message.xml"/>-->
-			<lib:http-request method="get">
-				<p:with-option name="username" select="$fedora-username"/>
-				<p:with-option name="password" select="$fedora-password"/>
-				<p:with-option name="uri" select="concat($item-base-uri, '/datastreams/rif-cs/content')"/>
-			</lib:http-request>			
+			<!-- execute a bash script to download the VAMAS file from Fedora and run the (Java) XML converter over it -->
+			<p:exec name="download-vamas-and-convert-to-xml" command="bash" result-is-xml="false">
+				<p:with-option name="args" select="concat('/ands/xproc/get-vamas-xml.sh ', $fedora-username, ' ', $fedora-password, ' ', $item-base-uri, '/datastreams/vamas/content')"/>
+			</p:exec>
+			<!-- load the vamas xml file created by the previous step -->
+			<p:load href="/tmp/vamas-xml.xml" name="vamas-xml"/>
 
-			<lib:crosswalk xslt="../xslt/rif-cs-to-oai_dc.xsl"/>
-			
-			<!-- put the dc stream back into fedora -->
-			<lib:http-request method="put">
+			<!-- put the vamas-xml stream back into fedora -->
+			<lib:fedora-save-datastream name="save-vamas-xml">
 				<p:with-option name="username" select="$fedora-username"/>
 				<p:with-option name="password" select="$fedora-password"/>
-				<p:with-option name="uri" select="concat($item-base-uri, '/datastreams/DC')"/>
-			</lib:http-request>
+				<p:with-option name="uri" select="$uri"/>
+			</lib:fedora-save-datastream>
 
 		</p:when>
 		<p:otherwise>
-			<!-- it's not an ingest or the update of a rif-cs stream -->
+			<!-- it's not an ingest or the update of a vamas datastream -->
 			<p:identity name="ignoring-message"/>
 		</p:otherwise>
 	</p:choose>
