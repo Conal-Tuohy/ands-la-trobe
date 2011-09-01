@@ -1,4 +1,8 @@
-<p:library version="1.0" xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:lib="http://code.google.com/p/ands-la-trobe/wiki/XProcLibrary">
+<p:library version="1.0" 
+	xmlns:p="http://www.w3.org/ns/xproc" 
+	xmlns:c="http://www.w3.org/ns/xproc-step" 
+	xmlns:lib="http://code.google.com/p/ands-la-trobe/wiki/XProcLibrary"
+	xmlns:fn="http://www.w3.org/2005/xpath-functions" >
 
 
 	<!-- create or update a datastream in Fedora -->
@@ -31,7 +35,7 @@
 				</lib:http-request>
 			</p:when>
 			<p:otherwise>
-				<!-- The datastream exists, so it can be updated with PUT to a URI like "/objects/{pid}/datastreams/{dsID}/content" --> 
+				<!-- The datastream exists, so it can be updated with PUT to a URI like "/objects/{pid}/datastreams/{dsID}" --> 
 				<lib:http-request method="put" name="update-datastream">
 					<p:input port="source">
 						<p:pipe step="fedora-save-datastream" port="source"/>
@@ -88,16 +92,17 @@
 		<p:option name="password"/>
 		<p:option name="uri" required="true"/>
 		<p:option name="detailed" select="'true'"/>
+		<p:option name="accept" select="'text/xml'"/>
 		
 		<p:in-scope-names name="variables"/>
 		
 		<p:choose name="choose-method">
 			<p:when test="$method = 'get' or $method='head'">
-				<p:template name="construct-request-document-for-get-or-head">
+				<p:template name="construct-request-without-body">
 					<p:input port="template">
 						<p:inline exclude-inline-prefixes="c">
 							<c:request detailed="{$detailed}" send-authorization="true"  method="{$method}" href="{$uri}" auth-method="Basic" username="{$username}" password="{$password}">
-								<c:header name="Accept" value="text/xml"/>
+								<c:header name="Accept" value="{$accept}"/>
 							</c:request>
 						</p:inline>
 					</p:input>
@@ -110,11 +115,11 @@
 				</p:template>
 			</p:when>
 			<p:otherwise><!-- put or post allow a message body -->
-				<p:template name="construct-request-document-for-put-or-post">
+				<p:template name="construct-request-with-body">
 					<p:input port="template">
 						<p:inline exclude-inline-prefixes="c">
 							<c:request detailed="{$detailed}" send-authorization="true" method="{$method}" href="{$uri}" auth-method="Basic" username="{$username}" password="{$password}">
-								<c:header name="Accept" value="text/xml"/>
+								<c:header name="Accept" value="{$accept}"/>
 								<c:body content-type="text/xml">{/*}</c:body>
 							</c:request>
 						</p:inline>
@@ -130,7 +135,67 @@
 		</p:choose>
 		<!-- execute the request -->
 		<p:http-request name="execute-request"/>
-	
 	</p:declare-step>
+	
+	<p:declare-step type="lib:mint-handle">
+		<p:input port="source"/>
+		<p:output port="result"/>
 
+		<p:option name="pids-identity-file" required="true"/>
+		<p:option name="pids-uri" required="true"/>
+		<p:option name="uri" required="true"/>
+		<p:in-scope-names name="variables"/>
+
+		<p:load name="load-pids-identity-file">
+			<p:with-option name="href" select="$pids-identity-file"/>
+		</p:load>
+		<lib:http-request method="post">
+			<p:with-option name="uri" select="concat($pids-uri, '/mint?type=URL&amp;value=', fn:encode-for-uri($uri))"/>
+			<p:input port="source">
+				<p:pipe step="load-pids-identity-file" port="result"/>
+			</p:input>
+		</lib:http-request>
+	</p:declare-step>
+	
+	<!-- checks if an object has a handle datastream, and if not, it creates one -->
+	<p:declare-step type="lib:ensure-fedora-object-has-handle">
+		<p:input port="source"/>
+		<p:output port="result"/>
+		
+		<p:option name="fedora-username"/>
+		<p:option name="fedora-password"/>
+		<p:option name="pids-uri"/>
+		<p:option name="pids-identity-file"/>
+		<p:option name="handle-datastream-uri"/>
+		<p:option name="public-item-uri"/>
+		
+		<lib:http-request name="check-if-handle-exists" method="head">
+			<p:with-option name="username" select="$fedora-username"/>
+			<p:with-option name="password" select="$fedora-password"/>
+			<p:with-option name="uri" select="$handle-datastream-uri"/>
+		</lib:http-request>	
+		
+		<!-- if the Fedora item has no handle metadata then we will have received:
+		<c:response xmlns:c="http://www.w3.org/ns/xproc-step" status="404">
+		-->
+		
+		<p:for-each name="item-missing-handle">
+			<p:iteration-source select="/c:response[@status='404']"/>
+			<p:identity/>
+			<!-- mint a handle for the datastream -->
+			<lib:mint-handle>
+				<p:with-option name="pids-identity-file" select="$pids-identity-file"/>
+				<p:with-option name="pids-uri" select="$pids-uri"/>
+				<p:with-option name="uri" select="$public-item-uri"/>
+			</lib:mint-handle>
+			<!-- post the handle stream back into fedora -->
+			<lib:http-request name="save-handle" method="post">
+				<p:with-option name="username" select="$fedora-username"/>
+				<p:with-option name="password" select="$fedora-password"/>
+				<p:with-option name="uri" select="$handle-datastream-uri"/>
+			</lib:http-request>	
+
+		</p:for-each>
+	</p:declare-step>
+	
 </p:library>
