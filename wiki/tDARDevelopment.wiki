@@ -10,6 +10,10 @@ How does it relate to the FilestoreService (which is supposed to provide access 
 
 http://dev.tdar.org/fisheye/browse/~br=trunk/tDAR/trunk/src/main/java/org/tdar/core/service/FilestoreService.java?r=2484
 
+How does one save metadata in filestore?
+
+NB org.tdar.core.service.ResourceService.saveRecordToFilestore appears to write a "record.xml" to the file store, but there's no code calling that method, and there are no such files in the file store. How does it all work?
+
 =Metadata schema=
 
 The metadata schema used in tDAR is shown in this test case:
