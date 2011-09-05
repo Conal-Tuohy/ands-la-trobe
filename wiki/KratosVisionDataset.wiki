@@ -1,0 +1,9 @@
+#summary About the ".dset" file format of Kratos Vision software
+
+= Kratos "Vision" dataset files =
+
+The "Vision" surface analysis software from [http://surface.kratos.com/ Kratos Analytical] uses the extension `.dset` to identify its dataset files.
+
+These are not standard file formats; they are proprietary files which generally require the Vision software to read and write. There are also a couple of utility programs available to convert these files into other formats.
+
+Files in this format may be identified using the internet media type `application/x-kratos-vision-dataset`, and a formal URI identifier for the format is [http://code.google.com/p/ands-la-trobe/w/edit/KratosVisionDataset]
