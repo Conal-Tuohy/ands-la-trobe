@@ -6,4 +6,4 @@
 
 !SurfaceLab 6 uses the extension `.itm` to identify its measurement files. These files are a proprietary format which require !SurfaceLab to generate or interpret them.
 
-The internet media type `application/x-iontof-measurement` may be used to classify the files on the internet.
+The internet media type `application/x-iontof-surfacelab-measurement` may be used to classify such files on the internet.
