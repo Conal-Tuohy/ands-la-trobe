@@ -4,7 +4,45 @@
 	xmlns:lib="http://code.google.com/p/ands-la-trobe/wiki/XProcLibrary"
 	xmlns:fn="http://www.w3.org/2005/xpath-functions" >
 
-
+	
+	<p:declare-step type="lib:fedora-tag-datastreams">
+		<p:option name="username" required="true"/>
+		<p:option name="password" required="true"/>
+		<p:option name="extension" required="true"/>
+		<p:option name="uri"/>
+		<p:option name="format-uri"/>
+		<p:option name="content-type"/>
+	
+		<p:for-each name="matching-files">
+			<!-- for each file with a matching extension ... -->
+			<p:iteration-source select="/f:digitalObject/f:datastream[ends-with(lower-case(f:datastreamVersion[last()]/@LABEL), $extension)]"/>
+			<!--	 tag the file -->
+			<lib:fedora-set-datastream-format>
+				<p:with-option name="format-uri" select="$format-uri"/>
+				<p:with-option name="content-type" select="$content-type"/>
+				<p:with-option name="username" select="$fedora-username"/>
+				<p:with-option name="password" select="$fedora-password"/>
+				<p:with-option name="uri" select="concat($item-base-uri, '/datastreams/', fn:encode-for-uri(/f:datastream/@ID))"/>
+			</lib:fedora-set-datastream-format>
+		</p:for-each>    
+	</p:declare-step>
+	
+	<!-- tag a datastream with a format URI -->
+	<p:declare-step type="lib:fedora-set-datastream-format" name="fedora-set-datastream-format">
+		<p:option name="username" required="true"/>
+		<p:option name="password" required="true"/>
+		<p:option name="uri"/>
+		<p:option name="format-uri"/>
+		<p:option name="content-type"/>
+		<lib:http-request method="put" name="update-properties" detailed="true">
+			<p:input port="source"><p:inline><ignore/></p:inline></p:input>
+			<p:with-option name="username" select="$username"/>
+			<p:with-option name="password" select="$password"/>
+			<p:with-option name="uri" select="concat($uri, '?ignoreContent=true&amp;formatURI=', fn:encode-for-uri($format-uri), '&amp;mimeType=', fn:encode-for-uri($content-type))"/>			
+		</lib:http-request>
+		<p:sink name="ignore-response-from-fedora"/>
+	</p:declare-step>
+	
 	<!-- create or update a datastream in Fedora -->
 	<p:declare-step type="lib:fedora-save-datastream" name="fedora-save-datastream">
 		<p:input port="source"/>
@@ -97,7 +135,7 @@
 		<p:in-scope-names name="variables"/>
 		
 		<p:choose name="choose-method">
-			<p:when test="$method = 'get' or $method='head'">
+			<p:when test="($method = 'get' or $method='head')">
 				<p:template name="construct-request-without-body">
 					<p:input port="template">
 						<p:inline exclude-inline-prefixes="c">
@@ -159,9 +197,10 @@
 	
 	<!-- checks if an object has a handle datastream, and if not, it creates one -->
 	<p:declare-step type="lib:ensure-fedora-object-has-handle">
+	<!--
 		<p:input port="source"/>
 		<p:output port="result"/>
-		
+	-->
 		<p:option name="fedora-username"/>
 		<p:option name="fedora-password"/>
 		<p:option name="pids-uri"/>
@@ -170,6 +209,7 @@
 		<p:option name="public-item-uri"/>
 		
 		<lib:http-request name="check-if-handle-exists" method="head">
+			<p:input port="source"><p:empty/></p:input>
 			<p:with-option name="username" select="$fedora-username"/>
 			<p:with-option name="password" select="$fedora-password"/>
 			<p:with-option name="uri" select="$handle-datastream-uri"/>
@@ -196,6 +236,7 @@
 			</lib:http-request>	
 
 		</p:for-each>
+		<p:sink name="return-nothing"/>
 	</p:declare-step>
 	
 </p:library>
