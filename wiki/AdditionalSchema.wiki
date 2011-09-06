@@ -2,103 +2,40 @@
 
 = Introduction =
 
-
-
-= Details =
-
-The following 3 schema (group, project and dataset) are near-identical, and have thus been (nearly) incorporated.
-
+===LTU dataset===
 {{{
-<group|project|dataset>
-    <institution />
-    <department />
-    <key />
-    <alternativeName />
-    <abbreviatedName />
-    <primaryName />
-    <url />
-    <email />
-    <fax />
-    <phone />
-    <otherElectronic type="" />
-    <startDate />
-    <endDate />
-    <postalAddress>
-        <country />
-        <postcode />
-        <state />
-        <text />
-    </postalAddress>
-    <streetAddress>
-        <country />
-        <postcode />
-        <state />
-        <text />
-    </streetAddress>
-    <hasMember />
-    <subject type="" />
-    <briefDescription />
-    <fullDescription />
-    <relatedWebsite>
-        <location />
-        <title />
-        <notes />
-    </relatedWebsite>
-    <relatedPublication>
-        <location />
-        <title />
-        <notes />
-    </relatedPublication>
-</group|project|dataset>
+
 }}}
 
-=== Notes ===
+===Notes===
 
+
+===LTU group===
 {{{
-<person>
-	<institution />
-	<department />
-	<key />
-	<personalName />
-	<familyName />
-	<alternativeName />
-	<abbreviatedName />
-	<dateOfBirth />
-	<url />
-	<email />
-	<fax />
-	<phone />
-	<otherElectronic />
-	<postalAddress>
-		<country />
-		<postcode />
-		<state />
-		<text />
-	</postalAddress>
-	<streetAddress>
-		<country />
-		<postcode />
-		<region />
-		<text />
-	</streetAddress>
-	<briefDescription />
-	<fullDescription />
-	<relatedWebsite>
-		<location />
-		<title />
-		<notes />
-	</relatedWebsite>
-	<relatedPublication>
-		<location />
-		<title />
-		<notes />
-	</relatedPublication>
-</person>
 
 }}}
 
 === Notes ===
 
+
+===LTU project===
+{{{
+
+}}}
+
+=== Notes ===
+
+
+===LTU person===
+{{{
+
+}}}
+
+=== Notes ===
+
+
+
+===Boss RLI output schema===
 {{{
 <values>
 	<Other>
