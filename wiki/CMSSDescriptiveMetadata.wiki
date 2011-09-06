@@ -1,0 +1,3 @@
+#summary Format of the descriptive metadata schemas used in the DC19 project
+
+Define the schemas here.
