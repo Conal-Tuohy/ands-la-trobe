@@ -5,7 +5,7 @@
 ===LTU dataset===
 {{{
 <dataset xmlns="http://hdl.handle.net/102.100.100/6976">
-    <hasCollector id="" />
+    <hasCollector id="" /> 
     <hasCollector id="" />
     <abbreviatedName />
     <name />
@@ -43,6 +43,14 @@
 }}}
 
 ===Notes===
+
+<hasCollector id="" /> 
+ * Values: Collector's name (plaintext), @id: fedora entry pid 
+ * Sources: RLI booking system, @id: fedora internal
+
+<subject type="" code="" />
+ * Values: Name of subject (plaintext), @type: classification index/type (e.g ICHI, CAS, etc) @code: lookup code
+ * Sources: Some added autmoatically on ingest, based on submission source (e.g machine type)
 
 
 ===LTU group===
@@ -105,6 +113,11 @@
 
 === Notes ===
 
+<hasMember id="" />
+ See dataset/hasCollector
+
+<subject type="" code="" />
+ See dataset/hasCollector
 
 ===LTU project===
 {{{
