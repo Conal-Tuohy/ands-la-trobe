@@ -47,7 +47,60 @@
 
 ===LTU group===
 {{{
-
+<group xmlns="http://hdl.handle.net/102.100.100/6976">
+    <nlaPartyIdentifier />
+    <institution />
+    <department />
+    <abbreviatedName />
+    <name />
+    <url />
+    <email />
+    <fax />
+    <phone />
+    <otherElectronic type="" />
+    <startDate />
+    <endDate />
+    <postalAddress>
+            <text />
+            <state />
+            <postcode />
+            <country />
+    </postalAddress>
+    <streetAddress>
+            <text />
+            <state />
+            <postcode />
+            <country />
+    </streetAddress>
+    <hasMember id="" />
+    <hasMember id="" />
+    <subject type="anzsrc-for" code="020406" />
+    <subject type="anzsrc-for" code="030603" />
+    <subject type="anzsrc-for" code="030301" />
+    <subject type="local" code="" />
+    <briefDescription />
+    <fullDescription />
+    <relatedWebsite>
+            <location />
+            <title />
+            <notes />
+    </relatedWebsite>
+    <relatedWebsite>
+            <location />
+            <title />
+            <notes />
+    </relatedWebsite>
+    <relatedPublication>
+            <location />
+            <title />
+            <notes />
+    </relatedPublication>
+    <relatedPublication>
+            <location />
+            <title />
+            <notes />
+    </relatedPublication>
+</group>
 }}}
 
 === Notes ===
@@ -55,7 +108,59 @@
 
 ===LTU project===
 {{{
-
+<project xmlns="http://hdl.handle.net/102.100.100/6976">
+    <institution />
+    <department />
+    <alternativeName />
+    <alternativeName />
+    <abbreviatedName />
+    <name />
+    <url />
+    <email />
+    <otherElectronic type="" />
+    <startDate />
+    <endDate />
+    <postalAddress>
+        <text />
+        <country />
+        <postcode />
+        <state />
+    </postalAddress>
+    <streetAddress>
+        <text />
+        <country />
+        <postcode />
+        <state />
+    </streetAddress>
+    <hasMember id="aslasdf" />
+    <hasMember id="aslasdf2" />
+    <subject type="anzsrc-for" code="020406" />
+    <subject type="anzsrc-for" code="030603" />
+    <subject type="anzsrc-for" code="030301" />
+    <subject type="local" code="plastic film" />
+    <briefDescription />
+    <fullDescription />
+    <relatedWebsite>
+        <location />
+        <title />
+        <notes />
+    </relatedWebsite>
+    <relatedWebsite>
+        <location />
+        <title />
+        <notes />
+    </relatedWebsite>
+    <relatedPublication>
+        <location />
+        <title />
+        <notes />
+    </relatedPublication>
+    <relatedPublication>
+        <location />
+        <title />
+        <notes />
+    </relatedPublication>
+</project>
 }}}
 
 === Notes ===
@@ -63,7 +168,46 @@
 
 ===LTU person===
 {{{
-
+<person xmlns="http://hdl.handle.net/102.100.100/6976">
+    <nlaPartyIdentifier />
+    <institution />
+    <department />
+    <name />
+    <abbreviatedName />
+    <url />
+    <dateOfBirth />
+    <email />
+    <phone />
+    <fax />
+    <postalAddress>
+        <text />
+        <country />
+        <postcode />
+        <state />
+    </postalAddress>
+    <briefDescription />
+    <fullDescription />
+    <relatedWebsite>
+        <location />
+        <title />
+        <notes />
+    </relatedWebsite>
+    <relatedWebsite>
+        <location />
+        <title />
+        <notes />
+    </relatedWebsite>
+    <relatedPublication>
+        <location />
+        <title />
+        <notes />
+    </relatedPublication>
+    <relatedPublication>
+        <location />
+        <title />
+        <notes />
+    </relatedPublication>
+</person>
 }}}
 
 === Notes ===
