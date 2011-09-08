@@ -44,51 +44,31 @@
 	<p:choose>
 		<p:when test="$method='ingest'">
 		
-			<!-- get the full FoxML representation -->
-			<lib:http-request method="get" detailed="false" name="foxml">
+			<!-- recognise the types of ingested files (by extension) and explicitly set their format uri and internet media type -->
+			<lib:fedora-tag-datastreams>
+				<p:input port="type-map">
+					<p:inline>
+						<map>
+							<type 
+								extension="vms" 
+								format-uri="http://www.iso.org/iso/iso_catalogue/catalogue_tc/catalogue_detail.htm?csnumber=24269" 
+								content-type="chemical/x-vamas-iso14976"/>
+							<type 
+								extension="dset" 
+								format-uri="http://hdl.handle.net/102.100.100/6972" 
+								content-type="application/x-kratos-vision-dataset"/>
+							<type 
+								extension="itm" 
+								format-uri="http://hdl.handle.net/102.100.100/6972" 
+								content-type="application/x-iontof-surfacelab-measurement"/>
+						</map>
+					</p:inline>
+				</p:input>
 				<p:with-option name="username" select="$fedora-username"/>
 				<p:with-option name="password" select="$fedora-password"/>
-				<p:with-option name="uri" select="concat($item-base-uri, '/objectXML')"/>
-			</lib:http-request>
-			
-			<!-- recognise and tag various ingested files -->
-			
-			<!-- tag "vms" files -->
-			<lib:fedora-tag-datastreams 
-				extension="vms" 
-				format-uri="http://www.iso.org/iso/iso_catalogue/catalogue_tc/catalogue_detail.htm?csnumber=24269" 
-				content-type="chemical/x-vamas-iso14976">
-					<p:with-option name="username" select="$fedora-username"/>
-					<p:with-option name="password" select="$fedora-password"/>
-					<p:with-option name="item-base-uri" select="$item-base-uri"/>
+				<p:with-option name="item-base-uri" select="$item-base-uri"/>
 			</lib:fedora-tag-datastreams>
 			
-			<!-- tag "itm" files -->
-			<lib:fedora-tag-datastreams 
-				extension="itm" 
-				format-uri="http://hdl.handle.net/102.100.100/6972" 
-				content-type="application/x-iontof-surfacelab-measurement">
-					<p:input port="source">
-						<p:pipe name="foxml" port="result"/>
-					</p:input>
-					<p:with-option name="username" select="$fedora-username"/>
-					<p:with-option name="password" select="$fedora-password"/>
-					<p:with-option name="item-base-uri" select="$item-base-uri"/>
-			</lib:fedora-tag-datastreams>
-			
-			<!-- tag "dset" files -->
-			<lib:fedora-tag-datastreams 
-				extension="dset" 
-				format-uri="http://hdl.handle.net/102.100.100/6972" 
-				content-type="application/x-kratos-vision-dataset">
-					<p:input port="source">
-						<p:pipe name="foxml" port="result"/>
-					</p:input>
-					<p:with-option name="username" select="$fedora-username"/>
-					<p:with-option name="password" select="$fedora-password"/>
-					<p:with-option name="item-base-uri" select="$item-base-uri"/>
-			</lib:fedora-tag-datastreams>
-
 			<!-- Create a handle for the object -->
 			<lib:ensure-fedora-object-has-handle>
 				<p:with-option name="fedora-username" select="$fedora-username"/>

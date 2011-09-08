@@ -2,10 +2,12 @@
 	xmlns:p="http://www.w3.org/ns/xproc" 
 	xmlns:c="http://www.w3.org/ns/xproc-step" 
 	xmlns:lib="http://code.google.com/p/ands-la-trobe/wiki/XProcLibrary"
-	xmlns:fn="http://www.w3.org/2005/xpath-functions" >
+	xmlns:fn="http://www.w3.org/2005/xpath-functions"
+	xmlns:foxml="info:fedora/fedora-system:def/foxml#">
 
-	
+	<!--
 	<p:declare-step type="lib:fedora-tag-datastreams">
+		<p:input port="source"/>
 		<p:option name="username" required="true"/>
 		<p:option name="password" required="true"/>
 		<p:option name="extension" required="true"/>
@@ -14,9 +16,16 @@
 		<p:option name="content-type"/>
 	
 		<p:for-each name="matching-files">
-			<!-- for each file with a matching extension ... -->
-			<p:iteration-source select="/f:digitalObject/f:datastream[ends-with(lower-case(f:datastreamVersion[last()]/@LABEL), $extension)]"/>
-			<!--	 tag the file -->
+			<p:iteration-source select="
+				/f:digitalObject/f:datastream[
+					fn:ends-with(
+						fn:lower-case(
+							f:datastreamVersion[last()]/@LABEL
+						), 
+						$extension
+					)
+				]
+			"/>
 			<lib:fedora-set-datastream-format>
 				<p:with-option name="format-uri" select="$format-uri"/>
 				<p:with-option name="content-type" select="$content-type"/>
@@ -24,6 +33,38 @@
 				<p:with-option name="password" select="$fedora-password"/>
 				<p:with-option name="uri" select="concat($item-base-uri, '/datastreams/', fn:encode-for-uri(/f:datastream/@ID))"/>
 			</lib:fedora-set-datastream-format>
+		</p:for-each>    
+	</p:declare-step>
+	-->
+	<p:declare-step type="lib:fedora-tag-datastreams" name="fedora-tag-datastreams">
+		<p:input port="type-map" primary="true"/>
+		<p:option name="username" required="true"/>
+		<p:option name="password" required="true"/>
+		<p:option name="item-base-uri" required="true"/>
+	
+		<!-- get the full FoxML representation -->
+		<lib:http-request method="get" detailed="false" name="foxml">
+			<p:with-option name="username" select="$username"/>
+			<p:with-option name="password" select="$password"/>
+			<p:with-option name="uri" select="concat($item-base-uri, '/objectXML')"/>
+		</lib:http-request>
+		
+		<p:for-each name="ingested-datastream">
+			<p:iteration-source select="/foxml:digitalObject/foxml:datastream"/>
+			<p:variable name="extension"  select="substring-after(/foxml:datastream/foxml:datastreamVersion[last()]/@LABEL, '.')"/>
+			<p:variable name="datastream-uri" select="concat($item-base-uri, '/datastreams/', fn:encode-for-uri(/foxml:datastream/@ID))"/>
+			<p:for-each name="matching-type">
+				<p:iteration-source select="/map/type[fn:upper-case(@extension)=fn:upper-case($extension)]">
+					<p:pipe step="fedora-tag-datastreams" port="type-map"/>
+				</p:iteration-source>
+				<lib:fedora-set-datastream-format>
+					<p:with-option name="format-uri" select="type/@format-uri"/>
+					<p:with-option name="content-type" select="type/@content-type"/>
+					<p:with-option name="username" select="$username"/>
+					<p:with-option name="password" select="$password"/>
+					<p:with-option name="uri" select="$datastream-uri"/>
+				</lib:fedora-set-datastream-format>
+			</p:for-each>
 		</p:for-each>    
 	</p:declare-step>
 	
