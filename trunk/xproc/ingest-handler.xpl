@@ -55,7 +55,7 @@
 								content-type="chemical/x-vamas-iso14976"/>
 							<type 
 								extension="dset" 
-								format-uri="http://hdl.handle.net/102.100.100/6972" 
+								format-uri="http://hdl.handle.net/102.100.100/6973" 
 								content-type="application/x-kratos-vision-dataset"/>
 							<type 
 								extension="itm" 
