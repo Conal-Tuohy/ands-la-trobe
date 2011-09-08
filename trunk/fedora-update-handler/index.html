@@ -64,6 +64,39 @@
 		<p>You will need to <a href="https://wiki.duraspace.org/display/FCR30/Messaging#Messaging-config">enable Fedora's message service</a>.</p>
 		<p>You will need to copy the <code>fedora-update-handler.jar</code> into a folder along with all the jars in the <code>lib</code> folder.</p>
 		<p>To run the application:</p>
+<p>FedoraUpdateHandler expects either one or two parameters:</p>
+<ol>
+	<li>The first parameter is either 'start' or 'stop' to control the listener.</li>
+	<li>The second (and optional) parameter is the name of a Java properties XML file to configure the listener.</li>
+</ol>
+<p>e.g.</p>
+<p class="command">java -jar FedoraUpdateHandler.jar start handle-ingest.xml</p>
+<p class="command">java -jar FedoraUpdateHandler.jar start handle-dc-update.xml</p>
+<p class="command">java -jar FedoraUpdateHandler.jar stop handle-dc-update.xml</p>
+<p>The following properties are documented at https://wiki.duraspace.org/display/FCR30/Messaging</p>
+<ul>
+	<li>java.naming.factory.initial</li>
+	<li>java.naming.provider.url</li>
+	<li>connection.factory.name</li>
+	<li>topic.fedora</li>
+<ul>
+<p>The property "handler.jms.clientid" identifies the listener to Fedora. This value must be unique (i.e. each simultaneous client must use a different value for this property).</p>
+<p>The property "handler.command" specifies the application which the listener will run to handle the event.
+FedoraUpdateHandler will execute this application and pipe the Fedora message (an Atom XML document)
+to the application's standard input stream. </p>
+<p>Any properties not defined in the properties file will use defaults as shown below:</p>
+<![CDATA[
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties version="1.0">
+	<entry key="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</entry>
+	<entry key="java.naming.provider.url">failover://tcp://localhost:61616</entry>
+	<entry key="connection.factory.name">ConnectionFactory</entry>
+	<entry key="topic.fedora">fedora.apim.update</entry>
+	<entry key="handler.jms.clientid">FedoraUpdateHandler</entry>
+	<entry key="handler.command">cat</entry>
+</properties>
+]]>
+<p>Obsolete docs follow:</p>
 		<p class="command"><kbd>java -jar fedora-update-handler.jar</kbd> <var>command-line to execute to handle message</var></p>
 		<p>The fedora-update-handler application will connect to Fedora and subscribe to update notifications. When a notification message is received, the application will execute the specified command, and pass the notification message to it as the standard input stream.</p>
 		<p>For instance, to forward the notifications by email, using the <var>email</var> program, you might enter the following command:</p>
