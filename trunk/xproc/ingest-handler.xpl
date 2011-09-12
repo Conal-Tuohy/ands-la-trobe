@@ -89,7 +89,8 @@
 			<p:choose name="whether-object-has-a-boss-datastream">
 				<p:when test="/c:response[@status='200']">
 					<p:variable name="user-id" select="/c:response/c:body/values/proposalRequest/UsersUID"/>
-					<p:variable name="uri-encoded-user-pid" select="fn:encode-for-uri(concat('person:', $user-id))"/>
+					<p:variable name="user-pid" select="concat('person:', $user-id)"/>
+					<p:variable name="uri-encoded-user-pid" select="fn:encode-for-uri($user-pid)"/>
 					<p:variable name="user-person-datastream-uri" select="concat($fedora-base-uri, '/objects/', $uri-encoded-user-pid, '/datastreams/person')"/>
 					<!-- The new object contains a boss metadata stream which should be converted to a dataset stream, -->
 					<!-- and which may also require the creation of a person object to represent the researcher -->
@@ -123,30 +124,13 @@
 									<p:input port="source"><p:pipe step="boss" port="result"/></p:input>
 								</lib:crosswalk>
 								<p:store href="file:///tmp/new-person-datastream.xml"/>
-								<p:in-scope-names name="new-user-pid"/>
-								<!-- construct an Atom document for ingest by Fedora -->
-								<p:template name="construct-fedora-object-description">
-									<p:input port="template">
-										<p:inline exclude-inline-prefixes="c">
-											<feed xmlns="http://www.w3.org/2005/Atom">
-												<id>info:fedora/person:{$user-id}</id>
-											</feed>
-										</p:inline>
-									</p:input>
-									<p:input port="source">
-										<p:empty/>
-									</p:input>
-									<p:input port="parameters">
-										<p:pipe step="new-user-pid" port="result"/>
-									</p:input>
-								</p:template>
-								<!-- post the Atom document to Fedora to create the user record -->
-								<lib:http-request method="post" name="create-person-object">
+								<lib:fedora-create-object>
+									<p:with-option name="pid" select="$user-pid"/>
 									<p:with-option name="username" select="$fedora-username"/>
 									<p:with-option name="password" select="$fedora-password"/>
-									<p:with-option name="uri" select="concat($fedora-base-uri, '/objects/new?format=', fn:encode-for-uri('info:fedora/fedora-system:ATOM-1.1'))"/>
-									<p:with-option name="accept" select="'text/plain'"/>
-								</lib:http-request>
+									<p:with-option name="fedora-base-uri" select="$fedora-base-uri"/>
+								</lib:fedora-create-object>
+
 								<!-- add the "person" xml datastream to the new user object -->
 								<lib:fedora-save-datastream name="save-new-user-person-datastream">
 									<p:input port="source"><p:pipe step="person" port="result"/></p:input>

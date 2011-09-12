@@ -4,38 +4,39 @@
 	xmlns:lib="http://code.google.com/p/ands-la-trobe/wiki/XProcLibrary"
 	xmlns:fn="http://www.w3.org/2005/xpath-functions"
 	xmlns:foxml="info:fedora/fedora-system:def/foxml#">
-
-	<!--
-	<p:declare-step type="lib:fedora-tag-datastreams">
-		<p:input port="source"/>
+	
+	<p:declare-step type="lib:fedora-create-object" name="fedora-create-object">
+		<p:output port="fedora-response" primary="true"/>
+		<p:option name="pid" required="true"/>
 		<p:option name="username" required="true"/>
 		<p:option name="password" required="true"/>
-		<p:option name="extension" required="true"/>
-		<p:option name="uri"/>
-		<p:option name="format-uri"/>
-		<p:option name="content-type"/>
-	
-		<p:for-each name="matching-files">
-			<p:iteration-source select="
-				/f:digitalObject/f:datastream[
-					fn:ends-with(
-						fn:lower-case(
-							f:datastreamVersion[last()]/@LABEL
-						), 
-						$extension
-					)
-				]
-			"/>
-			<lib:fedora-set-datastream-format>
-				<p:with-option name="format-uri" select="$format-uri"/>
-				<p:with-option name="content-type" select="$content-type"/>
-				<p:with-option name="username" select="$fedora-username"/>
-				<p:with-option name="password" select="$fedora-password"/>
-				<p:with-option name="uri" select="concat($item-base-uri, '/datastreams/', fn:encode-for-uri(/f:datastream/@ID))"/>
-			</lib:fedora-set-datastream-format>
-		</p:for-each>    
+		<p:option name="fedora-base-uri" required="true"/>
+		<!-- construct an Atom document for ingest by Fedora -->
+		<p:in-scope-names name="options"/>
+		<p:template name="construct-fedora-object-description">
+			<p:input port="template">
+				<p:inline exclude-inline-prefixes="c">
+					<feed xmlns="http://www.w3.org/2005/Atom">
+						<id>info:fedora/{$pid}</id>
+					</feed>
+				</p:inline>
+			</p:input>
+			<p:input port="source">
+				<p:empty/>
+			</p:input>
+			<p:input port="parameters">
+				<p:pipe step="options" port="result"/>
+			</p:input>
+		</p:template>
+		<!-- post the Atom document to Fedora to create the object -->
+		<lib:http-request method="post" name="create-person-object">
+			<p:with-option name="username" select="$username"/>
+			<p:with-option name="password" select="$password"/>
+			<p:with-option name="uri" select="concat($fedora-base-uri, '/objects/new?format=', fn:encode-for-uri('info:fedora/fedora-system:ATOM-1.1'))"/>
+			<p:with-option name="accept" select="'text/plain'"/>
+		</lib:http-request>
 	</p:declare-step>
-	-->
+
 	<p:declare-step type="lib:fedora-tag-datastreams" name="fedora-tag-datastreams">
 		<p:input port="type-map" primary="true"/>
 		<p:option name="username" required="true"/>
