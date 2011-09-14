@@ -39,6 +39,7 @@
 	<p:variable name="item-base-uri" select="concat($fedora-base-uri, '/objects/', $uri-encoded-identifier)"/>
 	<p:variable name="handle-datastream-uri" select="concat($item-base-uri, '/datastreams/handle')"/>
 	<p:variable name="dataset-datastream-uri" select="concat($item-base-uri, '/datastreams/dataset')"/>
+	<p:variable name="sword-package-datastream-uri" select="concat($item-base-uri, '/datastreams/upload')"/>
 	<p:variable name="public-item-uri" select="concat('http://andsdb-dc19-dev.latrobe.edu.au/fedora/objects/', $uri-encoded-identifier, '/datastreams')"/>
    	
 	<p:choose>
@@ -68,6 +69,13 @@
 				<p:with-option name="password" select="$fedora-password"/>
 				<p:with-option name="item-base-uri" select="$item-base-uri"/>
 			</lib:fedora-tag-datastreams>
+			
+			<!-- delete the original ingest package "SWORD Generic File Upload" -->
+			<lib:fedora-purge-datastream>
+				<p:with-option name="username" select="$fedora-username"/>
+				<p:with-option name="password" select="$fedora-password"/>
+				<p:with-option name="datastream-uri" select="$sword-package-datastream-uri"/>
+			</lib:fedora-purge-datastream>
 			
 			<!-- Create a handle for the object -->
 			<lib:ensure-fedora-object-has-handle>
