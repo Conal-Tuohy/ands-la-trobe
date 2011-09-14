@@ -36,6 +36,23 @@
 			<p:with-option name="accept" select="'text/plain'"/>
 		</lib:http-request>
 	</p:declare-step>
+	
+	<p:declare-step type="lib:fedora-purge-datastream" name="fedora-purge-datastream">
+		<p:option name="username" required="true"/>
+		<p:option name="password" required="true"/>
+		<p:option name="datastream-uri" required="true"/>
+		<lib:http-request method="delete" detailed="true" name="delete">
+			<p:input port="source"><p:empty/></p:input>
+			<p:with-option name="username" select="$username"/>
+			<p:with-option name="password" select="$password"/>
+			<p:with-option name="uri" select="$datastream-uri"/>
+			<p:with-option name="accept" select="'application/json'"/><!-- oddly, this API can only return an array of strings in JSON format -->
+		</lib:http-request>
+<!--
+		<p:sink name="ignore-fedora-response"/>
+-->
+		<p:store name="ignore-fedora-response" href="file:///tmp/purge-response.xml"/>
+	</p:declare-step>
 
 	<p:declare-step type="lib:fedora-tag-datastreams" name="fedora-tag-datastreams">
 		<p:input port="type-map" primary="true"/>
@@ -177,7 +194,7 @@
 		<p:in-scope-names name="variables"/>
 		
 		<p:choose name="choose-method">
-			<p:when test="($method = 'get' or $method='head')">
+			<p:when test="($method = 'get' or $method='head' or $method='delete')">
 				<p:template name="construct-request-without-body">
 					<p:input port="template">
 						<p:inline exclude-inline-prefixes="c">
