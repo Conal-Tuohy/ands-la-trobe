@@ -8,6 +8,8 @@ VAMAS-XML is designed to make it easier to handle VAMAS files using modern XML-b
 
 The VAMAS-XML element vocabulary is drawn simplistically from the ISO specification for the VAMAS exchange format. VAMAS-XML does not use XML attributes.
 
+The vocabulary is currently only defined in [http://code.google.com/p/ands-la-trobe/source/browse/trunk/dc19/VAMASParser/src/au/edu/latrobe/cmss/vamas/VAMASParser.java#151 the Java source of the VAMAS Parser]
+
 ===Links and Information===
 
 The webXPS site has some information on the background of the VAMAS format, and an example header which was actually used in the development of the parsers - http://www.acolytescience.co.uk/JISO/Detail.html
