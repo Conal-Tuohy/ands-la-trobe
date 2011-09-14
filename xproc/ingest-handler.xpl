@@ -34,13 +34,16 @@
 	<p:variable name="method" select="/atom:entry/atom:title[@type='text']"/>
 	<p:variable name="datastream" select="/atom:entry/atom:category[@scheme='fedora-types:dsID']/@term"/>
 	<p:variable name="identifier" select="/atom:entry/atom:summary[@type='text']"/>
-	<p:variable name="uri-encoded-identifier" select="fn:encode-for-uri($identifier)"/> 
+	<p:variable name="uri-encoded-identifier" select="fn:encode-for-uri($identifier)"/>
+	<!-- for querying Solr, the ':' in a Fedora PID must be escaped with a '\' character --> 
+	<p:variable name="uri-encoded-solr-escaped-identifier" select="fn:encode-for-uri(concat(substring-before($identifier, ':'), '\:', substring-after($identifier, ':')))"/>  
 	<p:variable name="fedora-base-uri" select="'http://localhost:8080/fedora'"/>
 	<p:variable name="item-base-uri" select="concat($fedora-base-uri, '/objects/', $uri-encoded-identifier)"/>
 	<p:variable name="handle-datastream-uri" select="concat($item-base-uri, '/datastreams/handle')"/>
 	<p:variable name="dataset-datastream-uri" select="concat($item-base-uri, '/datastreams/dataset')"/>
 	<p:variable name="sword-package-datastream-uri" select="concat($item-base-uri, '/datastreams/upload')"/>
-	<p:variable name="public-item-uri" select="concat('http://andsdb-dc19-dev.latrobe.edu.au/fedora/objects/', $uri-encoded-identifier, '/datastreams')"/>
+	<!-- e.g. http://andsdb-dc19-dev.latrobe.edu.au/solr/select/?q=id%3A10378.3%5C%2F394938 -->
+	<p:variable name="public-item-uri" select="concat('http://andsdb-dc19-dev.latrobe.edu.au/solr/select/?q=id%3A', $uri-encoded-solr-escaped-identifier)"/>
    	
 	<p:choose>
 		<p:when test="$method='ingest'">
