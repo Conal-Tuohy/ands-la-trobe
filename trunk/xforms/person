@@ -1,0 +1,52 @@
+<person xmlns="http://hdl.handle.net/102.100.100/6976">
+	<nlaPartyIdentifier></nlaPartyIdentifier>
+	<institution>La Trobe University</institution>
+	<department>Department of Physics</department>
+	<name>Robert Jones</name>
+	<abbreviatedName>Rob</abbreviatedName>
+	<url response=""></url>
+	<dateOfBirth>1960-01-01</dateOfBirth>
+	<email>r.jones@latrobe.edu.au</email>
+	<phone>613 9479 2646</phone>
+	<fax></fax>
+	<postalAddress>
+		<country>Australia</country>
+		<postcode>3083</postcode>
+		<state>Victoria</state>
+		<text>Centre for Materials and Surface Science
+Department of Physics
+La Trobe University</text>
+	</postalAddress>
+	<streetAddress>
+		<country>Australia</country>
+		<postcode>3083</postcode>
+		<state>Victoria</state>
+		<text>Centre for Materials and Surface Science
+Department of Physics
+La Trobe University</text>
+	</streetAddress>
+	<briefDescription />
+	<fullDescription />
+	<relatedWebsite>
+		<location>http://www.latrobe.edu.au/surface/contact.html</location>
+		<title>Centre for Materials and Surface Science - La Trobe University</title>
+		<notes>CMSS@Latrobe Homepage</notes>
+		<response></response>
+	</relatedWebsite>
+	<relatedWebsite>
+		<location>https://rli.latrobe.edu.au/index.php</location>
+		<title>Remote Laboratory Instrumentation</title>
+		<notes>Web interface for controlling CMSS Lab systems</notes>
+		<response></response>
+	</relatedWebsite>
+	<relatedPublication>
+		<location />
+		<title />
+		<notes />
+	</relatedPublication>
+	<relatedPublication>
+		<location />
+		<title />
+		<notes />
+	</relatedPublication>
+</person>

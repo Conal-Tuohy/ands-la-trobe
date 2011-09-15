@@ -5,6 +5,7 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events" 
 	xmlns:r="http://ands.org.au/standards/rif-cs/registryObjects"
 	xmlns:srw="http://www.loc.gov/zing/srw/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	srw:dummy=""
 	r:dummy="">
 	<head>
@@ -27,15 +28,46 @@
 			}
 			body {
 				padding: 1em;
+				background-color: #F7F9F5;
 			}
+			
+			#heading {
+				border-bottom: 1px solid #BF0404;
+
+			}
+
+			#content {
+				border: 10px solid #C2C6AF;
+				padding: 10px;
+
+			}
+
+			.xforms-value {
+				width: 25em;
+			}
+
+			/* Active components/xforms css */
+
+			.xforms-invalid {
+				background-color: #FF0;
+			}
+
+			*:disabled {
+				visibility: hidden;
+			}
+			
+			/* Display repeat-items with a dashed border */
+			*:repeat-item { border: dashed; }
+
 		</style>
+
+
 		
 		<!-- RIF-CS -->
 		<xf:model id="rif-cs-editor-model">
 
 
 			<xf:instance id="rif-cs" resource="rif-cs"/>
-
 
 
 <!--
@@ -56,8 +88,12 @@
 			<xf:instance id="rif-cs-template" resource="/xforms/rif-cs-template.xml"/>
 			<xf:bind id="primary-name" nodeset="instance('rif-cs')/r:registryObject/r:party/r:name[@type='primary']/r:namePart" required="true()"/>
 			<xf:bind id="alternate-name" nodeset="instance('rif-cs')/r:registryObject/r:party/r:name[@type='alternate']"/>
-			<xf:submission id="save" instance="rif-cs" action="http://andsdb-dc19-dev.latrobe.edu.au/fedora-objects/andsdb-dc19%3A4/datastreams/rif-cs" method="put" serialization="application/xml" replace="none"/>
-		</xf:model>
+			<xf:bind id="email-address" nodeset="instance('rif-cs')/r:registryObject/r:party/r:location/r:address/r:electronic[@type='email']" type="xf:email" required="true()"/>
+<!--
+	<xf:submission id="save" instance="rif-cs" action="http://andsdb-dc19-dev.latrobe.edu.au/fedora-objects/andsdb-dc19%3A4/datastreams/rif-cs" method="put" serialization="application/xml" replace="none"/>
+-->
+	<xf:submission id="save" instance="rif-cs" action="rif-cs" method="put" serialization="application/xml" replace="none"/>
+</xf:model>
 		
 		<!-- Fedora object search -->
 		<xf:model id="fedora-search-model">
@@ -121,14 +157,15 @@
 		</xf:model>
 	</head>
 	<body>
-		<h1>
-			<xf:output bind="primary-name"/>
-			<!-- rif-cs key is the unique identifier -->
-			( <xf:output ref="instance('rif-cs')/r:registryObject/r:key"/> )
-		</h1>
-
+		<div id="heading">
+				<h1>
+					<xf:output bind="primary-name"/>
+					<!-- rif-cs key is the unique identifier -->
+					( <xf:output ref="instance('rif-cs')/r:registryObject/r:key"/> )
+				</h1>
+		</div>
 		<!-- other identifiers -->
-		<!--<div>-->
+		<div id="content">
 			<xf:trigger>
 				<xf:label>Add National Library identifier</xf:label>
 				<xf:insert 
@@ -147,9 +184,10 @@
 				<xf:label>Search</xf:label>
 				<xf:send ev:event="DOMActivate" submission="ardcpip-submission"/>
 			</xf:trigger>
-			<xf:output model="ardcpip-model" ref="instance('ardcpip-response')/srw:numberOfRecords"/>
+			<br />
+			<xf:output model="ardcpip-model" ref="instance('ardcpip-response')/srw:numberOfRecords"/><br />
 			<xf:output model="ardcpip-model" ref="instance('ardcpip-response')/srw:records/srw:record/srw:recordData
-						/r:registryObjects/r:registryObject[1]/r:party/r:name[@type='primary']/r:namePart[1]"/>
+						/r:registryObjects/r:registryObject[1]/r:party/r:name[@type='primary']/r:namePart[1]"/><br />
 			<xf:repeat model="ardcpip-model" nodeset="
 				instance('ardcpip-response')
 					/srw:records/srw:record/srw:recordData
@@ -250,7 +288,7 @@
 
 						<xf:repeat id="address-email-repeat" nodeset="r:electronic[@type='email']">
 							<!--<div>-->
-								<xf:input ref="r:value">
+								<xf:input ref="r:value" bind="email-address">
 									<xf:label>Email</xf:label>
 								</xf:input>
 								<xf:trigger>
@@ -259,6 +297,7 @@
 								</xf:trigger>
 							<!--</div>-->
 						</xf:repeat>
+
 						<xf:repeat id="address-other-repeat" nodeset="r:electronic[@type='other']">
 							<!--<div>-->
 								<xf:input ref="r:value">
@@ -621,6 +660,6 @@ TODO
 				<!-- send data to server (invoking xf:submission[@id='save']) when button pressed (=DOMActivate) -->
 				<xf:send ev:event="DOMActivate" submission="save"/>
 			</xf:trigger>
-		<!--</div>-->
+		</div> <!--content end-->
 	</body>
 </html>

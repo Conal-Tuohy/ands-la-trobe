@@ -1,0 +1,60 @@
+<group xmlns="http://hdl.handle.net/102.100.100/6976">
+	<nlaPartyIdentifier></nlaPartyIdentifier>
+	<institution>La Trobe University</institution>
+	<department>Department of Physics</department>
+	<abbreviatedName>CMSS</abbreviatedName>
+	<name>Centre for Materials and Surface Science</name>
+	<url response="">http://www.latrobe.edu.au/surface/</url>
+	<email>cmss@latrobe.edu.au</email>
+	<fax>+61-3-94791552</fax>
+	<phone>+61-3-94793031</phone>
+	<otherElectronic type=""></otherElectronic>
+	<startDate></startDate>
+	<endDate></endDate>
+	<postalAddress>
+		<text>Centre for Materials and Surface Science
+Department of Physics
+La Trobe University</text>
+		<state>Victoria</state>
+		<postcode>3086</postcode>
+		<country>Australia</country>
+	</postalAddress>
+	<streetAddress>
+		<text>Centre for Materials and Surface Science
+Department of Physics
+La Trobe University</text>
+		<state>Victoria</state>
+		<postcode>3086</postcode>
+		<country>Australia</country>
+	</streetAddress>
+	<hasMember id="latrobe:r.jones">Robert Jones</hasMember>
+	<hasMember id="latrobe:p.pigram">Paul Pigram</hasMember>
+	<subject type="anzsrc-for" code="020406">020406 Something or other</subject>
+	<subject type="anzsrc-for" code="030603">030603 Something or other</subject>
+	<subject type="anzsrc-for" code="030301">030301 Something or other</subject>
+	<subject type="local" code="plastic film">plastic film</subject>
+	<briefDescription>The Centre for Materials and Surface Science is an interdisciplinary research centre involving staff from the departments of Physics, Chemistry, Electronic Engineering and Pharmacy.  CMSS research activities are predominantly within the areas of materials and surface science involving significant interaction with both local and international industrial and academic research organisations.</briefDescription>
+	<fullDescription> </fullDescription>
+	<relatedWebsite>
+		<location>http://www.latrobe.edu.au/surface/contact.html</location>
+		<title>Centre for Materials and Surface Science - La Trobe University</title>
+		<notes>CMSS@Latrobe Homepage</notes>
+		<response></response>
+	</relatedWebsite>
+	<relatedWebsite>
+		<location>https://rli.latrobe.edu.au/index.php</location>
+		<title>Remote Laboratory Instrumentation</title>
+		<notes>Web interface for controlling CMSS Lab systems</notes>
+		<response></response>
+	</relatedWebsite>
+	<relatedPublication>
+	        <location></location>
+	        <title></title>
+	        <notes></notes>
+	</relatedPublication>
+	<relatedPublication>
+        		<location></location>
+        		<title></title>
+        		<notes></notes>
+	</relatedPublication>
+</group>

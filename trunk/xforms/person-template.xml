@@ -1,0 +1,42 @@
+<person xmlns="http://hdl.handle.net/102.100.100/6976">
+	<nlaPartyIdentifier />
+	<institution />
+	<department />
+	<name />
+	<abbreviatedName />
+	<url response=""/>
+	<dateOfBirth />
+	<email />
+	<phone />
+	<fax />
+	<postalAddress>
+		<text />
+		<country />
+		<postcode />
+		<state />
+	</postalAddress>
+	<briefDescription />
+	<fullDescription />
+	<relatedWebsite>
+		<location />
+		<title />
+		<notes />
+		<response />
+	</relatedWebsite>
+	<relatedWebsite>
+		<location />
+		<title />
+		<notes />
+		<response />
+	</relatedWebsite>
+	<relatedPublication>
+		<location />
+		<title />
+		<notes />
+	</relatedPublication>
+	<relatedPublication>
+		<location />
+		<title />
+		<notes />
+	</relatedPublication>
+</person>

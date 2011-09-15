@@ -1,0 +1,62 @@
+@namespace xf url(http://www.w3.org/2002/xforms);
+/* Note that when XSLTForms translates XForms markup into XHTML markup, the structure of the XHTML doesn't */
+/* exactly reflect that of the XForms, so care has to be taken to ensure the CSS rules apply. */
+/* In particular: when e.g. an XForms textarea is converted into an XHTML textarea, the output consists of a set of*/
+/* XHTML spans (one of which has @class="xforms-textarea"), wrapping an XHTML textarea. */
+/* In the output CSS, the "xf|textarea" */
+/* selector is mapped to ".xforms-textarea", which means that the rules associated with that selector will apply */
+/* to the wrapper span, and will be inherited by the inner XHTML textarea only if the XHTML textarea has the */
+/* value "inherit" for those properties, or "100%" in the case of width, etc. */
+
+
+textarea.xforms-value {
+	width: 100%;
+}
+
+xf|textarea {
+	width: 50em;
+}
+
+#heading h1 {	
+	font-family: sans-serif;
+	font-size: 40px;
+	vertical-align: 60%;
+	display: inline;
+}
+
+#logos {
+	float: right;
+}
+
+#logos img {
+	display: block;
+}
+
+.xforms-value {
+	width: 25em;
+}
+
+/* Active components/xforms css */
+
+.xforms-invalid {
+	background-color: #FF0;
+}
+
+.hover {
+	position: absolute;
+	z-index: 1;
+
+}
+
+.hidden {
+	visibility: hidden;
+}
+
+*:disabled {
+	visibility: hidden;
+}
+
+/* Display repeat-items with a dashed border */
+*:repeat-item { border: dashed; }
+
+

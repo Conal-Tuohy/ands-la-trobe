@@ -1,0 +1,339 @@
+<?xml-stylesheet href=" /xforms/xsltforms/xsltforms.xsl" type="text/xsl"?>
+<?xsltforms-options debug="yes" lang="en"?>
+<?css-conversion no?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:srw="http://www.loc.gov/zing/srw/"
+    xmlns:r="http://ands.org.au/standards/rif-cs/registryObjects"
+	xmlns:my="http://hdl.handle.net/102.100.100/6976"
+	my:dummy=""
+	srw:dummy="">
+
+	<head>
+		<title>Edit Person Metadata</title>
+
+		<link type="text/css" href="/xforms/css/xforms.css" rel="stylesheet"/>
+		<link type="text/css" href="/css/CMSS.css" rel="stylesheet"/>		
+
+		<xf:model id="person-metadata-editor-model">
+			<xf:instance id="person-metadata" src="person" />
+			<xf:instance id="person-template" src="/xforms/person-template.xml"/>
+			<xf:bind nodeset="instance('person-metadata')/my:dateOfBirth" type="xf:date" />
+			<xf:bind nodeset="instance('person-metadata')/my:email" type="xf:email" />
+			<xf:bind nodeset="instance('person-metadata')/my:url" type="xf:anyURI" constraint="(starts-with(.,'http://') or starts-with(.,'https://')) and not(contains(.,' '))" />
+			<xf:submission id="save" instance="person-metadata" action="person" method="put" serialization="application/xml" replace="none" />
+		
+		</xf:model>	
+
+		<!-- Leave this for now ... it's not essential -->
+		<!-- ARDC Party Infrastructure search -->
+		<xf:model id="ardcpip-model">
+
+			<!-- ARDC Party Infrastructure -->
+			<!-- what the user enters -->
+			<xf:instance id="ardcpip-query">
+				<request xmlns="">
+					<personal-name></personal-name>
+					<family-name></family-name>
+				</request>
+			</xf:instance>
+			<!-- what is actually sent to the ARDCPIP -->
+			<xf:instance id="ardcpip-request">
+				<request xmlns="">
+					<query>bath.name="Murray, Tim"</query>
+					<version>1.1</version>
+					<operation>searchRetrieve</operation>
+					<recordSchema>http://ands.org.au/standards/rif-cs/registryObjects</recordSchema>
+					<maximumRecords>100</maximumRecords>
+					<startRecord>1</startRecord>
+					<resultSetTTL>300</resultSetTTL>
+					<recordPacking>xml</recordPacking>
+					<recordXPath/>
+					<sortKeys/>
+				</request>
+			</xf:instance>
+			<!-- what is retrieved from the ARDCPIP -->
+			<xf:instance id="ardcpip-response">
+				<srw:searchRetrieveResponse>
+					<srw:numberOfRecords>0</srw:numberOfRecords>
+				</srw:searchRetrieveResponse>
+			</xf:instance>
+			<!-- the ARDCPIP query submission process -->
+			<xf:submission id="ardcpip-submission" 
+				action="/ardcpip/search/peopleaustralia"
+				method="get" separator="&amp;" 
+				ref="instance('ardcpip-request')"
+				replace="instance" instance="ardcpip-response">
+				<!--
+				<xf:action ev:event="xforms-submit">
+					<xf:rebuild/>
+					<xf:refresh/>
+
+					<setvalue ref="diagnosis" value="instance('patientRecord')/malady"/> 
+					<setvalue ref="city" value="instance('patientRecord')/city"/>
+				</xf:action>
+				-->
+
+
+			</xf:submission>
+		</xf:model>
+
+	</head>
+
+	<body>
+		<div id="heading">
+			<img width="215" height="82" src="/xforms/images/latrobe_university.gif" />
+			<h1>		
+				<xf:output value="instance('person-metadata')/my:name" />
+			</h1>
+		</div>
+		<div id="ardc-pip">
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:nlaPartyIdentifier" >
+				<xf:label>National Library Party Identifier:</xf:label>
+				<xf:hint>A National Library Party Identifier is an HTTP URI that uniquely identifies a person. It looks something like this: http://nla.gov.au/nla.party-516490</xf:hint>
+			</xf:input><br />
+
+		
+			<!--
+			leave this for now because it's hard ... come back to it later
+			<xf:trigger>
+				<xf:label>Add National Library identifier</xf:label>
+				<xf:insert 
+					ev:event="DOMActivate" 
+					origin="instance('person-template')/nlaPartyIdentifier" 
+					nodeset="instance('person-metadata')/name" 
+					position="before"/>
+			</xf:trigger>
+			<xf:input model="ardcpip-model" ref="personal-name">
+				<xf:label>Personal Name</xf:label>
+			</xf:input>
+			<xf:input model="ardcpip-model" ref="family-name">
+				<xf:label>Family Name</xf:label>
+			</xf:input>
+			<xf:trigger>
+				<xf:label>Search</xf:label>
+				<xf:send ev:event="DOMActivate" submission="ardcpip-submission"/>
+			</xf:trigger>
+			<br />
+			<xf:output model="ardcpip-model" ref="instance('ardcpip-response')/srw:numberOfRecords"/><br />
+			<xf:output model="ardcpip-model" 
+				ref="instance('ardcpip-response')/srw:records/srw:record/srw:recordData
+						/r:registryObjects/r:registryObject[1]/r:party/r:name[@type='primary']/r:namePart[1]"/><br />
+			<xf:repeat model="ardcpip-model" nodeset="
+				instance('ardcpip-response')
+					/srw:records/srw:record/srw:recordData
+						/r:registryObjects/r:registryObject/r:party/r:name[@type='primary']">
+				<xf:repeat nodeset="r:namePart"><xf:output ref="."/></xf:repeat>
+			</xf:repeat>
+			<xf:select1 ref="instance('person-metadata')/r:registryObject/r:party/r:identifier">
+				<xf:itemset model="ardcpip-model" nodeset="instance('ardcpip-response')
+					/srw:records/srw:record/srw:recordData
+						/r:registryObjects/r:registryObject">
+					<xf:label ref="r:party/r:name[@type='primary']/r:namePart[1]"/>
+					<xf:value ref="r:key"/>
+				</xf:itemset>
+			</xf:select1>
+			-->
+		</div>
+		<div id="body">
+					
+			<div id="logos">
+				<img style="position: relative" src="/xforms/images/cmss_logo.gif" />
+				<img src="/xforms/images/VeRSI.gif" />
+			</div>
+			<!--
+			<xf:output model="person-metadata-editor-model" ref="instance('person-metadata')/key" >
+				<xf:label>Key:</xf:label>
+			</xf:output>
+			<br/>
+			-->
+			<!--
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/personalName" >
+				<xf:label>Personal name:</xf:label>
+				<xf:hint>The person's first or given name</xf:hint>
+			</xf:input><br />
+			 
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/familyName" >
+				<xf:label>Family name:</xf:label>
+				<xf:hint>The person's family name</xf:hint>
+			</xf:input><br />
+-->
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:name" >
+				<xf:label>Name:</xf:label>
+				<xf:hint>The person's full name</xf:hint>
+			</xf:input><br />
+
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:department" >
+				<xf:label>Department:</xf:label>
+			</xf:input><br />
+			
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:institution" >
+				<xf:label>Institution:</xf:label>
+			</xf:input><br />
+
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:abbreviatedName" >
+				<xf:label>Abbreviated Name:</xf:label>
+				<xf:hint>Common nickname or other title</xf:hint>
+			</xf:input><br />
+	
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:dateOfBirth" >
+				<xf:label>Date of Birth:</xf:label>
+			</xf:input><br />
+		 	
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:url" >
+				<xf:label>URL:</xf:label>
+				<xf:hint>Personal Homepage or university profile page</xf:hint>
+			</xf:input><br />
+		
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:email" >
+				<xf:label>Email:</xf:label>
+			</xf:input><br />
+
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:fax" >
+				<xf:label>Fax:</xf:label>
+			</xf:input><br />
+			
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:phone" >
+				<xf:label>Phone:</xf:label>
+			</xf:input><br />
+<!--
+			<xf:repeat nodeset="instance('person-metadata')/otherElectronic">
+				<h3>Other Electronic <xf:trigger>
+										<xf:label>Remove</xf:label>
+										<xf:delete ev:event="DOMActivate" nodeset="." />
+									</xf:trigger></h3>
+				<xf:input ref="./@type" >
+					<xf:label>Type: </xf:label>
+					<xf:hint>Device, network or protocol</xf:hint>
+				</xf:input>
+				<xf:input ref="." >
+					<xf:label>Contact: </xf:label>
+				</xf:input>
+			</xf:repeat>	
+				<xf:trigger>
+					<xf:label>Add Other Electronic</xf:label>
+					<xf:insert
+						ev:event="DOMActivate"
+						origin="instance('person-template')/otherElectronic"
+						position="after"/>
+				</xf:trigger>
+-->	
+			<xf:textarea model="person-metadata-editor-model" ref="instance('person-metadata')/my:postalAddress/my:text" >
+				<xf:label><h2>Postal Address:</h2>Address:</xf:label>
+			</xf:textarea><br />
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:postalAddress/my:state" >
+				<xf:label>State:</xf:label>
+			</xf:input>
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:postalAddress/my:postcode"  >
+				<xf:label>Postcode: </xf:label>
+			</xf:input><br />
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:postalAddress/my:country"  >
+				<xf:label>Country: </xf:label>
+			</xf:input><br />
+
+			<xf:textarea model="person-metadata-editor-model" ref="instance('person-metadata')/my:streetAddress/my:text"  >
+				<xf:label><h2>Street Address:</h2>Address:</xf:label>
+			</xf:textarea>
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:streetAddress/my:state"  >
+				<xf:label>State:</xf:label>
+			</xf:input>
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:streetAddress/my:postcode" >
+				<xf:label>Postcode: </xf:label>
+			</xf:input><br />
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:streetAddress/my:country"  >
+				<xf:label>Country: </xf:label>
+			</xf:input><br />
+			<xf:textarea model="person-metadata-editor-model" ref="instance('person-metadata')/my:briefDescription">
+				<xf:label><h2>Brief Description</h2> </xf:label>
+				<xf:hint>A biographical summary briefly detailing the academic history of the person</xf:hint>
+			</xf:textarea>
+			<xf:textarea model="person-metadata-editor-model" ref="instance('person-metadata')/my:fullDescription">
+				<xf:label><h2>Full Description</h2> </xf:label>
+				<xf:hint>The person's full academic history, citations of their publications, notes about their other academic achievements, and any other relevant unstructured information</xf:hint>
+			</xf:textarea>
+
+			<xf:repeat nodeset="instance('person-metadata')/my:relatedWebsite">
+				<div>
+					<h2>Related website <xf:trigger>
+										<xf:label>Remove</xf:label>
+										<xf:delete ev:event="DOMActivate" nodeset="."/>
+									</xf:trigger></h2>
+									
+					<xf:input ref="my:location">
+						<xf:label>URL: </xf:label>
+					</xf:input>
+					<br/>
+					<xf:input ref="my:title">
+						<xf:label>Title: </xf:label>
+					</xf:input>
+					<br/>
+					<xf:input ref="my:notes">
+						<xf:label>Notes: </xf:label>
+					</xf:input>
+				</div>
+			</xf:repeat>
+				<xf:trigger>
+					<xf:label>Add Related Website</xf:label>
+					<!-- @ev:event is what triggers the insert -->
+					<!-- @origin is the location of the content to insert -->
+					<!-- @context is the evaluation context -->
+					<!-- @nodeset specifies where the inserted content goes (evaluated within @context) -->
+					<!-- @at specifies at which node in the nodeset to make the insertion (evaluated within @context) --> 
+					<!-- @position says to insert the content before or after the nodeset -->
+					<xf:insert
+						ev:event="DOMActivate"
+						origin="instance('person-template')/my:relatedWebsite[1]"
+						position="after"/>
+
+				</xf:trigger>
+	
+			<xf:repeat nodeset="instance('person-metadata')/my:relatedPublication">
+				<div>
+					<h2>Related publication<xf:trigger>
+												<xf:label>Remove</xf:label>
+												<xf:delete ev:event="DOMActivate" nodeset="."/>
+										</xf:trigger></h2>
+									
+					<xf:input ref="my:location">
+						<xf:label>URL: </xf:label>
+					</xf:input>
+					<br/>
+					<xf:input ref="my:title">
+						<xf:label>Title: </xf:label>
+					</xf:input>
+					<br/>
+					<xf:input ref="my:notes">
+						<xf:label>Notes: </xf:label>
+					</xf:input>
+				</div>
+			</xf:repeat>
+				<xf:trigger>
+					<xf:label>Add Related Publication</xf:label>
+					<!-- @ev:event is what triggers the insert -->
+					<!-- @origin is the location of the content to insert -->
+					<!-- @context is the evaluation context -->
+					<!-- @nodeset specifies where the inserted content goes (evaluated within @context) -->
+					<!-- @at specifies at which node in the nodeset to make the insertion (evaluated within @context) --> 
+					<!-- @position says to insert the content before or after the nodeset -->
+					<xf:insert
+						ev:event="DOMActivate"
+						origin="instance('person-template')/my:relatedPublication[1]"
+						position="after"/>
+
+				</xf:trigger>
+	
+
+		
+		</div>
+			<xf:trigger>
+				<xf:label>Save</xf:label>
+				<!-- send data to server (invoking xf:submission[@id='save']) when button pressed (=DOMActivate) -->
+				<xf:send ev:event="DOMActivate" submission="save"/>
+			</xf:trigger>
+		
+	</body>
+
+</html>		                                                                                                            

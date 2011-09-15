@@ -1,0 +1,39 @@
+<dataset xmlns="http://hdl.handle.net/102.100.100/6976">
+	<hasCollector id="" />
+	<abbreviatedName />
+	<name />
+	<otherElectronic type="" />
+	<otherElectronic type="" />
+	<startDate />
+	<endDate />
+	<url response="" />
+	<subject type="anzsrc-for" code="020406" />
+	<subject type="anzsrc-for" code="030603" />
+	<subject type="anzsrc-for" code="030301" />
+	<subject type="local" code="" />
+	<briefDescription />
+	<fullDescription />
+	<relatedWebsite>
+		<location />
+		<title />
+		<notes />
+		<response />
+	</relatedWebsite>
+	<relatedWebsite>
+		<location />
+		<title />
+		<notes />
+		<response />
+	</relatedWebsite>
+	<relatedPublication>
+		<location />
+		<title />
+		<notes />
+	</relatedPublication>
+	<relatedPublication>
+		<location />
+		<title />
+		<notes />
+	</relatedPublication>
+</dataset>
+

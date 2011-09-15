@@ -1,0 +1,320 @@
+
+<?xml-stylesheet href=" /xforms/xsltforms/xsltforms.xsl" type="text/xsl"?>
+<?xsltforms-options debug="yes" lang="en"?>
+<?css-conversion no?>
+<html 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xf="http://www.w3.org/2002/xforms" 
+	xmlns:ev="http://www.w3.org/2001/xml-events" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:my="http://hdl.handle.net/102.100.100/6976" 
+	xmlns:fedora="http://www.fedora.info/definitions/1/0/types/"
+	fedora:dummy=""
+	my:dummy="">
+	
+	<head>
+		<title>Edit Dataset Metadata</title>
+
+		<link type="text/css" href="/xforms/css/xforms.css" rel="stylesheet"/>
+		<link type="text/css" href="/css/CMSS.css" rel="stylesheet"/>
+
+
+		<xf:model id="dataset-metadata-editor-model">
+			<xf:instance id="dataset-metadata" src="dataset" />
+			<xf:instance id="dataset-template" src="/xforms/dataset-template.xml"/>
+			<xf:instance id="persons-query">
+				<search xmlns="">
+					<query>type~person</query> 
+					<pid>true</pid>
+					<label>true</label>
+					<title>true</title>
+					<description>true</description>
+					<xml>true</xml>
+				</search>
+			</xf:instance>
+			<xf:instance id="persons-result">
+				<!-- sample result -->
+				<result xmlns="http://www.fedora.info/definitions/1/0/types/">
+					<resultList>
+						<objectFields>
+							<pid>andsdb-dc19:1</pid>
+							<label>Object created through the SWORD deposit system</label>
+							<state>A</state>
+							<ownerId>fedoraAdmin</ownerId>
+							<cDate>2011-07-11T16:57:23.166Z</cDate>
+							<mDate>2011-08-16T12:45:33.011Z</mDate>
+							<dcmDate>2011-07-25T16:24:31.095Z</dcmDate>
+							<title>Dummy Title</title>
+							<creator>fedoraAdmin</creator>
+							<format>application/zip</format>
+							<identifier>andsdb-dc19:1</identifier>
+						</objectFields>
+					</resultList>
+				</result>
+			</xf:instance>
+			
+			<xf:bind nodeset="instance('dataset-metadata')/my:startDate" type="xf:dateTime" />
+			<xf:bind nodeset="instance('dataset-metadata')/my:endDate" type="xf:dateTime" />
+	                <xf:bind nodeset="instance('dataset-metadata')/my:email" type="xf:email" />
+	                <xf:bind nodeset="instance('dataset-metadata')/my:url" type="xf:anyURI" constraint="(starts-with(.,'http://') or starts-with(.,'https://')) and not(contains(.,' '))" />
+
+			
+			<xf:submission id="save" instance="dataset-metadata" action="dataset" method="put" serialization="application/xml" replace="none"/>
+			<!-- send the "persons-query" instance as a query to Fedora, and retrieve the result to "persons-result" instance -->  
+			<xf:submission id="search-persons" 
+				action="/fedora/search"
+				method="get"
+				ref="instance('persons-query')"
+				replace="instance"
+				instance="persons-result">
+				<xf:dispatch name="xforms-refresh"/>
+			</xf:submission>
+		
+		</xf:model>
+	
+	</head>
+	
+	<body>
+		<div id="heading">
+			<img width="215" height="82" src="/xforms/images/latrobe_university.gif" />
+			
+			<h1>
+				<xf:output ref="instance('dataset-metadata')/my:name" />
+			</h1>
+			
+		</div>
+		<div id="body">
+			<!--
+			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/key" >
+				<xf:label>Key:</xf:label>
+			</xf:input>
+			<br/>-->
+			<div id="logos">
+				<img style="position: relative" src="/xforms/images/cmss_logo.gif" />
+				<img src="/xforms/images/VeRSI.gif" />
+			</div>
+			
+			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:name" incremental="true">
+				<xf:label>Name:</xf:label>
+				<xf:hint>Name used to reference the dataset</xf:hint>
+			</xf:input>
+			<br/>
+			
+			<xf:output id="debug-output-identifier" model="dataset-metadata-editor-model"  ref="instance('dataset-metadata')/my:hasCollector/@id">
+				<xf:label>Debugging output of identifier:</xf:label>
+			</xf:output>
+			<br/>
+			
+			<xf:output id="debug-output-query" model="dataset-metadata-editor-model"  ref="instance('persons-query')/query">
+				<xf:label>Debugging output of query:</xf:label>
+			</xf:output>
+			<br/>
+			
+			<xf:output id="debug-output-query-result" model="dataset-metadata-editor-model"  ref="instance('persons-result')/fedora:resultList/fedora:objectFields[1]/fedora:pid">
+				<xf:label>Debugging output of result (first pid):</xf:label>
+			</xf:output>
+			<br/>
+			
+			<xf:repeat nodeset="instance('dataset-metadata')/my:hasCollector"> <!--start id search autocomplete -->
+				<xf:input ref="." incremental="true" id="my:hasCollector">
+					<xf:label>Collector:</xf:label>
+					<xf:hint>Any person involved in the acquisition of this dataset</xf:hint>
+					<!-- when the value in the field changes, construct a new query and submit it -->
+					<xf:action ev:event="xforms-value-changed">
+						<xf:setvalue ref="instance('persons-query')/query" value="concat('type~person title~', context(), '*')"/>
+						<xf:send submission="search-persons"/>
+					</xf:action>
+				</xf:input>
+				<div class="hover hidden">
+				<xf:select1 id="collectors-list" ref="@id" appearance="compact">
+					<xf:itemset model="dataset-metadata-editor-model" nodeset="instance('persons-result')/fedora:resultList/fedora:objectFields">
+						<xf:label ref="fedora:title"/>
+						<xf:value ref="fedora:pid"/>
+					</xf:itemset>
+					<xf:action ev:event="xforms-value-changed">
+						<xf:setvalue ref="context()/.." value="instance('persons-result')/fedora:resultList/fedora:objectFields[fedora:pid=context()]/fedora:title"/>
+
+						<!--
+						<xf:setvalue ref="context()/.." value="'foo'"/>
+						-->
+						<!--
+						<xf:message level="modal">Value changed</xf:message>
+						-->
+					</xf:action>
+				</xf:select1>
+				</div>
+				
+				<xf:trigger>
+					<xf:label>Remove</xf:label>
+					<xf:delete ev:event="DOMActivate" nodeset="." />
+				</xf:trigger>
+			</xf:repeat>
+			<xf:trigger>
+				<xf:label>Add Collector</xf:label>
+				<xf:insert ev:event="DOMActivate" origin="instance('dataset-template')/my:hasCollector[1]" position="after" />
+			</xf:trigger> <!-- end id search autocomplete -->
+			<br />
+			
+			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:abbreviatedName">
+				<xf:label>Abbreviated Name:</xf:label>
+			</xf:input>
+			<br />
+			
+			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:url">
+				<xf:label>URL:</xf:label>
+				<xf:hint>A link to an abstract or summary, or to another alternative location where the dataset can be accessed.</xf:hint>
+			</xf:input>
+			<br />
+			
+			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:email">
+				<xf:label>Email:</xf:label>
+				<xf:hint>Primary email contact for inquiries regarding this dataset</xf:hint>
+			</xf:input>
+			<br />
+			
+			<xf:repeat nodeset="instance('dataset-metadata')/my:otherElectronic">
+				<h3>Other Electronic 
+					<xf:trigger>
+					    	<xf:label>Remove</xf:label>
+						<xf:delete ev:event="DOMActivate" nodeset="." />
+					</xf:trigger>
+				</h3>
+				<xf:input ref="./@type">
+					<xf:label>Type: </xf:label>
+					<xf:hint>The type of contact or link (e.g. Handle, URI, OpenURL, etc)</xf:hint>
+				</xf:input>
+				<xf:input ref=".">
+					<xf:label>Contact: </xf:label>
+				</xf:input>
+				<xf:trigger>
+					<xf:label>Remove</xf:label>
+					<xf:delete ev:event="DOMActivate" nodeset="." />
+				</xf:trigger>
+			</xf:repeat>
+			<xf:trigger>
+				<xf:label>Add Other Electronic</xf:label>
+				<xf:insert ev:event="DOMActivate" origin="instance('dataset-template')/my:otherElectronic[1]" position="after"/>
+			</xf:trigger>
+			<br />
+			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:startDate">
+				<xf:label>Start Date: </xf:label>
+				<xf:hint></xf:hint>
+			</xf:input>
+			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:endDate">
+				<xf:label>End Date: </xf:label>
+				<xf:hint></xf:hint>
+			</xf:input>
+			<xf:textarea model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:briefDescription">
+				<xf:label>
+					<h2>Brief Description</h2>
+				</xf:label>
+				<xf:hint>A brief summary of the contents of the dataset</xf:hint>
+			</xf:textarea>
+			<xf:textarea model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:fullDescription">
+				<xf:label>
+					<h2>Full Description</h2>
+				</xf:label>
+				<xf:hint>A summary of dataset contents, including relevant sample data, coverage, and any other relevant details</xf:hint>
+			</xf:textarea>
+			
+			<xf:repeat nodeset="instance('dataset-metadata')/my:subject">
+				<h3>Subject:
+					<xf:trigger>
+						<xf:label>Remove</xf:label>
+						<xf:delete ev:event="DOMActivate" nodeset="." />
+					</xf:trigger>
+				</h3>
+				<xf:input ref="./@type">
+					<xf:label>Type: </xf:label>
+				</xf:input>
+				<xf:input ref=".">
+					<xf:label>Value: </xf:label>
+				</xf:input>
+				<xf:trigger>
+					<xf:label>Remove</xf:label>
+					<xf:delete ev:event="DOMActivate" nodeset="." />
+				</xf:trigger>
+			</xf:repeat>
+			<xf:trigger>
+				<xf:label>Add Subject</xf:label>
+				<xf:insert ev:event="DOMActivate" origin="instance('dataset-template')/my:subject[1]" position="after"/>
+			</xf:trigger>
+			
+			
+			<xf:repeat nodeset="instance('dataset-metadata')/my:relatedWebsite">
+				<div>
+					<h2>Related website <xf:trigger>
+										<xf:label>Remove</xf:label>
+							<xf:delete ev:event="DOMActivate" nodeset="."/>
+						</xf:trigger>
+					</h2>
+					
+					<xf:input ref="my:location">
+						<xf:label>URL: </xf:label>
+					</xf:input>
+					<br/>
+					<xf:input ref="my:title">
+						<xf:label>Title: </xf:label>
+					</xf:input>
+					<br/>
+					<xf:input ref="my:notes">
+						<xf:label>Notes: </xf:label>
+					</xf:input>
+				</div>
+			</xf:repeat>
+			<xf:trigger>
+				<xf:label>Add Related Website</xf:label>
+					<!-- @ev:event is what triggers the insert -->
+					<!-- @origin is the location of the content to insert -->
+					<!-- @context is the evaluation context -->
+					<!-- @nodeset specifies where the inserted content goes (evaluated within @context) -->
+					<!-- @at specifies at which node in the nodeset to make the insertion (evaluated within @context) --> 
+					<!-- @position says to insert the content before or after the nodeset -->
+				<xf:insert ev:event="DOMActivate" origin="instance('dataset-template')/my:relatedWebsite[1]" position="after"/>
+			
+			</xf:trigger>
+			
+			<xf:repeat nodeset="instance('dataset-metadata')/my:relatedPublication">
+				<div>
+					<h2>Related Publication <xf:trigger>
+												<xf:label>Remove</xf:label>
+							<xf:delete ev:event="DOMActivate" nodeset="."/>
+						</xf:trigger>
+					</h2>
+					
+					<xf:input ref="my:location">
+						<xf:label>URL: </xf:label>
+					</xf:input>
+					<br/>
+					<xf:input ref="my:title">
+						<xf:label>Title: </xf:label>
+					</xf:input>
+					<br/>
+					<xf:input ref="my:notes">
+						<xf:label>Notes: </xf:label>
+					</xf:input>
+				</div>
+			</xf:repeat>
+			<xf:trigger>
+				<xf:label>Add Related Publication</xf:label>
+					<!-- @ev:event is what triggers the insert -->
+					<!-- @origin is the location of the content to insert -->
+					<!-- @context is the evaluation context -->
+					<!-- @nodeset specifies where the inserted content goes (evaluated within @context) -->
+					<!-- @at specifies at which node in the nodeset to make the insertion (evaluated within @context) --> 
+					<!-- @position says to insert the content before or after the nodeset -->
+				<xf:insert ev:event="DOMActivate" origin="instance('dataset-template')/my:relatedPublication[1]" position="after"/>
+			
+			</xf:trigger>
+		
+		</div>
+		<xf:trigger>
+			<xf:label>Save</xf:label>
+				<!-- send data to server (invoking xf:submission[@id='save']) when button pressed (=DOMActivate) -->
+			<xf:send ev:event="DOMActivate" submission="save"/>
+		</xf:trigger>
+		<br />
+		
+	</body>
+
+</html>		                                                                                                            
