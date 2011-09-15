@@ -1,0 +1,39 @@
+<dataset xmlns="http://hdl.handle.net/102.100.100/6976">
+	<hasCollector id="pid">asdfasfd</hasCollector>
+	<hasCollector id="pid2">someone else</hasCollector>
+	<abbreviatedName></abbreviatedName>
+	<name>Sample Dataset Name</name>
+	<otherElectronic type=""></otherElectronic>
+	<otherElectronic type=""></otherElectronic>
+	<startDate>1993-01-04T21:05:00+1100</startDate>
+	<endDate></endDate>
+	<url response=""></url>
+	<subject type="anzsrc-for" code="020406">020406 Something or other</subject>
+	<subject type="anzsrc-for" code="030603">030603 Something or other</subject>
+	<subject type="anzsrc-for" code="030301">030301 Something or other</subject>
+	<subject type="local" code="plastic film">plastic film</subject>
+	<briefDescription>Test 1</briefDescription>
+	<fullDescription></fullDescription>
+	<relatedWebsite>
+		<location></location>
+		<title></title>
+		<notes></notes>
+		<response></response>
+	</relatedWebsite>
+	<relatedWebsite>
+		<location></location>
+		<title></title>
+		<notes></notes>
+		<response></response>
+	</relatedWebsite>
+	<relatedPublication>
+		<location></location>
+		<title></title>
+		<notes></notes>
+	</relatedPublication>
+	<relatedPublication>
+		<location></location>
+		<title></title>
+		<notes></notes>
+	</relatedPublication>
+</dataset>

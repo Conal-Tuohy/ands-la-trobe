@@ -1,0 +1,57 @@
+<group xmlns="http://hdl.handle.net/102.100.100/6976">
+	<nlaPartyIdentifier />
+	<institution />
+	<department />
+	<abbreviatedName />
+	<name />
+	<url response="" />
+	<email />
+	<fax />
+	<phone />
+	<otherElectronic type="" />
+	<startDate />
+	<endDate />
+	<postalAddress>
+			<text />
+			<state />
+			<postcode />
+			<country />
+	</postalAddress>
+	<streetAddress>
+			<text />
+			<state />
+			<postcode />
+			<country />
+	</streetAddress>
+	<hasMember id="" />
+	<hasMember id="" />
+	<subject type="anzsrc-for" code="020406" />
+	<subject type="anzsrc-for" code="030603" />
+	<subject type="anzsrc-for" code="030301" />
+	<subject type="local" code="" />
+	<briefDescription />
+	<fullDescription />
+	<relatedWebsite>
+			<location />
+			<title />
+			<notes />
+			<response />
+	</relatedWebsite>
+	<relatedWebsite>
+			<location />
+			<title />
+			<notes />
+			<response />
+	</relatedWebsite>
+	<relatedPublication>
+			<location />
+			<title />
+			<notes />
+	</relatedPublication>
+	<relatedPublication>
+			<location />
+			<title />
+			<notes />
+	</relatedPublication>
+</group>
+

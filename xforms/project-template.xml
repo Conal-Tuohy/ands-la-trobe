@@ -1,0 +1,57 @@
+<project xmlns="http://hdl.handle.net/102.100.100/6976">
+	<institution />
+	<department />
+	<alternativeName />
+	<alternativeName />
+	<abbreviatedName />
+	<name />
+	<url response=""/>
+	<email />
+	<otherElectronic type="" />
+	<startDate />
+	<endDate />
+	<postalAddress>	
+		<text />
+		<country />
+		<postcode />
+		<state />
+	</postalAddress>
+	<streetAddress>	
+		<text />
+		<country />
+		<postcode />
+		<state />
+	</streetAddress>
+	<hasMember id="aslasdf" />
+	<hasMember id="aslasdf2" />
+	<subject type="anzsrc-for" code="020406" />
+	<subject type="anzsrc-for" code="030603" />
+	<subject type="anzsrc-for" code="030301" />
+	<subject type="local" code="plastic film" />
+	<briefDescription />
+	<fullDescription />
+	<relatedWebsite>
+		<location />
+		<title />
+		<notes />
+		<response />
+	</relatedWebsite>
+	<relatedWebsite>
+		<location />
+		<title />
+		<notes />
+		<response />
+	</relatedWebsite>
+	<relatedPublication>
+		<location />
+		<title />
+		<notes />
+	</relatedPublication>
+	<relatedPublication>
+		<location />
+		<title />
+		<notes />
+	</relatedPublication>
+</project>
+
+

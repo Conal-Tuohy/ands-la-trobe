@@ -1,0 +1,266 @@
+
+<?xml-stylesheet href=" /xforms/xsltforms/xsltforms.xsl" type="text/xsl"?>
+<?xsltforms-options debug="yes" lang="en"?>
+<?css-conversion no?>
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xf="http://www.w3.org/2002/xforms" 
+	xmlns:ev="http://www.w3.org/2001/xml-events" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:my="http://hdl.handle.net/102.100.100/6976"
+	my:dummy=""
+	>
+	
+	<head>
+		<title>Edit Group Metadata</title>
+		
+		<xf:model id="group-metadata-editor-model">
+			<xf:instance id="group-metadata" src="group" />
+			<xf:instance id="group-template" src="/xforms/group-template.xml"/>
+			<xf:bind nodeset="instance('group-metadata')/my:startDate" type="xf:dateTime" />
+			<xf:bind nodeset="instance('group-metadata')/my:endDate" type="xf:dateTime" />
+			<xf:bind nodeset="instance('group-metadata')/my:email" type="xf:email" />
+			 <xf:bind nodeset="instance('group-metadata')/my:url" type="xf:anyURI" constraint="(starts-with(.,'http://') or starts-with(.,'https://')) and not(contains(.,' '))" />
+			<xf:submission id="save" instance="group-metadata" action="group" method="put" serialization="application/xml" replace="none"/>
+		
+		</xf:model>
+
+		<link type="text/css" href="/xforms/css/xforms.css" rel="stylesheet"/>
+		<link type="text/css" href="/css/CMSS.css" rel="stylesheet"/>	
+
+	
+	</head>
+	
+	<body>
+		<div id="heading">
+			<img width="215" height="82" src="/xforms/images/latrobe_university.gif" />
+			<h1>
+				<xf:output ref="instance('group-metadata')/my:name" />
+			</h1>
+		</div>
+		<div id="body">
+			<!--
+			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/key" >
+				<xf:label>Key:</xf:label>
+			</xf:input>
+			<br/>-->
+			
+			<div id="logos">
+				<img style="position: relative" src="/xforms/images/cmss_logo.gif" />
+				<img src="/xforms/images/VeRSI.gif" />
+			</div>
+			
+			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:name" incremental="true">
+				<xf:label>Name:</xf:label>
+				<xf:hint>Full name of the group</xf:hint>
+			</xf:input>
+			<br/>
+			
+			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:department">
+				<xf:label>Department:</xf:label>
+			</xf:input>
+			<br />
+			
+			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:institution">
+				<xf:label>Institution:</xf:label>
+			</xf:input>
+			<br/>
+			
+			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:abbreviatedName">
+				<xf:label>Abbreviated Name:</xf:label>
+				<xf:hint>Common acronym or shortened name</xf:hint>
+			</xf:input>
+			<br />
+			
+			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:url">
+				<xf:label>URL:</xf:label>
+				<xf:hint>Group homepage</xf:hint>
+			</xf:input>
+			<br />
+			
+			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:email">
+				<xf:label>Email:</xf:label>
+			</xf:input>
+			<br/>
+			
+			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:fax">
+				<xf:label>Fax:</xf:label>
+			</xf:input>
+			<br />
+			
+			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:phone">
+				<xf:label>Phone:</xf:label>
+			</xf:input>
+			<br />
+<!--
+			<xf:repeat nodeset="instance('group-metadata')/otherElectronic"> 
+				<h3>Other Electronic <xf:trigger>
+								    	<xf:label>Remove</xf:label>
+		    							<xf:delete ev:event="DOMActivate" nodeset="." />
+								    	</xf:trigger></h3>
+				<xf:input ref="./@type" >
+			    	<xf:label>Type: </xf:label>
+			    </xf:input>
+				<xf:input ref="." >
+			    	<xf:label>Contact: </xf:label>
+				</xf:input>
+			    <xf:trigger>
+			    	<xf:label>Remove</xf:label>
+		    		<xf:delete ev:event="DOMActivate" nodeset="." />
+		    	</xf:trigger>
+			</xf:repeat>
+				<xf:trigger>
+					<xf:label>Add Other Electronic</xf:label>
+				    	<xf:insert
+				        	ev:event="DOMActivate"
+			    	        origin="instance('group-template')/otherElectronic"
+			        	    position="after"/>
+				</xf:trigger>
+			<br />
+			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/startDate">
+				<xf:label>Start Date: </xf:label>
+			</xf:input>
+			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/endDate">
+				<xf:label>End Date: </xf:label>
+			</xf:input>
+-->
+			<h2>Postal Address:</h2>
+			<xf:textarea model="group-metadata-editor-model" ref="instance('group-metadata')/my:postalAddress/my:text">
+				<xf:label>Address:</xf:label>
+			</xf:textarea>
+			<br />
+			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:postalAddress/my:state">
+				<xf:label>State:</xf:label>
+			</xf:input>
+			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:postalAddress/my:postcode">
+				<xf:label>Postcode: </xf:label>
+			</xf:input>
+			<br />
+			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:postalAddress/my:country">
+				<xf:label>Country: </xf:label>
+			</xf:input>
+			<br />
+			<br />
+			<br />
+			<h2>Street Address:</h2>
+			<xf:textarea model="group-metadata-editor-model" ref="instance('group-metadata')/my:streetAddress/my:text">
+				<xf:label>Address:</xf:label>
+			</xf:textarea>
+			<br />
+			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:streetAddress/my:state">
+				<xf:label>State:</xf:label>
+			</xf:input>
+			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:streetAddress/my:postcode">
+				<xf:label>Postcode: </xf:label>
+			</xf:input>
+			<br />
+			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:streetAddress/my:country">
+				<xf:label>Country: </xf:label>
+			</xf:input>
+			<br />
+			<h2>Group members:</h2>
+			<xf:repeat nodeset="instance('group-metadata')/my:hasMember">
+				<xf:input ref=".">
+					<xf:label>Member ID:</xf:label>
+					<xf:hint>A key reference to a <i>person</i> record. This reference can be found in the <i>key</i> field of the person's record</xf:hint>
+				</xf:input>
+				<xf:trigger>
+					<xf:label>Remove</xf:label>
+					<xf:delete ev:event="DOMActivate" nodeset="."/>
+				</xf:trigger>
+			</xf:repeat>
+			<xf:trigger>
+				<xf:label>Add Member</xf:label>
+				<xf:insert ev:event="DOMActivate" origin="instance('group-template')/my:hasMember[1]" position="after" />
+			</xf:trigger>
+			
+			<xf:textarea model="group-metadata-editor-model" ref="instance('group-metadata')/my:briefDescription">
+				<xf:label>
+					<h2>Brief Description</h2>
+				</xf:label>
+				<xf:hint>Summary of the group's mission and achievements </xf:hint>
+			</xf:textarea>
+			<xf:textarea model="group-metadata-editor-model" ref="instance('group-metadata')/my:fullDescription">
+				<xf:label>
+					<h2>Full Description</h2>
+				</xf:label>
+				<xf:hint>Complete description of the group's goals and achievements, with as much detail as possible</xf:hint>
+			</xf:textarea>
+			<xf:repeat nodeset="instance('group-metadata')/my:relatedWebsite">
+				<div>
+					<h2>Related website
+						<xf:trigger>
+							<xf:label>Remove</xf:label>
+							<xf:delete ev:event="DOMActivate" nodeset="."/>
+						</xf:trigger>
+					</h2>
+					
+					<xf:input ref="my:location">
+						<xf:label>URL: </xf:label>
+					</xf:input>
+					<br/>
+					<xf:input ref="my:title">
+						<xf:label>Title: </xf:label>
+					</xf:input>
+					<br/>
+					<xf:input ref="my:notes">
+						<xf:label>Notes: </xf:label>
+					</xf:input>
+				</div>
+			</xf:repeat>
+			<xf:trigger>
+				<xf:label>Add Related Website</xf:label>
+					<!-- @ev:event is what triggers the insert -->
+					<!-- @origin is the location of the content to insert -->
+					<!-- @context is the evaluation context -->
+					<!-- @nodeset specifies where the inserted content goes (evaluated within @context) -->
+					<!-- @at specifies at which node in the nodeset to make the insertion (evaluated within @context) --> 
+					<!-- @position says to insert the content before or after the nodeset -->
+				<xf:insert ev:event="DOMActivate" origin="instance('group-template')/my:relatedWebsite[1]" position="after"/>
+				
+			</xf:trigger>
+			
+			<xf:repeat nodeset="instance('group-metadata')/my:relatedPublication">
+				<div>
+					<h2>Related Publication 
+						<xf:trigger>
+							<xf:label>Remove</xf:label>
+							<xf:delete ev:event="DOMActivate" nodeset="."/>
+						</xf:trigger>
+					</h2>
+					
+					<xf:input ref="my:location">
+						<xf:label>URL: </xf:label>
+					</xf:input>
+					<br/>
+					<xf:input ref="my:title">
+						<xf:label>Title: </xf:label>
+					</xf:input>
+					<br/>
+					<xf:input ref="my:notes">
+						<xf:label>Notes: </xf:label>
+					</xf:input>
+				</div>
+			</xf:repeat>
+			<xf:trigger>
+				<xf:label>Add Related Publication</xf:label>
+					<!-- @ev:event is what triggers the insert -->
+					<!-- @origin is the location of the content to insert -->
+					<!-- @context is the evaluation context -->
+					<!-- @nodeset specifies where the inserted content goes (evaluated within @context) -->
+					<!-- @at specifies at which node in the nodeset to make the insertion (evaluated within @context) --> 
+					<!-- @position says to insert the content before or after the nodeset -->
+				<xf:insert ev:event="DOMActivate" origin="instance('group-template')/my:relatedPublication[1]" position="after"/>
+				
+			</xf:trigger>
+		
+		</div>
+		<xf:trigger>
+			<xf:label>Save</xf:label>
+				<!-- send data to server (invoking xf:submission[@id='save']) when button pressed (=DOMActivate) -->
+			<xf:send ev:event="DOMActivate" submission="save"/>
+		</xf:trigger>
+	
+	</body>
+
+</html>		                                                                                                            
