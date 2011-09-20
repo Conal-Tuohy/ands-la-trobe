@@ -5,6 +5,21 @@
 	xmlns:fn="http://www.w3.org/2005/xpath-functions"
 	xmlns:foxml="info:fedora/fedora-system:def/foxml#">
 	
+	<p:declare-step type="lib:send-mail" name="send-mail">
+		<p:input port="message" primary="true"/>
+		<p:output port="result" primary="true"/>
+		<p:option name="from" required="true"/>
+		<p:option name="to" required="true"/>
+		<p:option name="subject" required="true"/>
+		<!-- 
+			mail -s subject -r from-address to-address
+		-->
+		<!-- execute "mail" program -->
+		<p:exec name="mail" command="mail" result-is-xml="false" source-is-xml="false" arg-separator="|">
+			<p:with-option name="args" select="concat('-s ', $subject, '|-r ', $from, '|', $to)"/>
+		</p:exec>
+	</p:declare-step>
+	
 	<p:declare-step type="lib:fedora-create-object" name="fedora-create-object">
 		<p:output port="fedora-response" primary="true"/>
 		<p:option name="pid" required="true"/>
