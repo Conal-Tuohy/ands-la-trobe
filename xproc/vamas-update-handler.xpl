@@ -44,7 +44,7 @@
 					$item-base-uri, 
 					'/datastreams/', 
 					$uri-encoded-dsid,	'-xml',
-					'?amp;formatURI=', fn:encode-for-uri('http://hdl.handle.net/102.100.100/6919'), 
+					'?&amp;formatURI=', fn:encode-for-uri('http://hdl.handle.net/102.100.100/6919'), 
 					'&amp;mimeType=', fn:encode-for-uri('application/vamas+xml'),
 					'&amp;dsLabel=', fn:encode-for-uri($label), '.xml'
 				)

@@ -22,8 +22,10 @@
 	<p:variable name="auth-method" select=" 'Basic' "/>
 	<p:variable name="method" select="/atom:entry/atom:title[@type='text']"/>
 	<p:variable name="datastream" select="/atom:entry/atom:category[@scheme='fedora-types:dsID']/@term"/>
+	<p:variable name="format-uri" select="/atom:entry/atom:category[@scheme='fedora-types:formatURI']/@term"/>
 	<p:variable name="identifier" select="/atom:entry/atom:summary[@type='text']"/>
 	<p:variable name="uri-encoded-identifier" select="fn:encode-for-uri($identifier)"/> 
+	<p:variable name="vamas-xml-format-uri" select="'http://hdl.handle.net/102.100.100/6919'"/>
 <!--
 	<p:variable name="fedora-base-uri" select="/atom:entry/atom:author/atom:uri"/>
 -->
@@ -40,7 +42,7 @@
 	
 	<!-- if the notification is that one of the metadata streams has been modified ... -->
 	<p:choose>
-		<p:when test="($datastream='dataset') or ($datastream='person') or ($datastream='group') or ($datastream='project') or ($datastream='vamas-xml') or ($datastream='surfacelab-xml')"> 
+		<p:when test="($datastream='dataset') or ($datastream='person') or ($datastream='group') or ($datastream='project') or ($format-uri=$vamas-xml-format-uri) or ($datastream='surfacelab-xml')"> 
 			
 			<!-- get the full FoxML representation -->
 			<lib:http-request method="get" detailed="false" name="foxml">
@@ -84,7 +86,7 @@
 
 			<!-- For changed dataset metadata streams only, convert the foxml to solr and update the Solr index -->
 			<p:choose>
-				<p:when test="($datastream='dataset') or ($datastream='vamas-xml') or ($datastream='surfacelab-xml')">
+				<p:when test="($datastream='dataset') or ($format-uri = $vamas-xml-format-uri) or ($datastream='surfacelab-xml')">
 					<lib:crosswalk xslt="../xslt/foxml-to-solr.xsl" name="foxml-to-solr">
 						<p:input port="source">
 							<p:pipe step="foxml" port="result"/>
@@ -112,7 +114,21 @@
 			<p:sink name="ignore-non-source-metadata-stream-update"/>
 		</p:otherwise>
 	</p:choose>
-
+	
+	<!-- test of sending email -->
+	<!--
+	<lib:send-mail name="send-test-email">
+		<p:input port="message">
+			<p:inline><message>Dear Conal Tuohy,
+Your dataset was updated.
+Please visit http://andsdb-dc19-dev.latrobe.edu.au/ to see it.</message></p:inline>
+		</p:input>
+		<p:with-option name="from" select="'conal.tuohy@versi.edu.au'"/>
+		<p:with-option name="to" select="'conal.tuohy@gmail.com'"/>
+		<p:with-option name="subject" select="'test of sending email from pipeline'"/>
+	</lib:send-mail>
+	<p:store name="message-sending-result" href="file:///tmp/send-email-result.xml"/>
+	-->
 
 </p:declare-step>
 
