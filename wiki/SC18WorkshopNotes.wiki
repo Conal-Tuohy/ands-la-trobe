@@ -10,4 +10,4 @@ Analysis: we will at a minimum provide export of tabular data. But need to integ
 
 Heritage Victoria will require summaries by context, functional groups, etc. HV require Excel so this would require training in Excel pivot tables, etc. But AHAD could provide pre-built reports to meet those requirements.
 
-
+Peter asks if the survey produced evidence of inter-site analysis. 
