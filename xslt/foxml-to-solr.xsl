@@ -26,7 +26,11 @@
 		<xsl:variable name="pid" select="/f:digitalObject/@PID"/>
 		<xsl:variable name="uri-encoded-pid" select="concat(substring-before($pid, ':'), '%3A', substring-after($pid, ':'))"/>
 		<xsl:variable name="handle-datastream" select="/f:digitalObject/f:datastream[@ID='handle']/f:datastreamVersion[last()]/f:xmlContent"/>
-		<xsl:variable name="vamas-xml-datastream" select="/f:digitalObject/f:datastream[@ID='vamas-xml']/f:datastreamVersion[last()]/f:xmlContent"/>
+		<!-- vamas xml datastream is the content of the stream whose current version has the content type 'application/vamas+xml' -->
+		<xsl:variable name="vamas-xml-datastream" select="/f:digitalObject/f:datastream/f:datastreamVersion
+			[last()][@MIMETYPE='application/vamas+xml']
+				/f:xmlContent
+		"/>
 		<xsl:variable name="itm-xml-datastream" select="/f:digitalObject/f:datastream[@ID='vamas-xml']/f:datastreamVersion[last()]/f:xmlContent"/>
 		<xsl:variable name="dataset-datastream" select="/f:digitalObject/f:datastream[@ID='dataset']/f:datastreamVersion[last()]/f:xmlContent"/>
 		<xsl:variable name="person-datastream" select="/f:digitalObject/f:datastream[@ID='person']/f:datastreamVersion[last()]/f:xmlContent"/>
@@ -47,7 +51,13 @@
 				<xsl:if test="$vamas-xml-datastream">
 					<field name="technique"><xsl:value-of select="$vamas-xml-datastream/vamas:dataset/vamas:block[1]/vamas:technique"/></field>
 					<field name="instrument_model"><xsl:value-of select="$vamas-xml-datastream/vamas:dataset/vamas:instrumentModel"/></field>
-					<field name="date"><xsl:value-of select="$vamas-xml-datastream/vamas:dataset/vamas:block[1]/vamas:date"/>Z</field><!-- NB time zone suffix required by Solr -->
+
+					<!-- NB the 'Z' time zone suffix is required by Solr -->
+					<field name="date"><xsl:value-of select="$vamas-xml-datastream/vamas:dataset/vamas:block[1]/vamas:date"/>Z</field>
+					
+					<!-- also store link to VAMAS XML datastream for rendering a graph -->
+					<xsl:variable name="uri-encoded-vamas-xml-dsid" select="translate($vamas-xml-datastream/ancestor::f:datastream/@ID, ' ', '+')"/>
+					<field name="vamas-xml">/fedora/objects/<xsl:value-of select="$uri-encoded-pid"/>/datastreams/<xsl:value-of select="$uri-encoded-vamas-xml-dsid"/>/content</field>
 				</xsl:if>
 				
 				<!-- reference to the metadata stream -->
@@ -61,9 +71,10 @@
 				<xsl:for-each select="/f:digitalObject/f:datastream[
 						not(
 							@ID='DC' or @ID='AUDIT' or @ID='RELS-EXT' or 
-							@ID='rif-cs' or @ID='solr' or @ID='vamas-xml' or @ID='handle' or
+							@ID='rif-cs' or @ID='solr' or @ID='handle' or
 							@ID='boss' or 
-							@ID='person' or @ID='group' or @ID='project' or @ID='dataset'
+							@ID='person' or @ID='group' or @ID='project' or @ID='dataset' or
+							f:datastreamVersion[last()]/@MIMETYPE='application/vamas+xml'
 						)
 				]">
 				<!--
