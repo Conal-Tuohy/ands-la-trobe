@@ -174,7 +174,7 @@
 	<key> </key>
 	<alternativeName></alternativeName>
 	<abbreviatedName></abbreviatedName>
-	<primaryName>Sample Dataset Name</primaryName>
+	<name>Sample Dataset Name</name>
 	<url></url>
 	<email></email>
 	<fax></fax>
