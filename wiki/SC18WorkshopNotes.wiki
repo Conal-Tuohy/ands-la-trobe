@@ -1,23 +1,5 @@
-#summary notes for first sc18 workshop
+#summary notes from first sc18 workshop
 
-SC18 workshop
+=SC18 workshop=
 
-
-tDAR background and existing functionality
-	server-based product - not a desktop app
-		integrates many components
-		open source
-	archive repository of digital objects (documents, datasets, images)
-		capture data and metadata
-	pgAdmin view of the uploaded databases
-	message: everything retained as it was:
-		files stored as uploaded
-		tables extracted out of files and copied into a postgresql server
-		no normalization or transformation - just a copy
-what we intend to add:
-	object-level data entry/maintenance/reporting
-	customising import process, automating it to make it less fiddly - streamline
-	linking images to object-level metadata
-	publication of metadata to ARDC
-ARDC/RIF-CS
-doi / datacite
+http://services.ands.org.au/home/orca/rda/view.php?key=102.100.100%2F4604
