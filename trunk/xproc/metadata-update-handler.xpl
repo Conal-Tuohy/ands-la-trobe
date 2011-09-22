@@ -84,31 +84,24 @@
 				<p:with-option name="uri" select="concat($item-base-uri, '/datastreams/DC')"/>
 			</lib:http-request>
 
-			<!-- For changed dataset metadata streams only, convert the foxml to solr and update the Solr index -->
-			<p:choose>
-				<p:when test="($datastream='dataset') or ($format-uri = $vamas-xml-format-uri) or ($datastream='surfacelab-xml')">
-					<lib:crosswalk xslt="../xslt/foxml-to-solr.xsl" name="foxml-to-solr">
-						<p:input port="source">
-							<p:pipe step="foxml" port="result"/>
-						</p:input>
-					</lib:crosswalk>
-					<!-- post the solr stream to the solr server -->
-					<lib:http-request method="post" uri="http://localhost:8080/solr-example/update"/>
-					<!-- save the solr record in fedora too -->
-					<lib:fedora-save-datastream name="solr-to-fedora">
-						<p:input port="source">
-							<p:pipe step="foxml-to-solr" port="result"/>
-						</p:input>
-						<p:with-option name="username" select="$fedora-username"/>
-						<p:with-option name="password" select="$fedora-password"/>
-						<p:with-option name="uri" select="concat($item-base-uri, '/datastreams/solr')"/>
-					</lib:fedora-save-datastream>
-					<p:sink name="ignore-response-from-solr"/>
-				</p:when>
-				<p:otherwise>
-					<p:sink name="solr-ignore-foxml-of-non-dataset-record"/>
-				</p:otherwise>
-			</p:choose>
+			<!-- Convert the foxml to solr and update the Solr index -->
+			<lib:crosswalk xslt="../xslt/foxml-to-solr.xsl" name="foxml-to-solr">
+				<p:input port="source">
+					<p:pipe step="foxml" port="result"/>
+				</p:input>
+			</lib:crosswalk>
+			<!-- post the solr stream to the solr server -->
+			<lib:http-request method="post" uri="http://localhost:8080/solr-example/update"/>
+			<!-- save the solr record in fedora too -->
+			<lib:fedora-save-datastream name="solr-to-fedora">
+				<p:input port="source">
+					<p:pipe step="foxml-to-solr" port="result"/>
+				</p:input>
+				<p:with-option name="username" select="$fedora-username"/>
+				<p:with-option name="password" select="$fedora-password"/>
+				<p:with-option name="uri" select="concat($item-base-uri, '/datastreams/solr')"/>
+			</lib:fedora-save-datastream>
+			<p:sink name="ignore-response-from-solr"/>
 		</p:when>
 		<p:otherwise>
 			<p:sink name="ignore-non-source-metadata-stream-update"/>
