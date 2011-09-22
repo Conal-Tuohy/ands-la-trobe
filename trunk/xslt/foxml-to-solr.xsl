@@ -27,9 +27,15 @@
 		<xsl:variable name="uri-encoded-pid" select="concat(substring-before($pid, ':'), '%3A', substring-after($pid, ':'))"/>
 		<xsl:variable name="handle-datastream" select="/f:digitalObject/f:datastream[@ID='handle']/f:datastreamVersion[last()]/f:xmlContent"/>
 		<!-- vamas xml datastream is the content of the stream whose current version has the content type 'application/vamas+xml' -->
-		<xsl:variable name="vamas-xml-datastream" select="/f:digitalObject/f:datastream/f:datastreamVersion
+		<xsl:variable name="vamas-xml-datastreams" select="/f:digitalObject/f:datastream/f:datastreamVersion
 			[last()][@MIMETYPE='application/vamas+xml']
 				/f:xmlContent
+		"/>
+		<!-- vamas datastream is the stream whose current version has the content type 'chemical/x-vamas-iso14976' -->
+		<xsl:variable name="vamas-datastream-ids" select="
+			/f:digitalObject/f:datastream[
+				f:datastreamVersion[last()]/@MIMETYPE='chemical/x-vamas-iso14976'
+			]/@ID
 		"/>
 		<xsl:variable name="itm-xml-datastream" select="/f:digitalObject/f:datastream[@ID='vamas-xml']/f:datastreamVersion[last()]/f:xmlContent"/>
 		<xsl:variable name="dataset-datastream" select="/f:digitalObject/f:datastream[@ID='dataset']/f:datastreamVersion[last()]/f:xmlContent"/>
@@ -41,6 +47,7 @@
 			<doc>
 				<!-- searchable metadata fields -->
 				<field name="type"><xsl:value-of select="$metadata-datastream-id"/></field>
+				<field name="edit-uri">/fedora-objects/<xsl:value-of select="$uri-encoded-pid"/>/datastreams/<xsl:value-of select="$metadata-datastream-id"/>.xhtml</field>
 				<field name="id"><xsl:value-of select="$pid"/></field>
 				<xsl:if test="$handle-datastream">
 					<field name="handle"><xsl:value-of select="concat('http://hdl.handle.net/', $handle-datastream//response/identifier/@handle)"/></field>
@@ -48,16 +55,22 @@
 				<xsl:if test="$dataset-datastream">
 					<field name="title"><xsl:value-of select="$dataset-datastream/dataset:dataset/dataset:name"/></field>
 				</xsl:if>
-				<xsl:if test="$vamas-xml-datastream">
-					<field name="technique"><xsl:value-of select="$vamas-xml-datastream/vamas:dataset/vamas:block[1]/vamas:technique"/></field>
-					<field name="instrument_model"><xsl:value-of select="$vamas-xml-datastream/vamas:dataset/vamas:instrumentModel"/></field>
+				<xsl:for-each select="$vamas-datastream-ids">
+					<field name="vamas">/fedora/objects/<xsl:value-of select="$uri-encoded-pid"/>/datastreams/<xsl:value-of select="."/>/content</field>
+				</xsl:for-each>
+				<xsl:if test="$vamas-xml-datastreams">
+					<!-- QAZ there may be multiple techniques, but here we assume just one -->
+					<field name="technique"><xsl:value-of select="$vamas-xml-datastreams/vamas:dataset/vamas:block[1]/vamas:technique"/></field>
+					<field name="instrument_model"><xsl:value-of select="$vamas-xml-datastreams/vamas:dataset/vamas:instrumentModel"/></field>
 
 					<!-- NB the 'Z' time zone suffix is required by Solr -->
-					<field name="date"><xsl:value-of select="$vamas-xml-datastream/vamas:dataset/vamas:block[1]/vamas:date"/>Z</field>
+					<field name="date"><xsl:value-of select="$vamas-xml-datastreams/vamas:dataset/vamas:block[1]/vamas:date"/>Z</field>
 					
-					<!-- also store link to VAMAS XML datastream for rendering a graph -->
-					<xsl:variable name="uri-encoded-vamas-xml-dsid" select="translate($vamas-xml-datastream/ancestor::f:datastream/@ID, ' ', '+')"/>
-					<field name="vamas-xml">/fedora/objects/<xsl:value-of select="$uri-encoded-pid"/>/datastreams/<xsl:value-of select="$uri-encoded-vamas-xml-dsid"/>/content</field>
+					<!-- also store link to VAMAS XML datastreams for rendering a graph -->
+					<xsl:for-each select="$vamas-xml-datastreams">
+						<xsl:variable name="uri-encoded-vamas-xml-dsid" select="translate(./ancestor::f:datastream/@ID, ' ', '+')"/>
+						<field name="vamas-xml">/fedora/objects/<xsl:value-of select="$uri-encoded-pid"/>/datastreams/<xsl:value-of select="$uri-encoded-vamas-xml-dsid"/>/content</field>
+					</xsl:for-each>
 				</xsl:if>
 				
 				<!-- reference to the metadata stream -->
