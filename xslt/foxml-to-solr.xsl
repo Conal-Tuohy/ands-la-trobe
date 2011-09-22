@@ -3,7 +3,7 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:f="info:fedora/fedora-system:def/foxml#"
 	xmlns:vamas="http://hdl.handle.net/102.100.100/6919"
-	xmlns:dataset="http://hdl.handle.net/102.100.100/6976"
+	xmlns:metadata="http://hdl.handle.net/102.100.100/6976"
 	exclude-result-prefixes="f vamas"
 >
 
@@ -42,21 +42,34 @@
 		<xsl:variable name="person-datastream" select="/f:digitalObject/f:datastream[@ID='person']/f:datastreamVersion[last()]/f:xmlContent"/>
 		<xsl:variable name="group-datastream" select="/f:digitalObject/f:datastream[@ID='group']/f:datastreamVersion[last()]/f:xmlContent"/>
 		<xsl:variable name="project-datastream" select="/f:digitalObject/f:datastream[@ID='project']/f:datastreamVersion[last()]/f:xmlContent"/>
-		<xsl:variable name="metadata-datastream-id" select="($dataset-datastream | $person-datastream | $group-datastream | $project-datastream)/ancestor::f:datastream/@ID"/>
+		<xsl:variable name="metadata-datastream" select="$dataset-datastream | $person-datastream | $group-datastream | $project-datastream"/>
+		<xsl:variable name="metadata-datastream-id" select="$metadata-datastream/ancestor::f:datastream/@ID"/>
 		<add commitWithin="1000">
 			<doc>
 				<!-- searchable metadata fields -->
 				<field name="type"><xsl:value-of select="$metadata-datastream-id"/></field>
-				<field name="edit-uri">/fedora-objects/<xsl:value-of select="$uri-encoded-pid"/>/datastreams/<xsl:value-of select="$metadata-datastream-id"/>.xhtml</field>
+				<field name="edit-uri"><xsl:value-of select="concat(
+					'/fedora-objects/',
+					$uri-encoded-pid,
+					'/datastreams/',
+					$metadata-datastream-id,
+					'.xhtml'
+				)"/></field>
 				<field name="id"><xsl:value-of select="$pid"/></field>
 				<xsl:if test="$handle-datastream">
 					<field name="handle"><xsl:value-of select="concat('http://hdl.handle.net/', $handle-datastream//response/identifier/@handle)"/></field>
 				</xsl:if>
-				<xsl:if test="$dataset-datastream">
-					<field name="title"><xsl:value-of select="$dataset-datastream/dataset:dataset/dataset:name"/></field>
+				<xsl:if test="$metadata-datastream">
+					<field name="title"><xsl:value-of select="$metadata-datastream/metadata:*/metadata:name"/></field>
 				</xsl:if>
 				<xsl:for-each select="$vamas-datastream-ids">
-					<field name="vamas">/fedora/objects/<xsl:value-of select="$uri-encoded-pid"/>/datastreams/<xsl:value-of select="."/>/content</field>
+					<field name="vamas"><xsl:value-of select="concat(
+						'/fedora/objects/',
+						$uri-encoded-pid,
+						'/datastreams/',
+						.,
+						'/content'
+					)"/></field>
 				</xsl:for-each>
 				<xsl:if test="$vamas-xml-datastreams">
 					<!-- QAZ there may be multiple techniques, but here we assume just one -->
@@ -69,12 +82,24 @@
 					<!-- also store link to VAMAS XML datastreams for rendering a graph -->
 					<xsl:for-each select="$vamas-xml-datastreams">
 						<xsl:variable name="uri-encoded-vamas-xml-dsid" select="translate(./ancestor::f:datastream/@ID, ' ', '+')"/>
-						<field name="vamas-xml">/fedora/objects/<xsl:value-of select="$uri-encoded-pid"/>/datastreams/<xsl:value-of select="$uri-encoded-vamas-xml-dsid"/>/content</field>
+						<field name="vamas-xml"><xsl:value-of select="concat(
+							'/fedora/objects/',
+							$uri-encoded-pid,
+							'/datastreams/',
+							$uri-encoded-vamas-xml-dsid,
+							'/content')
+						"/></field>
 					</xsl:for-each>
 				</xsl:if>
 				
 				<!-- reference to the metadata stream -->
-				<field name="metadata-stream-uri">/fedora/objects/<xsl:value-of select="$uri-encoded-pid"/>/datastreams/<xsl:value-of select="$metadata-datastream-id"/>/content</field>
+				<field name="metadata-stream-uri"><xsl:value-of select="concat(
+					'/fedora/objects/',
+					$uri-encoded-pid,
+					'/datastreams/',
+					$metadata-datastream-id,
+					'/content'
+				)"/></field>
 				
 				<!-- references to the downloadable datastreams (for generating direct download hyperlinks) -->
 				<!-- 
