@@ -5,7 +5,7 @@
 >
 	<xsl:template match="boss:job">
 		<dataset xmlns="http://hdl.handle.net/102.100.100/6976">
-			<hasCollector identifier="person:{boss:request/boss:value[@name='Users UID']}"><xsl:value-of select="
+			<hasCollector identifier="person:{boss:request/boss:value[@name='Users ID']}"><xsl:value-of select="
 				concat(
 					boss:request/boss:value[@name='Users Name'],
 					' ',
