@@ -4,7 +4,7 @@
 
 When datasets are deposited into the CMSS repository, a metadata record associated with the data is first exported from the BOSS RLI booking system, and packaged up in a submission package. 
 
-The BOSS XML file uses the namespace URI which currently redirects to this page.
+The BOSS XML file uses the namespace URI http://hdl.handle.net/102.100.100/7003 which currently redirects to this page.
 
 The BOSS XML data file is a dump of fields from a relational database whose schema is not stable. The boss XML data file format is not defined by an XML schema. A sample document appears below:
 
