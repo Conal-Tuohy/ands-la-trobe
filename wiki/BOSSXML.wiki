@@ -9,7 +9,7 @@ The BOSS XML file uses the namespace URI http://hdl.handle.net/102.100.100/7003 
 The BOSS XML data file is a dump of fields from a relational database whose schema is not stable. The boss XML data file format is not defined by an XML schema. A sample document appears below:
 
 {{{
-<experiment>
+<job xmlns="http://hdl.handle.net/102.100.100/7003">
 <logsheet>
 <value name="Instrument">XPS-Ultra</value>
 <value name="Job Number">XPS-Ultra-10010</value>
@@ -78,13 +78,26 @@ The BOSS XML data file is a dump of fields from a relational database whose sche
 
 </logsheet>
 <request>
-<value name="User ID">kc3taylor</value>
+<value name="Users ID">kc3taylor</value>
 <value name="RequestNumber">2011-07-29_15:52:36-XPS-kc3taylor</value>
 <value name="date">2011-07-29</value>
 <value name="technique">XPS</value>
 <value name="description">Pure metal films, between 0.1 and 2mm in thickness, roughly 1cm X 1cm in size.</value>
 <value name="numberofsamples">5</value>
-<value name="samples"><row><column>1</column><column>Copper 0.1mm thick</column><column>undivided solid</column></row><row><column>2</column><column>Iron 0.1mm thick</column><column>undivided solid</column></row><row><column>3</column><column>Gold 0.127mm thick</column><column>undivided solid</column></row><row><column>4</column><column>Silver 0.25mm thick</column><column>undivided solid</column></row><row><column>5</column><column>Aluminium 2mm thick</column><column>undivided solid</column></row></value>
+<value name="samples">
+   <row>
+      <column>1</column>
+      <column>Copper 0.1mm thick</column>
+      <column>undivided solid</column>
+   </row>
+   <row>
+      <column>2</column>
+      <column>Iron 0.1mm thick</column>
+      <column>undivided solid</column>
+   </row>
+   <row>
+      <column>3</column>
+      <column>Gold 0.127mm thick</column><column>undivided solid</column></row><row><column>4</column><column>Silver 0.25mm thick</column><column>undivided solid</column></row><row><column>5</column><column>Aluminium 2mm thick</column><column>undivided solid</column></row></value>
 
 <value name="ultrahighvacuum">yes</value>
 <value name="magnetic">no</value>
@@ -119,5 +132,5 @@ Postcode. 3086</value>
 <value name="Users Fax"></value>
 <value name="Users Email">kaitlyn.taylor@latrobe.edu.au</value>
 </request>
-</experiment>
+</job>
 }}}
