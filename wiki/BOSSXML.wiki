@@ -1,0 +1,123 @@
+#summary metadata exported from the RLI booking system software
+
+= BOSS XML =
+
+When datasets are deposited into the CMSS repository, a metadata record associated with the data is first exported from the BOSS RLI booking system, and packaged up in a submission package. 
+
+The BOSS XML file uses the namespace URI which currently redirects to this page.
+
+The BOSS XML data file is a dump of fields from a relational database whose schema is not stable. The boss XML data file format is not defined by an XML schema. A sample document appears below:
+
+{{{
+<experiment>
+<logsheet>
+<value name="Instrument">XPS-Ultra</value>
+<value name="Job Number">XPS-Ultra-10010</value>
+<value name="ProposalNumber">2011-07-29_15:52:36-XPS-kc3taylor</value>
+<value name="Clips">1</value>
+<value name="Composition"></value>
+<value name="CompositionKV"></value>
+<value name="ConstantHeightBar"></value>
+<value name="DepthProfiles"></value>
+<value name="EBeamHeater"></value>
+<value name="EBeamHeaterNumber"></value>
+<value name="fDay">5</value>
+
+<value name="FlatBar">1</value>
+<value name="FlatStub"></value>
+<value name="fMonth">8</value>
+<value name="fPressureY">1</value>
+<value name="fPressureYY">8</value>
+<value name="Fracture"></value>
+<value name="fTime">16:30</value>
+<value name="fYear">2011</value>
+<value name="Gas"></value>
+<value name="GeneralDescription">Pure metal films, between 0.1 and 2mm in thickness, roughly 1cm X 1cm in size.</value>
+
+<value name="HeatingCooling"></value>
+<value name="Images"></value>
+<value name="InstrumentTimeHours">7</value>
+<value name="InstrumentTimeMinutes">15</value>
+<value name="LineScans"></value>
+<value name="LoadLock"></value>
+<value name="LoadLockCooling"></value>
+<value name="LoadLockCoolingT"></value>
+<value name="LoadLockHeating"></value>
+<value name="LoadLockHeatingT"></value>
+<value name="Maps"></value>
+<value name="noSamples">4</value>
+<value name="operator"></value>
+<value name="Other"></value>
+
+<value name="OtherSampleTreatment"></value>
+<value name="OtherSampleTreatmentText"></value>
+<value name="OtherSelect"></value>
+<value name="RecessedBar"></value>
+<value name="RecessedStub"></value>
+<value name="SAC"></value>
+<value name="SACCooling"></value>
+<value name="SACCoolingT"></value>
+<value name="SACHeating"></value>
+<value name="SACHeatingT"></value>
+<value name="Screws"></value>
+<value name="sDay">5</value>
+<value name="sMonth">8</value>
+<value name="Spectra">1</value>
+
+<value name="sPressureY">7</value>
+<value name="sPressureYY">9</value>
+<value name="sTime">09:00</value>
+<value name="sYear">2011</value>
+<value name="Tape"></value>
+<value name="CMSSprobetable"><row><column></column></row><row><column></column></row><row><column></column></row></value>
+<value name="depthprofilingtable"><row><column>5.0</column><column>1.2</column><column>3</column></row><row><column>5.0</column><column>1.2</column><column>3</column></row><row><column>5.0</column><column>0.9</column><column>3</column></row><row><column>5.0</column><column>1.0</column><column>3</column></row></value>
+
+<value name="probetable"><row><column></column></row><row><column></column></row></value>
+<value name="sampletable"><row><column>1</column><column>Copper 0.1mm thick</column><column>undivided solid</column></row><row><column>2</column><column>Iron 0.1mm thick</column><column>undivided solid</column></row><row><column>3</column><column>Gold 0.127mm thick</column><column>undivided solid</column></row><row><column>4</column><column>Silver 0.25mm thick</column><column>undivided solid</column></row></value>
+<value name="xraytable"><row><column>Mono Al</column><column>10</column><column>15</column></row></value>
+
+</logsheet>
+<request>
+<value name="User ID">kc3taylor</value>
+<value name="RequestNumber">2011-07-29_15:52:36-XPS-kc3taylor</value>
+<value name="date">2011-07-29</value>
+<value name="technique">XPS</value>
+<value name="description">Pure metal films, between 0.1 and 2mm in thickness, roughly 1cm X 1cm in size.</value>
+<value name="numberofsamples">5</value>
+<value name="samples"><row><column>1</column><column>Copper 0.1mm thick</column><column>undivided solid</column></row><row><column>2</column><column>Iron 0.1mm thick</column><column>undivided solid</column></row><row><column>3</column><column>Gold 0.127mm thick</column><column>undivided solid</column></row><row><column>4</column><column>Silver 0.25mm thick</column><column>undivided solid</column></row><row><column>5</column><column>Aluminium 2mm thick</column><column>undivided solid</column></row></value>
+
+<value name="ultrahighvacuum">yes</value>
+<value name="magnetic">no</value>
+<value name="afteranalysis">returned</value>
+<value name="hazardous">no</value>
+<value name="dangerous">no</value>
+<value name="analysis">All samples require wide scans, photoelectron peaks and valence band scans.</value>
+<value name="analysisby">user</value>
+<value name="accesspresent">no</value>
+<value name="accesstype">local</value>
+
+<value name="users">""</value>
+<value name="sapA"></value>
+<value name="sapB"></value>
+<value name="status">approved</value>
+<value name="billing">credit</value>
+<value name="jobcat">internal (LTU)</value>
+<value name="ASA"></value>
+<value name="Instrument">XPS-Ultra</value>
+<value name="teachingCourseCode"></value>
+<value name="Users Title">Miss</value>
+<value name="Users Name">Kaitlyn</value>
+
+<value name="Users Surname">Taylor</value>
+<value name="Users Institution">La Trobe University</value>
+<value name="Users Department">Department of Physics</value>
+<value name="Users Address">Street. Department of Physics
+City. La Trobe University
+State. Victoria
+Postcode. 3086</value>
+<value name="Users Telephone">0413572433</value>
+<value name="Users Fax"></value>
+<value name="Users Email">kaitlyn.taylor@latrobe.edu.au</value>
+</request>
+</experiment>
+}}}
