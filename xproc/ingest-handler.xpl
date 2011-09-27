@@ -7,6 +7,7 @@
 	xmlns:atom="http://www.w3.org/2005/Atom" 
 	xmlns:ands="http://www.example.org/" 
 	xmlns:lib="http://code.google.com/p/ands-la-trobe/wiki/XProcLibrary"
+	xmlns:boss="http://hdl.handle.net/102.100.100/7003"
 	xmlns:ft="http://www.fedora.info/definitions/1/0/types/">
 <!-- 
 	Handle the ingestion of a new Fedora .
@@ -46,7 +47,7 @@
 	<p:variable name="public-item-uri" select="concat('http://andsdb-dc19-dev.latrobe.edu.au/solr/select/?q=id%3A', $uri-encoded-solr-escaped-identifier)"/>
    	
 	<p:choose>
-		<p:when test="$method='ingest'">
+		<p:when test="$method='ingest' or $datastream='boss'">
 		
 			<!-- recognise the types of ingested files (by extension) and explicitly set their format uri and internet media type -->
 			<lib:fedora-tag-datastreams>
@@ -99,7 +100,7 @@
 			</lib:http-request>
 			<p:choose name="whether-object-has-a-boss-datastream">
 				<p:when test="/c:response[@status='200']">
-					<p:variable name="user-id" select="/c:response/c:body/values/proposalRequest/UsersUID"/>
+					<p:variable name="user-id" select="/c:response/c:body/boss:job/boss:request/boss:value[@name='Users ID']"/>
 					<p:variable name="user-pid" select="concat('person:', $user-id)"/>
 					<p:variable name="uri-encoded-user-pid" select="fn:encode-for-uri($user-pid)"/>
 					<p:variable name="user-person-datastream-uri" select="concat($fedora-base-uri, '/objects/', $uri-encoded-user-pid, '/datastreams/person')"/>
