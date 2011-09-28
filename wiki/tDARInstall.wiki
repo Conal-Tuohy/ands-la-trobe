@@ -39,7 +39,7 @@ sysadmin.email=root@localhost
 
 
 ===/ands/tDAR-install/src/main/resources/log4j.properties===
-  * Replaced Adam Brin's email with Daniel's and Conal's.
+  * Replaced Adam Brin's email with Daniel and Conals'.
   * Replaced file appender path /logs/tdar.log with /var/log/tdar/tdar.log
 
 ===/ands/tDAR-install/src/main/resources/hibernate.properties===
