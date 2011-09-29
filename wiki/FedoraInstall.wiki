@@ -43,3 +43,21 @@ Fedora Commons is a repository system which we are using to store RIF-CS and oth
 Enabled the JMS interface so that we can listen for updates to datastreams, by editing /ands/fedora/server/config/fedora.fcfg
 
 Changed the //module[@class="org.fcrepo.server.messaging.MessagingModule"]/param[@name="enabled"]/@value to "true"
+
+Added the following to /ands/fedora/server/config/mime-to-extensions.xml
+
+{{{
+  <mime-mapping>
+    <mime-type>chemical/x-vamas-iso14976</mime-type>
+    <extension>vms</extension>
+  </mime-mapping>
+  <mime-mapping>
+    <mime-type>application/x-kratos-vision-dataset</mime-type>
+    <extension>dset</extension>
+  </mime-mapping>
+  <mime-mapping>
+    <mime-type>application/x-iontof-surfacelab-measurement</mime-type>
+    <extension>itm</extension>
+  </mime-mapping>
+}}}
+(see http://code.google.com/p/ands-la-trobe/issues/detail?id=41 for requirement)
