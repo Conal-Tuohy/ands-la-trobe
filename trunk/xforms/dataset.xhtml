@@ -69,7 +69,7 @@
 				instance="persons-result">
 				<xf:dispatch name="xforms-refresh"/>
 			</xf:submission>
-		
+			<xf:instance id="handle" src="handle"/>		
 		</xf:model>
 	
 	</head>
@@ -314,7 +314,15 @@
 			<xf:send ev:event="DOMActivate" submission="save"/>
 		</xf:trigger>
 		<br />
-		
+			<!-- link to the record by its handle (persistent identifier) - loads the canonical page for the record -->
+			<xf:trigger appearance="minimal">
+				<xf:label>View this record in the repository</xf:label>
+				<xf:action ev:event="DOMActivate">
+					<xf:load>
+						<xf:resource value="concat('http://hdl.handle.net/', instance('handle')//identifier/@handle)" />
+					</xf:load>
+				</xf:action>
+			</xf:trigger>		
 	</body>
 
 </html>		                                                                                                            

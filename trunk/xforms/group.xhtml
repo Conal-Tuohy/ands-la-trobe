@@ -22,7 +22,7 @@
 			<xf:bind nodeset="instance('group-metadata')/my:email" type="xf:email" />
 			 <xf:bind nodeset="instance('group-metadata')/my:url" type="xf:anyURI" constraint="(starts-with(.,'http://') or starts-with(.,'https://')) and not(contains(.,' '))" />
 			<xf:submission id="save" instance="group-metadata" action="group" method="put" serialization="application/xml" replace="none"/>
-		
+			<xf:instance id="handle" src="handle"/>
 		</xf:model>
 
 		<link type="text/css" href="/xforms/css/xforms.css" rel="stylesheet"/>
@@ -259,7 +259,17 @@
 			<xf:label>Save</xf:label>
 				<!-- send data to server (invoking xf:submission[@id='save']) when button pressed (=DOMActivate) -->
 			<xf:send ev:event="DOMActivate" submission="save"/>
-		</xf:trigger>
+			</xf:trigger>
+			
+			<!-- link to the record by its handle (persistent identifier) - loads the canonical page for the record -->
+			<xf:trigger appearance="minimal">
+				<xf:label>View this record in the repository</xf:label>
+				<xf:action ev:event="DOMActivate">
+					<xf:load>
+						<xf:resource value="concat('http://hdl.handle.net/', instance('handle')//identifier/@handle)" />
+					</xf:load>
+				</xf:action>
+			</xf:trigger>
 	
 	</body>
 
