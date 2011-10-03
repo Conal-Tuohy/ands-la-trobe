@@ -10,7 +10,7 @@
 	xmlns:boss="http://hdl.handle.net/102.100.100/7003"
 	xmlns:ft="http://www.fedora.info/definitions/1/0/types/">
 <!-- 
-	Handle the ingestion of a new Fedora .
+	Handle the ingestion of a new Fedora object.
 
 	Mint a handle for the record and attach it. 
 	
