@@ -1,0 +1,110 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://hdl.handle.net/102.100.100/7003" xmlns:boss="http://hdl.handle.net/102.100.100/7003">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+			Metadata exported from the VeRSI Remote Laboratory Instrumentation Booking System ("BOSS"). 
+		</xs:documentation>
+	</xs:annotation>
+
+	<xs:element name="job">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+				The root element. Contains information about one session on a scientific instrument. 
+				Includes data from the original request to book the scientific instrument, and the logsheet resulting from the experiment. 
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="boss:logsheet" />
+				<xs:element ref="boss:request" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="logsheet">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+				Contains data entered by the researcher about the actual experiment. 
+				Contains a list of named properties, which may be either tables or simple values.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:choice>
+					<xs:element ref="boss:value" />
+					<xs:element ref="boss:table" />
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="request">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+				Contains data from the original request to book the scientific instrument.
+				Contains a list of named properties, which may be either tables or simple values.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:choice>
+					<xs:element ref="boss:value" />
+					<xs:element ref="boss:table" />
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="value">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+				A named property with no internal structure. 
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="name" type="xs:string" use="required" />
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="table">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+				A named property with a tabular structure.
+				Contains one or more rows.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="boss:row" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="row">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+				A table row.
+				Contains one or more columns.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="boss:column" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="column" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+				A column within a table row (i.e. a cell).
+				Has no name - the semantics of the column depend on its position and the name of the ancestor table element.
+			</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+</xs:schema>
