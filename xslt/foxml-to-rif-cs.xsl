@@ -5,7 +5,7 @@
 	xmlns:vamas="http://hdl.handle.net/102.100.100/6919"
 	xmlns:latrobe="http://hdl.handle.net/102.100.100/6976"
 	xmlns="http://ands.org.au/standards/rif-cs/registryObjects" 
-	exclude-result-prefixes="f vamas"
+	exclude-result-prefixes="f vamas latrobe"
 >
 
 	<xsl:variable name="handle-datastream" select="/f:digitalObject/f:datastream[@ID='handle']/f:datastreamVersion[last()]/f:xmlContent/*"/>
@@ -35,8 +35,17 @@
 
 	<xsl:template name="convert-descriptive-datastream-contents">
 		<!-- some of these elements need to be wrapped in a rif-cs:location element -->
-		<xsl:variable name="location-elements" select="*[normalize-space()]
-			[self::url|self::email|self::fax|self::phone|self::otherElectronic|self::postalAddress|self::streetAddress]"/>
+		<xsl:variable name="location-elements" select="
+			*[normalize-space()]
+			[
+				self::latrobe:url|
+				self::latrobe:email|
+				self::latrobe:fax|
+				self::latrobe:phone|
+				self::latrobe:otherElectronic|
+				self::latrobe:postalAddress|
+				self::latrobe:streetAddress
+			]"/>
 		<xsl:variable name="non-location-elements" select="*[count(. | $location-elements) &gt; count($location-elements)][normalize-space()]"/>
 		<xsl:apply-templates select="$non-location-elements"/>
 		<location>
