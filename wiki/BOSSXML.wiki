@@ -6,77 +6,7 @@ When datasets are deposited into the CMSS repository, a metadata record associat
 
 The BOSS XML file uses the namespace URI http://hdl.handle.net/102.100.100/7003 which currently redirects to this page.
 
-The BOSS XML data file is a dump of fields from a relational database whose schema is not yet stable. The boss XML data file format is defined by the XML schema below. 
-
-{{{
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  targetNamespace="http://hdl.handle.net/102.100.100/7003"
-  xmlns:boss="http://hdl.handle.net/102.100.100/7003">
-  <xs:element name="column">
-    <xs:complexType mixed="true" />
-  </xs:element>
-
-  <xs:element name="job">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="boss:logsheet" />
-        <xs:element ref="boss:request" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:element name="logsheet">
-    <xs:complexType>
-      <xs:sequence maxOccurs="unbounded">
-      	<xs:choice>
-      	<xs:element ref="boss:value" />
-      	<xs:element ref="boss:table" />
-      	</xs:choice>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:element name="request">
-    <xs:complexType>
-      <xs:sequence maxOccurs="unbounded">
-      	<xs:choice>
-      	<xs:element ref="boss:value" />
-      	<xs:element ref="boss:table" />
-      	</xs:choice>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:element name="table">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="boss:row" maxOccurs="unbounded" />
-      </xs:sequence>
-      <xs:attribute name="name" type="xs:string" use="required" />
-    </xs:complexType>
-  </xs:element>
-
-  <xs:element name="row">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="boss:column" maxOccurs="unbounded" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-
-  <xs:element name="value">
-    <xs:complexType>
-		<xs:simpleContent>
-			<xs:extension base="xs:string">
-				<xs:attribute name="name" type="xs:string" use="required" />
-			</xs:extension>
-		</xs:simpleContent>
-    </xs:complexType>
-  </xs:element>
-  
-</xs:schema>
-}}}
+The BOSS XML data file is a dump of fields from a relational database whose schema is not yet stable, so the [http://ands-la-trobe.googlecode.com/svn/trunk/schemas/boss.xsd schema for BOSS XML] defines that those field names are encoded using the `name` attribute of generic `value` and `table` elements. 
 
 A sample document appears below:
 
