@@ -19,7 +19,7 @@ Fedora Commons is a repository system which we are using to store RIF-CS and oth
 
  * got Fedora Commons jar installer 
   * ( fcrepo-installer-3.4.2.jar @ /home/ands-shared/ )
- * Need to add Envvars to tomcat (in this case, /etc/profile to share these envvars with all users.)
+ * Need to add Envvars to tomcat (in this case, /etc/profile to share these envvars with all users. This is probably not correct procedure except with regards to JAVA_HOME).
   * JAVA_HOME 
   * FEDORA_HOME (e.g. /ands/fedora)
   * PATH (add $FEDORA_HOME/server/bin, $FEDORA_HOME/client/bin and $JAVA_HOME/bin. )
