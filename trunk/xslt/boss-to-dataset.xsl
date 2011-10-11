@@ -11,7 +11,7 @@
 					' ',
 					boss:request/boss:value[@name='Users Surname'])"/></hasCollector>
 			<abbreviatedName></abbreviatedName>
-			<primaryName><xsl:value-of select="boss:request/boss:value[@name='technique']"/>
+			<name><xsl:value-of select="boss:request/boss:value[@name='technique']"/>
 				<xsl:text>: </xsl:text>
 				<xsl:for-each select="boss:logsheet/boss:value[@name='sampletable']/boss:row">
 					<xsl:value-of select="boss:column[2]"/>
@@ -21,7 +21,7 @@
 					<xsl:if test="position() &lt; last() - 1"><!-- there are more than one more sample -->
 						<xsl:text>, </xsl:text>
 					</xsl:if>
-				</xsl:for-each></primaryName>
+				</xsl:for-each></name>
 			<url></url>
 			<otherElectronic type=""></otherElectronic>
 			<startDate><xsl:value-of select="concat(
