@@ -40,9 +40,13 @@ Fedora Commons is a repository system which we are using to store RIF-CS and oth
 
  NOTE: target dir should be owned by the designated fedora user. Dir will be chmodded 766 by the installer.
 
+== Enabling JMS ==
+
 Enabled the JMS interface so that we can listen for updates to datastreams, by editing /ands/fedora/server/config/fedora.fcfg
 
 Changed the `//module[@class="org.fcrepo.server.messaging.MessagingModule"]/param[@name="enabled"]/@value` to "true"
+
+== MIME Types ==
 
 Disabled the auto-generation of file extensions (when downloading files) by editing `/ands/fedora/server/config/fedora.fcfg` and changing the value of `/server/param[@name='datastreamExtensionMappingLabel']/@value` from "always" to "ifmissing".
 
