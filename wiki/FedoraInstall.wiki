@@ -7,9 +7,10 @@ Fedora Commons is a repository system which we are using to store RIF-CS and oth
 = Prerequisites =
 
   * Packages:
-   * Apache
-   * Tomcat6
-   * MySQL
+   * Apache (httpd)
+   * Tomcat6 (tomcat6)
+   * MySQL (mysql, mysql-server)
+   * Java (java, java-sdk)
 
   * Other changes
    * User ands-shared (or equiv) should contain the apache and tomcat users, as well as any developers working on the system
