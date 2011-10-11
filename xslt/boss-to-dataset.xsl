@@ -51,7 +51,7 @@
 			<fullDescription><xsl:value-of select="boss:logsheet/boss:value[@name='GeneralDescription']"/><xsl:text>
 </xsl:text>
 				<xsl:text>Samples: </xsl:text>
-				<xsl:for-each select="boss:logsheet/boss:value[@name='sampletable']/boss:row">
+				<xsl:for-each select="boss:logsheet/boss:table[@name='sampletable']/boss:row">
 					<xsl:value-of select="boss:column[2]"/>
 					<xsl:text> (</xsl:text>
 					<xsl:value-of select="boss:column[3]"/>
