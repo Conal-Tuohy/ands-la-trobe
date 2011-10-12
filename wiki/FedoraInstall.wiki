@@ -10,11 +10,10 @@ Fedora Commons is a repository system which we are using to store RIF-CS and oth
    * Apache (httpd)
    * Tomcat6 (tomcat6)
    * MySQL (mysql, mysql-server)
-   * Java (java, java-sdk)
+   * Java (java, java-sdk both @1.6+)
 
   * Other changes
    * User ands-shared (or equiv) should contain the apache and tomcat users, as well as any developers working on the system
-
 
 = Details =
 
@@ -28,18 +27,46 @@ Fedora Commons is a repository system which we are using to store RIF-CS and oth
   * CLASSPATH (e.g. /usr/share/java:/etc/alternatives/javac:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/bin:/usr/share/java/tomcat6:$PATH)
 
  * modified mysql database -  why can't the installer handle this?
-  * added fedora user
+  * set root passwords for localhost and hostname
+  * ran mysql_secure_install to remove demo db & user
+  * added fedora user 
+   * `create user fedora with password ********`
   * added fedora3 database
-  * added authority database
-  * Gave relevant permissions over these dbs to fedora user
+   * `create database fedora3`
+  * added authority database 
+   * `create database authority`
+  * Gave relevant permissions over these dbs to fedora user 
+   *`use $db`
+   *`grant all on `*` to fedora`
+
+ NOTE: there were some issues with our install and java versions. RSUS-LTU locally listed both 1.5 and openjdk 1.6, but up2date-local installed only 1.5 by default. The following commands were used to install the newer versions:
+ * `yum install java-1.6.0-openjdk.x86_64`
+ * `yum install java-1.6.0-openjdk-devel.x86_64`
+ * `yum install java-1.6.0-openjdk-javadoc.x86_64` 
 
  * ran installer (./java -jar fcrepo-installer-3.4.2.jar)
 
  NOTE: Was missing /usr/share/tomcat6/common/lib/mysql-connector-java-5.1.6.jar for JDBC connector. Located and added manually (@ http://dev.mysql.com/downloads/connector/j/ ).
 
- ADDENDUM: Was ACTUALLY missing apache packages commons-dbcp-1.4 and commons-pool-1.5.5 as well. These should be placed in the same directory as the mysql-connector-java.jar and this path should be reported in the appropriate place when running the fcrepo installer. Note that catalina.properties does not appear to build the CLASSPATH envvar as reported, so these files will need to be placed somewhere tomcat can access them. The obvious place is /usr/share/tomcat6/lib
+ ADDENDUM: Was ACTUALLY missing apache packages commons-dbcp-1.4 (http://commons.apache.org/dbcp/download_dbcp.cgi) and commons-pool-1.5.5(http://commons.apache.org/pool/download_pool.cgi) as well. These should be placed in the same directory as the mysql-connector-java.jar and this path should be reported in the appropriate place when running the fcrepo installer. Note that catalina.properties does not appear to build the CLASSPATH envvar as reported, so these files will need to be placed somewhere tomcat can access them. The obvious place is /usr/share/tomcat6/lib.
 
- NOTE: target dir should be owned by the designated fedora user. Dir will be chmodded 766 by the installer.
+ * `cd /usr/share/tomcat6/lib`
+ * `ln -s /home/fedora-user/files/commons-dbcp-1.4/commons-dbcp-1.4.jar .`
+ * `ln -s /home/fedora-user/files/commons-pool-1.5.6/commons-pool-1.5.6.jar .`
+ * `ln -s /home/fedora-user/files/mysql-connector-java-5.1.18/mysql-connector-java-5.1.18-bin.jar .`
+
+
+ NOTE: target dir should be owned by the designated fedora user. Dir will be chmodded 766 by the installer at the beginning of the installation process.
+
+== Custom file locations ==
+
+fedora/server/config/akubra-llstore.cfg contains paths for the datastreamStore and objectStore. Our install stores these databases on the /mnt/rdprojects nfs partition. Similarly, the mysql databases should be in this location.
+
+ * moved mysql dbs from /var/lib/mysql to /mnt/rdprojects/fedora/mysql
+ * `ln -s /mnt/rdprojects/fedora/mysql /var/lib/mysql`
+ * changed akubra filestore locations to:
+  * datastreamStore: /mnt/rdprojects/fedora/datastreamStore
+  * objectStore: /mnt/rdprojects/fedora/objectStore
 
 == Enabling JMS ==
 
@@ -52,7 +79,3 @@ Changed the `//module[@class="org.fcrepo.server.messaging.MessagingModule"]/para
 Disabled the auto-generation of file extensions (when downloading files) by editing `/ands/fedora/server/config/fedora.fcfg` and changing the value of `/server/param[@name='datastreamExtensionMappingLabel']/@value` from "always" to "ifmissing".
 
 (see http://code.google.com/p/ands-la-trobe/issues/detail?id=41 for requirement)
-
-== Configuring the datastore ==
-
-fedora/server/config/akubra-llstore.cfg contains paths for the datastreamStore and objectStore. Our install stores these databases on the /mnt/rdprojects nfs partition.
