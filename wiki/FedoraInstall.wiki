@@ -68,6 +68,37 @@ fedora/server/config/akubra-llstore.cfg contains paths for the datastreamStore a
   * datastreamStore: /mnt/rdprojects/fedora/datastreamStore
   * objectStore: /mnt/rdprojects/fedora/objectStore
 
+== Reverse Proxy ==
+
+LTU has a mildly restrictive firewall, but it is useful to have fedora on (the externally inaccessable) port 8080. The following proxy file can help.
+
+{{{
+# Settings for accessing Fedora - Placeholder.
+
+# Don't access HTTP proxy requests
+# (this is a reverse proxy, not a forward proxy)
+ProxyRequests off
+
+# Any user may connect
+<Proxy *>
+Order deny,allow
+Allow from all
+</Proxy>
+
+
+# URL rewriting required to handle editor forms and work around bug in Fedora "RESTful" interface
+
+RewriteEngine on
+
+# Proxy other requests to Fedora listening on port 8080
+# This is so we have an unmodified version of Fedora's http interface,
+# alongside the modified version under /fedora-objects
+<Location /fedora>
+ProxyPass        http://localhost:8080/fedora
+ProxyPassReverse http://localhost:8080/fedora
+</Location>
+}}}
+
 == Enabling JMS ==
 
 Enabled the JMS interface so that we can listen for updates to datastreams, by editing /ands/fedora/server/config/fedora.fcfg
