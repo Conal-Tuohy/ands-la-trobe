@@ -55,8 +55,7 @@
 			
 			<xf:bind nodeset="instance('dataset-metadata')/my:startDate" type="xf:dateTime" />
 			<xf:bind nodeset="instance('dataset-metadata')/my:endDate" type="xf:dateTime" />
-	                <xf:bind nodeset="instance('dataset-metadata')/my:email" type="xf:email" />
-	                <xf:bind nodeset="instance('dataset-metadata')/my:url" type="xf:anyURI" constraint="(starts-with(.,'http://') or starts-with(.,'https://')) and not(contains(.,' '))" />
+<!--	                <xf:bind nodeset="instance('dataset-metadata')/my:url" type="xf:anyURI" constraint="(.='' or starts-with(.,'http://') or starts-with(.,'https://')) and not(contains(.,' '))" /> -->
 
 			
 			<xf:submission id="save" instance="dataset-metadata" action="dataset" method="put" serialization="application/xml" replace="none"/>
@@ -163,12 +162,6 @@
 			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:url">
 				<xf:label>URL:</xf:label>
 				<xf:hint>A link to an abstract or summary, or to another alternative location where the dataset can be accessed.</xf:hint>
-			</xf:input>
-			<br />
-			
-			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:email">
-				<xf:label>Email:</xf:label>
-				<xf:hint>Primary email contact for inquiries regarding this dataset</xf:hint>
 			</xf:input>
 			<br />
 			
