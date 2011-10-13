@@ -35,9 +35,9 @@ Fedora Commons is a repository system which we are using to store RIF-CS and oth
    * `create database fedora3`
   * added authority database 
    * `create database authority`
-  * Gave relevant permissions over these dbs to fedora user 
-   *`use $db`
-   *`grant all on `*` to fedora`
+  * Gave relevant permissions over these dbs to fedora user. For example:
+   * `use fedora3`
+   * `grant all on * to fedora`
 
  NOTE: there were some issues with our install and java versions. RSUS-LTU locally listed both 1.5 and openjdk 1.6, but up2date-local installed only 1.5 by default. The following commands were used to install the newer versions:
  * `yum install java-1.6.0-openjdk.x86_64`
