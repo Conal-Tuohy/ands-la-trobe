@@ -159,9 +159,9 @@
 			<xsl:variable name="handle-datastream-uri" select="
 				concat(
 					'http://localhost:8080/fedora/objects/',
-					substring-before(@identifier, ':'),
+					substring-before(@id, ':'),
 					'%3A',
-					substring-after(@identifier, ':'),
+					substring-after(@id, ':'),
 					'/datastreams/handle/content'
 				)
 			"/>
