@@ -1,4 +1,4 @@
-#summary A guide on setting up the CMSS
+#summary A guide on setting up the CMSS fedora/solr/metadata crosswalk system
 
 
 = CMSS setup =
