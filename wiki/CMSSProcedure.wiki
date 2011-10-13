@@ -1,0 +1,6 @@
+#summary A guide on setting up the CMSS
+
+
+= CMSS setup =
+
+  # follow the FedoraInstall guide.
