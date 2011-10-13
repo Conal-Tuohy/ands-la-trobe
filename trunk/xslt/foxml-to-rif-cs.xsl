@@ -9,6 +9,7 @@
 >
 
 	<xsl:variable name="handle-datastream" select="/f:digitalObject/f:datastream[@ID='handle']/f:datastreamVersion[last()]/f:xmlContent/*"/>
+	<xsl:variable name="handle" select="$handle-datastream//response/identifier/@handle"/>
 	<xsl:variable name="vamas-datastream" select="/f:digitalObject/f:datastream[@ID='vamas-xml']/f:datastreamVersion[last()]/f:xmlContent/*"/>
 	<xsl:variable name="surfacelab-datastream" select="/f:digitalObject/f:datastream[@ID='vamas-xml']/f:datastreamVersion[last()]/f:xmlContent/*"/>
 	<xsl:variable name="dataset-datastream" select="/f:digitalObject/f:datastream[@ID='dataset']/f:datastreamVersion[last()]/f:xmlContent/*"/>
@@ -24,7 +25,7 @@
 			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 			xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/1.2.0/schema/registryObjects.xsd">
 			<registryObject group="La Trobe University">
-				<key><xsl:value-of select="$handle-datastream//response/identifier/@handle"/></key>
+				<key><xsl:value-of select="$handle"/></key>
 				<originatingSource>http://andsdb-dc19-dev.latrobe.edu.au/</originatingSource>
 				<xsl:apply-templates select="$descriptive-datastream"/>
 			</registryObject>
@@ -50,6 +51,11 @@
 		<xsl:apply-templates select="$non-location-elements"/>
 		<location>
 			<xsl:apply-templates select="$location-elements"/>
+      	<address>
+      		<electronic type="url">
+      			<value>http://hdl.handle.net/<xsl:value-of select="$handle"/></value>
+      		</electronic>
+      	</address>
 		</location>
 	</xsl:template>
 	
