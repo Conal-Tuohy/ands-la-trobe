@@ -54,11 +54,28 @@
 			<!-- convert the aggregate metadata into RIF-CS -->
 			<lib:crosswalk xslt="../xslt/foxml-to-rif-cs.xsl" name="create-rif-cs"/>
 			
-			<!-- Store the RIF-CS in the OAI-PMH server jOAI -->
-			<p:store name="rif-cs-to-oai-pmh-provider">
-				<p:with-option name="href" select="$rif-cs-output-uri"/>
-			</p:store>
-
+			<!-- validate the result, and if valid, send it to the OAI-PMH harvester -->
+			<!-- otherwise, remove any corresponding stale record from the OAI-PMH provider -->
+			<p:try name="to-publish-valid-rif-cs">
+				<p:group name="validate-and-publish-rif-cs">
+					<p:validate-with-xml-schema>
+						<p:input  port="schema">
+							<p:document href="../schemas/rif-cs/registryObjects.xsd"/>
+						</p:input>
+					</p:validate-with-xml-schema>
+					<!-- Store the RIF-CS in the OAI-PMH server jOAI -->
+					<p:store name="rif-cs-to-oai-pmh-provider">
+						<p:with-option name="href" select="$rif-cs-output-uri"/>
+					</p:store>
+				</p:group>
+				<p:catch name="invalid-rif-cs">
+					<lib:http-request method="delete" name="delete-stale-rif-cs">
+						<p:with-option name="uri" select="$rif-cs-output-uri"/>
+					</lib:http-request>
+					<p:sink name="ignore-results-of-deleting-stale-rif-cs"/>
+				</p:catch>
+			</p:try>
+			
 			<!-- store RIF-CS to Fedora datastream (not really necessary, but may be handy for debugging) -->			
 			<lib:fedora-save-datastream name="rif-cs-to-fedora">
 				<p:input port="source">
