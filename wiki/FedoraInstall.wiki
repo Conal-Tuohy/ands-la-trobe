@@ -48,7 +48,7 @@ Fedora Commons is a repository system which we are using to store RIF-CS and oth
 
  NOTE: Was missing /usr/share/tomcat6/common/lib/mysql-connector-java-5.1.6.jar for JDBC connector. Located and added manually (@ http://dev.mysql.com/downloads/connector/j/ ).
 
- ADDENDUM: Was ACTUALLY missing apache packages commons-dbcp-1.4 (http://commons.apache.org/dbcp/download_dbcp.cgi) and commons-pool-1.5.5(http://commons.apache.org/pool/download_pool.cgi) as well. These should be placed in the same directory as the mysql-connector-java.jar and this path should be reported in the appropriate place when running the fcrepo installer. Note that catalina.properties does not appear to build the CLASSPATH envvar as reported, so these files will need to be placed somewhere tomcat can access them. The obvious place is /usr/share/tomcat6/lib.
+ ADDENDUM: Was ACTUALLY missing apache packages commons-dbcp (http://commons.apache.org/dbcp/download_dbcp.cgi) and commons-pool (http://commons.apache.org/pool/download_pool.cgi) as well. These should be placed in the same directory as the mysql-connector-java.jar and this path should be reported in the appropriate place when running the fcrepo installer. Note that catalina.properties does not appear to build the CLASSPATH envvar as reported, so these files will need to be placed somewhere tomcat can access them. The obvious place is /usr/share/tomcat6/lib.
 
  * `cd /usr/share/tomcat6/lib`
  * `ln -s /home/fedora-user/files/commons-dbcp-1.4/commons-dbcp-1.4.jar .`
