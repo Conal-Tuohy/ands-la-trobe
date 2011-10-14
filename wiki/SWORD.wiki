@@ -35,6 +35,8 @@ before
 
 = Notes =
 
+Remember to modify firewall or proxy rules appropriately.
+
 SWORD will ingest .xml files present with a deposit and use metadata from them if they are in an appropriate format (e.g rif-cs.xml, DC.xml). However, DC.xml appears to break the deposit process, as SWORD will generate a default DC record with no extracted information when generating the initial internal FoxML record, and then attempt to append the real DC data in a subsequent block. This violates the OAI_DC schema, causing an exception and terminating the process.
 
 For example, the following internally generated code:
@@ -106,3 +108,85 @@ org.purl.sword.base.SWORDException: Had problems adding the object to the reposi
 However, the DC data is useful in that it is automatically indexed by fedora's search system. Thus we have decided to automatically update the DC record after submission using a combination of SWORD and JMI listeners.
 
 ADDENDUM: This note on the DC record is useful but redundant, as solr has since been included instead, as both index and user interface.
+
+Example Production properties.xml
+{{{
+
+<properties>
+    <!-- Fedora Properties the username and password for fedora are the ones supplied in the deposit and are not in this config file-->
+    <fedora>
+        <!-- This is the URL that should be returned to the client as a link to the object -->
+        <external_obj_url>http://example.com/fedora/get/##PID##</external_obj_url>
+        <!-- This is the URL that should point to a copy of the thing the deposited -->
+        <external_ds_url>http://example.com/fedora/get/##PID##/##DS##</external_ds_url>
+        <protocol>http</protocol>
+        <host>localhost</host>
+        <port>8080</port>
+        <!-- Namespace for pids specified in the fedora.fcfg attribute pidNamespace-->
+        <pid_namespace>CMSS</pid_namespace>
+    </fedora>
+    <general>
+        <!-- Return a URI for the repository (used in atom:generator) -->
+        <repository_uri>http://example.com/sword</repository_uri>
+        <!-- Directory where zip files are extracted and uploads are stored before ingest. This should be an absolute path -->
+        <temp_dir>/usr/share/tomcat/temp/</temp_dir>
+        <!-- This returns the directory where the sub service documents are stored relative to the web app directory -->
+        <sub-service-documents>/sub_service_documents</sub-service-documents>
+        <entry-location>/entries</entry-location>
+    </general>
+    <file_handlers>
+        <!--
+            Group of classes which handle ingesting specific files into Fedora
+            You can add your own classes as long as they implement
+                org.purl.sword.server.fedora.fileHandlers.FileHandler interface
+            and have a default constructor
+        -->
+        <handler class="org.purl.sword.server.fedora.fileHandlers.JpegHandler" />
+        <handler class="org.purl.sword.server.fedora.fileHandlers.METSFileHandler" />
+        <handler class="org.purl.sword.server.fedora.fileHandlers.ZipFileHandler" />
+        <handler class="org.purl.sword.server.fedora.fileHandlers.ZipMETSFileHandler" />
+    </file_handlers>
+    <files>
+        <!-- XML list of file extension to mime-type conversions -->
+        <mime-type>WEB-INF/mime-types.xml</mime-type>
+    </files>
+    <!-- This is where you configure the service document requests
+        For further details on what the mean go to: http://www.ukoln.ac.uk/repositories/digirep/index/SWORD_APP_Profile_1.0
+    -->
+    <service_document>
+        <level>1</level>
+        <noOp>true</noOp>
+        <verbose>true</verbose>
+        <workspace title="Fedora SWORD Workspace">
+            <!--
+                collection_pid is the pid of the collection where deposits will end up
+            -->
+            <collection collection_pid="collection:open" mediation="true" mediationSet="true">
+                <!--
+                    This is the URL which listens for deposit requests
+                    ##COLLECTION_PID## is overwritten at runtime to contain the value of collection_pid
+                -->
+                <deposit_url>http://example.com/sword/##COLLECTION_PID##</deposit_url>
+                <users/>
+                <title>Open Collection</title>
+                <abstract>This is a collection of objects which can be freely deposited to. This is aviable for the SWORD test project</abstract>
+                <policy>This collection accepts any deposit from anyone</policy>
+                <treatment>Preservation actions may occur on submited deposits</treatment>
+                <accepts> <!-- list of mime types that are accepted by the collection -->
+                    <accept>text/xml</accept>
+                    <accept>application/zip</accept>
+                    <accept>application/x-zip-compressed</accept>
+                    <accept>application/atom+xml</accept>
+                    <accept>image/gif</accept>
+                    <accept>image/jpeg</accept>
+                    <accept>image/jpg</accept>
+                </accepts>
+                <packaging>
+                    <package quality="0.9">http://purl.org/net/sword-types/METSDSpaceSIP</package>
+                    <package quality="0.9">http://www.loc.gov/METS/</package>
+                </packaging>
+            </collection>
+        </workspace>
+    </service_document>
+</properties>
+}}}
