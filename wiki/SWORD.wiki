@@ -24,9 +24,15 @@ SWORD is a submission tool that allows users to add objects to a fedora reposito
           * {{{<accept>image/jpg</accept>}}}
           * {{{<accept>application/x-zip-compressed</accept>}}}
         * pending more info from conal. Sadly this must be done at compile at the moment.
+      * added the following entries to mime-types.xml
+        * `<type><mime-type>application/x-iontof-surfacelab-measurement</mime-type></extension>itm</extension></type>`
+        * `<type><mime-type>chemical/x-vamas-iso14976</mime-type></extension>vms</extension></type>`
+
   * ran ant dist, installed into Tomcat6
 
-NB when reinstalling, it appears necessary to run:
+NOTE: it may be necessary to alter the temp path in build.xml
+
+NOTE: when reinstalling, it appears necessary to run:
 `ant clean`
 and also
 `rm -r -f /usr/share/tomcat/webapps/sword`
