@@ -104,3 +104,5 @@ org.purl.sword.base.SWORDException: Had problems adding the object to the reposi
 }}}
 
 However, the DC data is useful in that it is automatically indexed by fedora's search system. Thus we have decided to automatically update the DC record after submission using a combination of SWORD and JMI listeners.
+
+ADDENDUM: This is redundant, as solr has since been included instead, as both index and frontend.
