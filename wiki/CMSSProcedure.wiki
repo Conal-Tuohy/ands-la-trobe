@@ -9,6 +9,15 @@
   # follow the Calabash guide.
   # follow the jOAI guide.
 
-= CMSS custom components =
-
 = CMSS configuration =
+
+=== set up Solr config and schemas ===
+
+
+=== add Calabash pipeliines ===
+
+
+=== add xforms ===
+
+
+=== configure apache ===
