@@ -4,3 +4,11 @@
 = CMSS setup =
 
   # follow the FedoraInstall guide.
+  # follow the SWORD install guide.
+  # follow the SolrInstall guide.
+  # follow the Calabash guide.
+  # follow the jOAI guide.
+
+= CMSS custom components =
+
+= CMSS configuration =
