@@ -2,6 +2,8 @@
 
 = XML Calabash installation =
 
+NOTE: This page needs some work.
+
 As per http://xmlcalabash.com/docs/
 
 Download calabash distro from http://xmlcalabash.com/download/calabash-0.9.32.zip
