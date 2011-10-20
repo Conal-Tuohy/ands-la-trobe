@@ -13,11 +13,32 @@
 
 === set up Solr config and schemas ===
 
+Alter solrconfig.xml ro reflect the following: 
 
-=== add Calabash pipeliines ===
+{{{
+<requestHandler name="standard" class="solr.SearchHandler" default="true">
+    <!-- default values for query parameters -->
+     <lst name="defaults">
+       <str name="echoParams">all</str>
+       <str name="wt">xslt</str>
+       <str name="tr">cmss.xsl</str>
+       <int name="rows">10</int>
+       <!--
+       <str name="fl">*</str>
+       <str name="version">2.1</str>
+        -->
+     </lst>
+  </requestHandler>
+}}}
+
+Where cmss.xsl is the custom xslt form, located in conf/xslt/
+
+
+=== add Calabash pipelines ===
 
 
 === add xforms ===
 
+ * Place xforms in an appropriate directory for web accessibility.
 
 === configure apache ===
