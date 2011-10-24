@@ -23,6 +23,7 @@
 			<xf:instance id="person-template" src="/xforms/person-template.xml"/>
 			<xf:bind nodeset="instance('person-metadata')/my:dateOfBirth" type="xf:date" />
 			<xf:bind nodeset="instance('person-metadata')/my:email" type="xf:email" />
+			<xf:bind nodeset="instance('person-metadata')/my:phone/@public" type="xf:boolean"/>
 			<!-- <xf:bind nodeset="instance('person-metadata')/my:url" type="xf:anyURI" constraint="(starts-with(.,'http://') or starts-with(.,'https://')) and not(contains(.,' '))" /> -->
 			<xf:submission id="save" instance="person-metadata" action="person" method="put" serialization="application/xml" replace="none" />
 			<xf:instance id="handle" src="handle"/>		
@@ -198,7 +199,26 @@
 			
 			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:phone" >
 				<xf:label>Phone:</xf:label>
-			</xf:input><br />
+			</xf:input>
+			<!--
+			<xf:select1 appearance="full" model="person-metadata-editor-model" ref="instance('person-metadata')/my:phone/@public" >
+				<xf:label>Public</xf:label>
+				<xf:hint>Select to make the phone number publicly viewable</xf:hint>
+				<xf:item>
+					<xf:label>Public</xf:label>
+					<xf:value>true</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>Confidential</xf:label>
+					<xf:value>false</xf:value>
+				</xf:item>
+			</xf:select1>
+			-->
+			<xf:input  model="person-metadata-editor-model" ref="instance('person-metadata')/my:phone/@public" >
+				<xf:label>Public</xf:label>
+				<xf:hint>Select to make the phone number publicly viewable</xf:hint>
+			</xf:input>
+			<br />
 <!--
 			<xf:repeat nodeset="instance('person-metadata')/otherElectronic">
 				<h3>Other Electronic <xf:trigger>
