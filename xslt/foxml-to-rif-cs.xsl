@@ -128,7 +128,7 @@
 			</address>
 	</xsl:template>
 	
-	<xsl:template match="latrobe:phone">
+	<xsl:template match="latrobe:phone[@public='true']">
 			<address>
 				<physical>
 					<addressPart type="telephoneNumber"><xsl:apply-templates/></addressPart>
