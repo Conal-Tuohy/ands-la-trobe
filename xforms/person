@@ -7,7 +7,7 @@
 	<url response=""></url>
 	<dateOfBirth>1960-01-01</dateOfBirth>
 	<email>r.jones@latrobe.edu.au</email>
-	<phone>613 9479 2646</phone>
+	<phone public="false">613 9479 2646</phone>
 	<fax></fax>
 	<postalAddress>
 		<country>Australia</country>

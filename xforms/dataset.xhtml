@@ -85,7 +85,7 @@
 		<div id="body">
 			<!--
 			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/key" >
-				<xf:label>Key:</xf:label>
+				<xf:label>Key</xf:label>
 			</xf:input>
 			<br/>-->
 			<div id="logos">
@@ -94,29 +94,29 @@
 			</div>
 			
 			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:name" incremental="true">
-				<xf:label>Name:</xf:label>
+				<xf:label>Name</xf:label>
 				<xf:hint>Name used to reference the dataset</xf:hint>
 			</xf:input>
 			<br/>
 			
 			<xf:output id="debug-output-identifier" model="dataset-metadata-editor-model"  ref="instance('dataset-metadata')/my:hasCollector/@id">
-				<xf:label>Debugging output of identifier:</xf:label>
+				<xf:label>Debugging output of identifier</xf:label>
 			</xf:output>
 			<br/>
 			
 			<xf:output id="debug-output-query" model="dataset-metadata-editor-model"  ref="instance('persons-query')/query">
-				<xf:label>Debugging output of query:</xf:label>
+				<xf:label>Debugging output of query</xf:label>
 			</xf:output>
 			<br/>
 			
 			<xf:output id="debug-output-query-result" model="dataset-metadata-editor-model"  ref="instance('persons-result')/fedora:resultList/fedora:objectFields[1]/fedora:pid">
-				<xf:label>Debugging output of result (first pid):</xf:label>
+				<xf:label>Debugging output of result (first pid)</xf:label>
 			</xf:output>
 			<br/>
 			
 			<xf:repeat nodeset="instance('dataset-metadata')/my:hasCollector"> <!--start id search autocomplete -->
 				<xf:input ref="." incremental="true" id="my:hasCollector">
-					<xf:label>Collector:</xf:label>
+					<xf:label>Collector</xf:label>
 					<xf:hint>Any person involved in the acquisition of this dataset</xf:hint>
 					<!-- when the value in the field changes, construct a new query and submit it -->
 					<xf:action ev:event="xforms-value-changed">
@@ -155,78 +155,87 @@
 			<br />
 			
 			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:abbreviatedName">
-				<xf:label>Abbreviated Name:</xf:label>
+				<xf:label>Abbreviated Name</xf:label>
 			</xf:input>
 			<br />
 			
 			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:url">
-				<xf:label>URL:</xf:label>
+				<xf:label>URL</xf:label>
 				<xf:hint>A link to an abstract or summary, or to another alternative location where the dataset can be accessed.</xf:hint>
 			</xf:input>
 			<br />
 			
 			<xf:repeat nodeset="instance('dataset-metadata')/my:otherElectronic">
-				<h3>Other Electronic 
-					<xf:trigger>
-					    	<xf:label>Remove</xf:label>
-						<xf:delete ev:event="DOMActivate" nodeset="." />
-					</xf:trigger>
-				</h3>
-				<xf:input ref="./@type">
-					<xf:label>Type: </xf:label>
-					<xf:hint>The type of contact or link (e.g. Handle, URI, OpenURL, etc)</xf:hint>
-				</xf:input>
-				<xf:input ref=".">
-					<xf:label>Contact: </xf:label>
-				</xf:input>
-				<xf:trigger>
-					<xf:label>Remove</xf:label>
-					<xf:delete ev:event="DOMActivate" nodeset="." />
-				</xf:trigger>
-			</xf:repeat>
-			<xf:trigger>
-				<xf:label>Add Other Electronic</xf:label>
-				<xf:insert ev:event="DOMActivate" origin="instance('dataset-template')/my:otherElectronic[1]" position="after"/>
-			</xf:trigger>
-			<br />
-			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:startDate">
-				<xf:label>Start Date: </xf:label>
-				<xf:hint></xf:hint>
-			</xf:input>
-			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:endDate">
-				<xf:label>End Date: </xf:label>
-				<xf:hint></xf:hint>
-			</xf:input>
-			<xf:textarea model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:briefDescription">
-				<xf:label>
-					<h2>Brief Description</h2>
-				</xf:label>
-				<xf:hint>A brief summary of the contents of the dataset</xf:hint>
-			</xf:textarea>
-			<xf:textarea model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:fullDescription">
-				<xf:label>
-					<h2>Full Description</h2>
-				</xf:label>
-				<xf:hint>A summary of dataset contents, including relevant sample data, coverage, and any other relevant details</xf:hint>
-			</xf:textarea>
-			
-			<xf:repeat nodeset="instance('dataset-metadata')/my:subject">
-				<h3>Subject:
+				<div class="panel">
+					<h2>Other electronic address 
+						<xf:trigger>
+								<xf:label>Remove</xf:label>
+							<xf:delete ev:event="DOMActivate" nodeset="." />
+						</xf:trigger>
+					</h2>
+					<xf:input ref="./@type">
+						<xf:label>Type</xf:label>
+						<xf:hint>The type of address or link (e.g. Handle, URI, OpenURL, etc)</xf:hint>
+					</xf:input>
+					<br/>
+					<xf:input ref=".">
+						<xf:label>Address</xf:label>
+					</xf:input>
+					<!--
 					<xf:trigger>
 						<xf:label>Remove</xf:label>
 						<xf:delete ev:event="DOMActivate" nodeset="." />
 					</xf:trigger>
-				</h3>
-				<xf:input ref="./@type">
-					<xf:label>Type: </xf:label>
-				</xf:input>
-				<xf:input ref=".">
-					<xf:label>Value: </xf:label>
-				</xf:input>
-				<xf:trigger>
-					<xf:label>Remove</xf:label>
-					<xf:delete ev:event="DOMActivate" nodeset="." />
-				</xf:trigger>
+					-->
+				</div>
+			</xf:repeat>
+			<xf:trigger>
+				<xf:label>Add other electronic address</xf:label>
+				<xf:insert ev:event="DOMActivate" origin="instance('dataset-template')/my:otherElectronic[1]" position="after"/>
+			</xf:trigger>
+			<br />
+			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:startDate">
+				<xf:label>Start Date</xf:label>
+				<xf:hint></xf:hint>
+			</xf:input>
+			<br/>
+			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:endDate">
+				<xf:label>End Date</xf:label>
+				<xf:hint></xf:hint>
+			</xf:input>
+			<div class="panel">
+				<xf:textarea model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:briefDescription">
+					<xf:label>Brief Description</xf:label>
+					<xf:hint>A brief summary of the contents of the dataset</xf:hint>
+				</xf:textarea>
+				<br/>
+				<xf:textarea model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:fullDescription">
+					<xf:label>Full Description</xf:label>
+					<xf:hint>A summary of dataset contents, including relevant sample data, coverage, and any other relevant details</xf:hint>
+				</xf:textarea>
+			</div>
+			
+			<xf:repeat nodeset="instance('dataset-metadata')/my:subject">
+				<div class="panel">
+					<h2>Subject:
+						<xf:trigger>
+							<xf:label>Remove</xf:label>
+							<xf:delete ev:event="DOMActivate" nodeset="." />
+						</xf:trigger>
+					</h2>
+					<xf:input ref="./@type">
+						<xf:label>Type</xf:label>
+					</xf:input>
+					<xf:input ref=".">
+						<xf:label>Value</xf:label>
+					</xf:input>
+					<!--
+					<xf:trigger>
+						<xf:label>Remove</xf:label>
+						<xf:delete ev:event="DOMActivate" nodeset="." />
+					</xf:trigger>
+					-->
+				</div>
 			</xf:repeat>
 			<xf:trigger>
 				<xf:label>Add Subject</xf:label>
@@ -235,7 +244,7 @@
 			
 			
 			<xf:repeat nodeset="instance('dataset-metadata')/my:relatedWebsite">
-				<div>
+				<div class="panel">
 					<h2>Related website <xf:trigger>
 										<xf:label>Remove</xf:label>
 							<xf:delete ev:event="DOMActivate" nodeset="."/>
@@ -243,15 +252,15 @@
 					</h2>
 					
 					<xf:input ref="my:location">
-						<xf:label>URL: </xf:label>
+						<xf:label>URL</xf:label>
 					</xf:input>
 					<br/>
 					<xf:input ref="my:title">
-						<xf:label>Title: </xf:label>
+						<xf:label>Title</xf:label>
 					</xf:input>
 					<br/>
 					<xf:input ref="my:notes">
-						<xf:label>Notes: </xf:label>
+						<xf:label>Notes</xf:label>
 					</xf:input>
 				</div>
 			</xf:repeat>
@@ -268,7 +277,7 @@
 			</xf:trigger>
 			
 			<xf:repeat nodeset="instance('dataset-metadata')/my:relatedPublication">
-				<div>
+				<div class="panel">
 					<h2>Related Publication <xf:trigger>
 												<xf:label>Remove</xf:label>
 							<xf:delete ev:event="DOMActivate" nodeset="."/>
@@ -276,15 +285,15 @@
 					</h2>
 					
 					<xf:input ref="my:location">
-						<xf:label>URL: </xf:label>
+						<xf:label>URL</xf:label>
 					</xf:input>
 					<br/>
 					<xf:input ref="my:title">
-						<xf:label>Title: </xf:label>
+						<xf:label>Title</xf:label>
 					</xf:input>
 					<br/>
 					<xf:input ref="my:notes">
-						<xf:label>Notes: </xf:label>
+						<xf:label>Notes</xf:label>
 					</xf:input>
 				</div>
 			</xf:repeat>
