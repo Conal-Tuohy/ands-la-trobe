@@ -41,7 +41,7 @@
 		<div id="body">
 			<!--
 			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/key" >
-				<xf:label>Key:</xf:label>
+				<xf:label>Key</xf:label>
 			</xf:input>
 			<br/>-->
 			
@@ -51,45 +51,45 @@
 			</div>
 			
 			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:name" incremental="true">
-				<xf:label>Name:</xf:label>
+				<xf:label>Name</xf:label>
 				<xf:hint>Full name of the group</xf:hint>
 			</xf:input>
 			<br/>
 			
 			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:department">
-				<xf:label>Department:</xf:label>
+				<xf:label>Department</xf:label>
 			</xf:input>
 			<br />
 			
 			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:institution">
-				<xf:label>Institution:</xf:label>
+				<xf:label>Institution</xf:label>
 			</xf:input>
 			<br/>
 			
 			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:abbreviatedName">
-				<xf:label>Abbreviated Name:</xf:label>
+				<xf:label>Abbreviated Name</xf:label>
 				<xf:hint>Common acronym or shortened name</xf:hint>
 			</xf:input>
 			<br />
 			
 			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:url">
-				<xf:label>URL:</xf:label>
+				<xf:label>URL</xf:label>
 				<xf:hint>Group homepage</xf:hint>
 			</xf:input>
 			<br />
 			
 			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:email">
-				<xf:label>Email:</xf:label>
+				<xf:label>Email</xf:label>
 			</xf:input>
 			<br/>
 			
 			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:fax">
-				<xf:label>Fax:</xf:label>
+				<xf:label>Fax</xf:label>
 			</xf:input>
 			<br />
 			
 			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:phone">
-				<xf:label>Phone:</xf:label>
+				<xf:label>Phone</xf:label>
 			</xf:input>
 			<br />
 <!--
@@ -99,10 +99,10 @@
 		    							<xf:delete ev:event="DOMActivate" nodeset="." />
 								    	</xf:trigger></h3>
 				<xf:input ref="./@type" >
-			    	<xf:label>Type: </xf:label>
+			    	<xf:label>Type</xf:label>
 			    </xf:input>
 				<xf:input ref="." >
-			    	<xf:label>Contact: </xf:label>
+			    	<xf:label>Contact</xf:label>
 				</xf:input>
 			    <xf:trigger>
 			    	<xf:label>Remove</xf:label>
@@ -118,50 +118,50 @@
 				</xf:trigger>
 			<br />
 			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/startDate">
-				<xf:label>Start Date: </xf:label>
+				<xf:label>Start Date</xf:label>
 			</xf:input>
 			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/endDate">
-				<xf:label>End Date: </xf:label>
+				<xf:label>End Date</xf:label>
 			</xf:input>
 -->
 			<h2>Postal Address:</h2>
 			<xf:textarea model="group-metadata-editor-model" ref="instance('group-metadata')/my:postalAddress/my:text">
-				<xf:label>Address:</xf:label>
+				<xf:label>Address</xf:label>
 			</xf:textarea>
 			<br />
 			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:postalAddress/my:state">
-				<xf:label>State:</xf:label>
+				<xf:label>State</xf:label>
 			</xf:input>
 			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:postalAddress/my:postcode">
-				<xf:label>Postcode: </xf:label>
+				<xf:label>Postcode</xf:label>
 			</xf:input>
 			<br />
 			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:postalAddress/my:country">
-				<xf:label>Country: </xf:label>
+				<xf:label>Country</xf:label>
 			</xf:input>
 			<br />
 			<br />
 			<br />
 			<h2>Street Address:</h2>
 			<xf:textarea model="group-metadata-editor-model" ref="instance('group-metadata')/my:streetAddress/my:text">
-				<xf:label>Address:</xf:label>
+				<xf:label>Address</xf:label>
 			</xf:textarea>
 			<br />
 			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:streetAddress/my:state">
-				<xf:label>State:</xf:label>
+				<xf:label>State</xf:label>
 			</xf:input>
 			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:streetAddress/my:postcode">
-				<xf:label>Postcode: </xf:label>
+				<xf:label>Postcode</xf:label>
 			</xf:input>
 			<br />
 			<xf:input model="group-metadata-editor-model" ref="instance('group-metadata')/my:streetAddress/my:country">
-				<xf:label>Country: </xf:label>
+				<xf:label>Country</xf:label>
 			</xf:input>
 			<br />
 			<h2>Group members:</h2>
 			<xf:repeat nodeset="instance('group-metadata')/my:hasMember">
 				<xf:input ref=".">
-					<xf:label>Member ID:</xf:label>
+					<xf:label>Member ID</xf:label>
 					<xf:hint>A key reference to a <i>person</i> record. This reference can be found in the <i>key</i> field of the person's record</xf:hint>
 				</xf:input>
 				<xf:trigger>
@@ -196,15 +196,15 @@
 					</h2>
 					
 					<xf:input ref="my:location">
-						<xf:label>URL: </xf:label>
+						<xf:label>URL</xf:label>
 					</xf:input>
 					<br/>
 					<xf:input ref="my:title">
-						<xf:label>Title: </xf:label>
+						<xf:label>Title</xf:label>
 					</xf:input>
 					<br/>
 					<xf:input ref="my:notes">
-						<xf:label>Notes: </xf:label>
+						<xf:label>Notes</xf:label>
 					</xf:input>
 				</div>
 			</xf:repeat>
@@ -230,15 +230,15 @@
 					</h2>
 					
 					<xf:input ref="my:location">
-						<xf:label>URL: </xf:label>
+						<xf:label>URL</xf:label>
 					</xf:input>
 					<br/>
 					<xf:input ref="my:title">
-						<xf:label>Title: </xf:label>
+						<xf:label>Title</xf:label>
 					</xf:input>
 					<br/>
 					<xf:input ref="my:notes">
-						<xf:label>Notes: </xf:label>
+						<xf:label>Notes</xf:label>
 					</xf:input>
 				</div>
 			</xf:repeat>

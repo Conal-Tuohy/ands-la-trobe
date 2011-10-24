@@ -9,13 +9,32 @@
 /* value "inherit" for those properties, or "100%" in the case of width, etc. */
 
 
+
+/*
 textarea.xforms-value {
 	width: 100%;
 }
-
 xf|textarea {
-	width: 50em;
+	display: block;
+	width: 30em;
 }
+*/
+
+body {
+	font-family: sans-serif;
+	font-size: 16px;
+}
+
+input, textarea {
+	font-family: inherit;
+	font-size: inherit;
+}
+
+textarea {
+	height: 4em;
+}
+
+	
 
 #heading h1 {	
 	font-family: sans-serif;
@@ -32,8 +51,21 @@ xf|textarea {
 	display: block;
 }
 
+.xforms-trigger .xforms-label {
+	text-align: center;
+	vertical-align: center;
+}
+
+.xforms-label {
+	display: inline-block;
+	width: 10em;
+	text-align: right;
+	vertical-align: top;
+	margin-top: 3pt;
+	margin-right: 4pt;
+}
 .xforms-value {
-	width: 25em;
+	width: 30em;
 }
 
 /* Active components/xforms css */
@@ -59,4 +91,15 @@ xf|textarea {
 /* Display repeat-items with a dashed border */
 *:repeat-item { border: dashed; }
 
+.panel {
+	/*
+	*/
+	margin-top: 1.5em;
+	margin-bottom: 3em;
+}
 
+.panel h2 {
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: inherit;
+}	

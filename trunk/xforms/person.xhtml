@@ -21,10 +21,22 @@
 		<xf:model id="person-metadata-editor-model">
 			<xf:instance id="person-metadata" src="person" />
 			<xf:instance id="person-template" src="/xforms/person-template.xml"/>
+			<!-- the following binds are used to specify types and constraints -->
 			<xf:bind nodeset="instance('person-metadata')/my:dateOfBirth" type="xf:date" />
 			<xf:bind nodeset="instance('person-metadata')/my:email" type="xf:email" />
 			<xf:bind nodeset="instance('person-metadata')/my:phone/@public" type="xf:boolean"/>
-			<xf:bind nodeset="instance('person-metadata')/my:url" type="xf:anyURI" constraint="(normalize-space(.)='') or (starts-with(.,'http://') or starts-with(.,'https://')) and not(contains(.,' '))" />
+			<xf:bind 
+				nodeset="
+					instance('person-metadata')/my:url | 
+					instance('person-metadata')/my:relatedWebsite/my:location |
+					instance('person-metadata')/my:relatedPublication/my:location
+				" 
+				type="xf:anyURI" 
+				constraint="(normalize-space(.)='') or (starts-with(.,'http://') or starts-with(.,'https://')) and not(contains(.,' '))" 
+			/>
+			<xf:bind nodeset="instance('person-metadata')/my:nlaPartyIdentifier" 
+				type="xf:anyURI" 
+				constraint="(normalize-space(.)='') or (starts-with(., 'http://nla.gov.au/nla.party-') and string-length(.) &gt; string-length('http://nla.gov.au/nla.party-'))" />
 			<xf:submission id="save" instance="person-metadata" action="person" method="put" serialization="application/xml" replace="none" />
 			<xf:instance id="handle" src="handle"/>		
 		</xf:model>	
@@ -92,8 +104,9 @@
 			</h1>
 		</div>
 		<div id="ardc-pip">
-			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:nlaPartyIdentifier" >
-				<xf:label>National Library Party Identifier:</xf:label>
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:nlaPartyIdentifier" incremental="true">
+				<xf:label>National Library Party Identifier</xf:label>
+				<xf:alert>NLA identifier should begin with "http://nla.gov.au/nla.party-"</xf:alert>
 				<xf:hint>A National Library Party Identifier is an HTTP URI that uniquely identifies a person. It looks something like this: http://nla.gov.au/nla.party-516490</xf:hint>
 			</xf:input><br />
 
@@ -162,43 +175,44 @@
 				<xf:hint>The person's family name</xf:hint>
 			</xf:input><br />
 -->
-			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:name" >
-				<xf:label>Name:</xf:label>
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:name" incremental="true" >
+				<xf:label>Name</xf:label>
 				<xf:hint>The person's full name</xf:hint>
 			</xf:input><br />
 
 			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:department" >
-				<xf:label>Department:</xf:label>
+				<xf:label>Department</xf:label>
 			</xf:input><br />
 			
 			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:institution" >
-				<xf:label>Institution:</xf:label>
+				<xf:label>Institution</xf:label>
 			</xf:input><br />
 
 			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:abbreviatedName" >
-				<xf:label>Abbreviated Name:</xf:label>
+				<xf:label>Abbreviated Name</xf:label>
 				<xf:hint>Common nickname or other title</xf:hint>
 			</xf:input><br />
 	
 			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:dateOfBirth" >
-				<xf:label>Date of Birth:</xf:label>
+				<xf:label>Date of Birth</xf:label>
 			</xf:input><br />
 		 	
-			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:url" >
-				<xf:label>URL:</xf:label>
-				<xf:hint>Personal Homepage or university profile page</xf:hint>
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:url" incremental="true">
+				<xf:label>URL</xf:label>
+				<xf:alert>URL should begin with "http://" or "https://" and contain no spaces</xf:alert>
+				<xf:hint>Personal home page or university profile page</xf:hint>
 			</xf:input><br />
 		
 			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:email" >
-				<xf:label>Email:</xf:label>
+				<xf:label>Email</xf:label>
 			</xf:input><br />
 
 			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:fax" >
-				<xf:label>Fax:</xf:label>
+				<xf:label>Fax</xf:label>
 			</xf:input><br />
 			
 			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:phone" >
-				<xf:label>Phone:</xf:label>
+				<xf:label>Phone</xf:label>
 			</xf:input>
 			<!--
 			<xf:select1 appearance="full" model="person-metadata-editor-model" ref="instance('person-metadata')/my:phone/@public" >
@@ -241,62 +255,72 @@
 						position="after"/>
 				</xf:trigger>
 -->	
-			<xf:textarea model="person-metadata-editor-model" ref="instance('person-metadata')/my:postalAddress/my:text" >
-				<xf:label><h2>Postal Address:</h2>Address:</xf:label>
-			</xf:textarea><br />
-			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:postalAddress/my:state" >
-				<xf:label>State:</xf:label>
-			</xf:input>
-			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:postalAddress/my:postcode"  >
-				<xf:label>Postcode: </xf:label>
-			</xf:input><br />
-			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:postalAddress/my:country"  >
-				<xf:label>Country: </xf:label>
-			</xf:input><br />
-
-			<xf:textarea model="person-metadata-editor-model" ref="instance('person-metadata')/my:streetAddress/my:text"  >
-				<xf:label><h2>Street Address:</h2>Address:</xf:label>
-			</xf:textarea>
-			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:streetAddress/my:state"  >
-				<xf:label>State:</xf:label>
-			</xf:input>
-			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:streetAddress/my:postcode" >
-				<xf:label>Postcode: </xf:label>
-			</xf:input><br />
-			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:streetAddress/my:country"  >
-				<xf:label>Country: </xf:label>
-			</xf:input><br />
-			<xf:textarea model="person-metadata-editor-model" ref="instance('person-metadata')/my:briefDescription">
-				<xf:label><h2>Brief Description</h2> </xf:label>
-				<xf:hint>A biographical summary briefly detailing the academic history of the person</xf:hint>
-			</xf:textarea>
-			<xf:textarea model="person-metadata-editor-model" ref="instance('person-metadata')/my:fullDescription">
-				<xf:label><h2>Full Description</h2> </xf:label>
-				<xf:hint>The person's full academic history, citations of their publications, notes about their other academic achievements, and any other relevant unstructured information</xf:hint>
-			</xf:textarea>
+			<div class="panel" id="postal-address">
+				<xf:textarea model="person-metadata-editor-model" ref="instance('person-metadata')/my:postalAddress/my:text" >
+					<xf:label>Postal Address</xf:label>
+				</xf:textarea><br />
+				<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:postalAddress/my:state" >
+					<xf:label>State</xf:label>
+				</xf:input><br />
+				<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:postalAddress/my:postcode"  >
+					<xf:label>Postcode</xf:label>
+				</xf:input><br />
+				<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:postalAddress/my:country"  >
+					<xf:label>Country</xf:label>
+				</xf:input><br />
+			</div>
+			
+			<div class="panel" id="street-address">
+				<xf:textarea model="person-metadata-editor-model" ref="instance('person-metadata')/my:streetAddress/my:text"  >
+					<xf:label>Street Address</xf:label>
+				</xf:textarea><br/>
+				<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:streetAddress/my:state"  >
+					<xf:label>State</xf:label>
+				</xf:input><br />
+				<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:streetAddress/my:postcode" >
+					<xf:label>Postcode</xf:label>
+				</xf:input><br />
+				<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:streetAddress/my:country"  >
+					<xf:label>Country</xf:label>
+				</xf:input><br />
+			</div>
+			
+			<div class="panel" id="descriptions">
+				<xf:textarea model="person-metadata-editor-model" ref="instance('person-metadata')/my:briefDescription">
+					<xf:label>Brief Description</xf:label>
+					<xf:hint>A biographical summary briefly detailing the academic history of the person</xf:hint>
+				</xf:textarea><br />
+				<xf:textarea model="person-metadata-editor-model" ref="instance('person-metadata')/my:fullDescription">
+					<xf:label>Full Description</xf:label>
+					<xf:hint>The person's full academic history, citations of their publications, notes about their other academic achievements, and any other relevant unstructured information</xf:hint>
+				</xf:textarea>
+			</div>
 
 			<xf:repeat nodeset="instance('person-metadata')/my:relatedWebsite">
-				<div>
+				<div class="panel">
 					<h2>Related website <xf:trigger>
 										<xf:label>Remove</xf:label>
 										<xf:delete ev:event="DOMActivate" nodeset="."/>
 									</xf:trigger></h2>
 									
-					<xf:input ref="my:location">
-						<xf:label>URL: </xf:label>
+					<xf:input ref="my:location" incremental="true">
+						<xf:label>URL</xf:label>
+						<xf:alert>URL should begin with "http://" or "https://" and contain no spaces</xf:alert>
+						<xf:hint>Other related website</xf:hint>
 					</xf:input>
 					<br/>
 					<xf:input ref="my:title">
-						<xf:label>Title: </xf:label>
+						<xf:label>Title</xf:label>
 					</xf:input>
 					<br/>
 					<xf:input ref="my:notes">
-						<xf:label>Notes: </xf:label>
+						<xf:label>Notes</xf:label>
 					</xf:input>
 				</div>
 			</xf:repeat>
+			
 				<xf:trigger>
-					<xf:label>Add Related Website</xf:label>
+					<xf:label>Add a related website</xf:label>
 					<!-- @ev:event is what triggers the insert -->
 					<!-- @origin is the location of the content to insert -->
 					<!-- @context is the evaluation context -->
@@ -311,27 +335,30 @@
 				</xf:trigger>
 	
 			<xf:repeat nodeset="instance('person-metadata')/my:relatedPublication">
-				<div>
-					<h2>Related publication<xf:trigger>
+				<div class="panel">
+					<h2>Related publication <xf:trigger>
 												<xf:label>Remove</xf:label>
 												<xf:delete ev:event="DOMActivate" nodeset="."/>
 										</xf:trigger></h2>
 									
-					<xf:input ref="my:location">
-						<xf:label>URL: </xf:label>
+					<xf:input ref="my:location" incremental="true">
+						<xf:label>URL</xf:label>
+						<xf:alert>URL should begin with "http://" or "https://" and contain no spaces</xf:alert>
+						<xf:hint>URL of related publication (e.g. thesis)</xf:hint>
 					</xf:input>
 					<br/>
 					<xf:input ref="my:title">
-						<xf:label>Title: </xf:label>
+						<xf:label>Title</xf:label>
 					</xf:input>
 					<br/>
 					<xf:input ref="my:notes">
-						<xf:label>Notes: </xf:label>
+						<xf:label>Notes</xf:label>
 					</xf:input>
 				</div>
 			</xf:repeat>
+			
 				<xf:trigger>
-					<xf:label>Add Related Publication</xf:label>
+					<xf:label>Add a related publication</xf:label>
 					<!-- @ev:event is what triggers the insert -->
 					<!-- @origin is the location of the content to insert -->
 					<!-- @context is the evaluation context -->

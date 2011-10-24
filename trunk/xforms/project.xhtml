@@ -100,40 +100,40 @@
 			
 			<!--
 			<xf:input model="project-metadata-editor-model" ref="instance('project-metadata')/key" >
-				<xf:label>Key:</xf:label>
+				<xf:label>Key</xf:label>
 			</xf:input>
 			<br/>-->
 			
 			<xf:input model="project-metadata-editor-model" ref="instance('project-metadata')/my:name" >
-				<xf:label>Name:</xf:label>
+				<xf:label>Name</xf:label>
 				<xf:hint>Reference name for the project</xf:hint>
 			</xf:input>
 			<br/>
 			 
 			<xf:input model="project-metadata-editor-model" ref="instance('project-metadata')/my:department" >
-				<xf:label>Department:</xf:label>
+				<xf:label>Department</xf:label>
 			</xf:input>
 			<br />
 			
 			<xf:input model="project-metadata-editor-model" ref="instance('project-metadata')/my:institution" >
-				<xf:label>Institution:</xf:label>
+				<xf:label>Institution</xf:label>
 				<xf:hint>Initiating institution or primary point of research</xf:hint>
 			</xf:input>
 			<br/>
 		
 			<xf:input model="project-metadata-editor-model" ref="instance('project-metadata')/my:abbreviatedName" >
-				<xf:label>Abbreviated Name:</xf:label>
+				<xf:label>Abbreviated Name</xf:label>
 			</xf:input>
 			<br />	
 	 	
 			<xf:input model="project-metadata-editor-model" ref="instance('project-metadata')/my:url" >
-				<xf:label>URL:</xf:label>
+				<xf:label>URL</xf:label>
 				<xf:hint>A link to the project homepage, or an appropriate summary page</xf:hint>
 			</xf:input>
 			<br />
 			
 			<xf:input model="project-metadata-editor-model" ref="instance('project-metadata')/my:email" >
-				<xf:label>Email:</xf:label>
+				<xf:label>Email</xf:label>
 				<xf:hint>Primary email contact for the project</xf:hint>
 			</xf:input>
 			<br/>
@@ -146,10 +146,10 @@
 		    							<xf:delete ev:event="DOMActivate" nodeset="." />
 								    	</xf:trigger></h3>
 				<xf:input ref="./@type" >
-			    	<xf:label>Type: </xf:label>
+			    	<xf:label>Type</xf:label>
 			    </xf:input>
 				<xf:input ref="." >
-			    	<xf:label>Contact: </xf:label>
+			    	<xf:label>Contact</xf:label>
 				</xf:input>
 			    <xf:trigger>
 			    	<xf:label>Remove</xf:label>
@@ -166,45 +166,45 @@
 			<br />
 -->
 			<xf:input model="project-metadata-editor-model" ref="instance('project-metadata')/my:startDate">
-				<xf:label>Start Date: </xf:label>
+				<xf:label>Start Date</xf:label>
 				<xf:hint>Project initiation date</xf:hint>
 			</xf:input>
 			<xf:input model="project-metadata-editor-model" ref="instance('project-metadata')/my:endDate">
-				<xf:label>End Date: </xf:label>
+				<xf:label>End Date</xf:label>
 				<xf:hint>Project termination date</xf:hint>
 			</xf:input>
 
 			<h2>Postal Address:</h2>
 			<xf:textarea model="project-metadata-editor-model" ref="instance('project-metadata')/my:postalAddress/my:text" >
-				<xf:label>Address:</xf:label>
+				<xf:label>Address</xf:label>
 			</xf:textarea><br />
 			<xf:input model="project-metadata-editor-model" ref="instance('project-metadata')/my:postalAddress/my:state" >
-				<xf:label>State:</xf:label>
+				<xf:label>State</xf:label>
 			</xf:input>
 			<xf:input model="project-metadata-editor-model" ref="instance('project-metadata')/my:postalAddress/my:postcode"  >
-				<xf:label>Postcode: </xf:label>
+				<xf:label>Postcode</xf:label>
 			</xf:input><br />
 			<xf:input model="project-metadata-editor-model" ref="instance('project-metadata')/my:postalAddress/my:country"  >
-				<xf:label>Country: </xf:label>
+				<xf:label>Country</xf:label>
 			</xf:input><br />
 			
 			<h2>Street Address:</h2>
 			<xf:textarea model="project-metadata-editor-model" ref="instance('project-metadata')/my:streetAddress/my:text"  >
-				<xf:label>Address:</xf:label>
+				<xf:label>Address</xf:label>
 			</xf:textarea><br />
 			<xf:input model="project-metadata-editor-model" ref="instance('project-metadata')/my:streetAddress/my:state"  >
-				<xf:label>State:</xf:label>
+				<xf:label>State</xf:label>
 			</xf:input>
 			<xf:input model="project-metadata-editor-model" ref="instance('project-metadata')/my:streetAddress/my:postcode" >
-				<xf:label>Postcode: </xf:label>
+				<xf:label>Postcode</xf:label>
 			</xf:input><br />
 			<xf:input model="project-metadata-editor-model" ref="instance('project-metadata')/my:streetAddress/my:country"  >
-				<xf:label>Country: </xf:label>
+				<xf:label>Country</xf:label>
 			</xf:input><br />
 
 			<xf:repeat nodeset="instance('project-metadata')/my:hasMember">
 				<xf:input ref=".">
-					<xf:label>Member ID:</xf:label>
+					<xf:label>Member ID</xf:label>
 					<xf:hint>A key reference to a <i>person</i> record. This reference can be found in the <i>key</i> field of the person's record</xf:hint>
 				</xf:input> <xf:trigger>
 								<xf:label>Remove</xf:label>
@@ -235,15 +235,15 @@
 									</xf:trigger></h2>
 									
 					<xf:input ref="my:location">
-						<xf:label>URL: </xf:label>
+						<xf:label>URL</xf:label>
 					</xf:input>
 					<br/>
 					<xf:input ref="my:title">
-						<xf:label>Title: </xf:label>
+						<xf:label>Title</xf:label>
 					</xf:input>
 					<br/>
 					<xf:input ref="my:notes">
-						<xf:label>Notes: </xf:label>
+						<xf:label>Notes</xf:label>
 					</xf:input>
 				</div>
 			</xf:repeat>
@@ -270,15 +270,15 @@
 											</xf:trigger></h2>
 									
 					<xf:input ref="my:location">
-						<xf:label>URL: </xf:label>
+						<xf:label>URL</xf:label>
 					</xf:input>
 					<br/>
 					<xf:input ref="my:title">
-						<xf:label>Title: </xf:label>
+						<xf:label>Title</xf:label>
 					</xf:input>
 					<br/>
 					<xf:input ref="my:notes">
-						<xf:label>Notes: </xf:label>
+						<xf:label>Notes</xf:label>
 					</xf:input>
 				</div>
 			</xf:repeat>
