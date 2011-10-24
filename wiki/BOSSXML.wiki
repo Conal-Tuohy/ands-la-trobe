@@ -183,7 +183,7 @@ A sample document appears below:
 City. La Trobe University
 State. Victoria
 Postcode. 3086</value>
-		<value name="Users Telephone">0413572433</value>
+		<value name="Users Telephone">555-555-555</value>
 		<value name="Users Fax"/>
 		<value name="Users Email">kaitlyn.taylor@latrobe.edu.au</value>
 	</request>
