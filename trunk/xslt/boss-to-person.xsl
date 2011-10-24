@@ -39,7 +39,7 @@
 			<abbreviatedName></abbreviatedName>
 			<url></url>
 			<email><xsl:value-of select="$request-values[@name='Users Email']" /></email>
-			<phone><xsl:value-of select="$request-values[@name='Users Telephone']" /></phone>
+			<phone public="false"><xsl:value-of select="$request-values[@name='Users Telephone']" /></phone>
 			<fax><xsl:value-of select="$request-values[@name='Users Fax']" /></fax>
 			<otherElectronic type=""></otherElectronic>
 			<postalAddress>
