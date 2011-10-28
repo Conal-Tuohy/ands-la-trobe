@@ -20,14 +20,28 @@
     <briefDescription />
     <fullDescription />
     <sample>
-        <id />
-        <details />
-        <type />
+            <name />
+            <id />
+            <cas />
+            <dimensions />
+            <supplier />
+            <supplierCode />
+            <purity />
+            <typicalAnalysis />
+            <prep />
+            <additionalNotes />
     </sample>
     <sample>
-        <id />
-        <details />
-        <type />
+            <name />
+            <id />
+            <cas />
+            <dimensions />
+            <supplier />
+            <supplierCode />
+            <purity />
+            <typicalAnalysis />
+            <prep />
+            <additionalNotes />
     </sample>
     <relatedWebsite />
         <location />
