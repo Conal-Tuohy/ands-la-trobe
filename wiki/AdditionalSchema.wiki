@@ -19,6 +19,16 @@
     <subject type="local" code="" />
     <briefDescription />
     <fullDescription />
+    <sample>
+        <id />
+        <details />
+        <type />
+    </sample>
+    <sample>
+        <id />
+        <details />
+        <type />
+    </sample>
     <relatedWebsite />
         <location />
         <title />
