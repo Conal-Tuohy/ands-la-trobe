@@ -110,3 +110,6 @@ Changed the `//module[@class="org.fcrepo.server.messaging.MessagingModule"]/para
 Disabled the auto-generation of file extensions (when downloading files) by editing `/ands/fedora/server/config/fedora.fcfg` and changing the value of `/server/param[@name='datastreamExtensionMappingLabel']/@value` from "always" to "ifmissing".
 
 (see http://code.google.com/p/ands-la-trobe/issues/detail?id=41 for requirement)
+
+== LDAP auth ==
+https://wiki.duraspace.org/display/FEDORA34/Security
