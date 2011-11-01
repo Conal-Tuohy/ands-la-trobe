@@ -13,6 +13,30 @@
 	<subject type="local" code="" />
 	<briefDescription />
 	<fullDescription />
+	<sample>
+		<name />
+		<id />
+		<cas />
+		<dimensions />
+		<supplier />
+		<supplierCode />
+		<purity />
+		<typicalAnalysis />
+		<prep />
+		<additionalNotes />
+	</sample>
+	<sample>
+		<name />
+		<id />
+		<cas />
+		<dimensions />
+		<supplier />
+		<supplierCode />
+		<purity />
+		<typicalAnalysis />
+		<prep />
+		<additionalNotes />
+	</sample>
 	<relatedWebsite>
 		<location />
 		<title />

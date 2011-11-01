@@ -214,7 +214,53 @@
 					<xf:hint>A summary of dataset contents, including relevant sample data, coverage, and any other relevant details</xf:hint>
 				</xf:textarea>
 			</div>
-			
+	
+				<xf:repeat nodeset="instance('dataset-metadata')/my:sample">
+						<h3>Sample:
+								<xf:trigger>
+								<xf:label>Remove</xf:label>
+								<xf:delete ev:event="DOMActivate" nodeset="." />
+								</xf:trigger>
+						</h3>
+						<xf:input ref="./my:name">
+							<xf:label>Sample Name: </xf:label>
+						</xf:input><br />
+						<xf:input ref="./my:id">
+							<xf:label>Sample ID: </xf:label>
+						</xf:input><br />
+						<xf:input ref="./my:cas">
+							<xf:label>CAS Number: </xf:label>
+						</xf:input><br />
+						<xf:input ref="./my:dimensions">
+							<xf:label>Dimensions: </xf:label>
+						</xf:input><br />
+						<xf:input ref="./my:supplier">
+							<xf:label>Supplier: </xf:label>
+						</xf:input><br />
+						<xf:input ref="./my:supplierCode">
+							<xf:label>Supplier Code: </xf:label>
+						</xf:input><br />
+						<xf:input ref="./my:purity">
+							<xf:label>Purity: </xf:label>
+						</xf:input><br />
+						<xf:input ref="./my:typicalAnalysis">
+							<xf:label>Typical Analysis: </xf:label>
+						</xf:input><br />
+						<xf:input ref="./my:prep">
+							<xf:label>Prep: </xf:label>
+						</xf:input><br />
+						<xf:input ref="./my:additionalNotes">
+							<xf:label>Additional Notes: </xf:label>
+						</xf:input><br />
+				</xf:repeat>
+				<xf:trigger>
+					<xf:label>Add Sample</xf:label>
+					<xf:insert ev:event="DOMActivate" origin="instance('dataset-template')/my:sample[1]" position="after"/>
+				</xf:trigger>
+
+
+	
+
 			<xf:repeat nodeset="instance('dataset-metadata')/my:subject">
 				<div class="panel">
 					<h2>Subject:

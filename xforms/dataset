@@ -14,6 +14,30 @@
 	<subject type="local" code="plastic film">plastic film</subject>
 	<briefDescription>Test 1</briefDescription>
 	<fullDescription></fullDescription>
+	<sample>
+		<name></name>
+		<id></id>
+		<cas></cas>
+		<dimensions></dimensions>
+		<supplier></supplier>
+		<supplierCode></supplierCode>
+		<purity></purity>
+		<typicalAnalysis></typicalAnalysis>
+		<prep></prep>
+		<additionalNotes></additionalNotes>
+	</sample>	
+	<sample>
+		<name></name>
+		<id></id>
+		<cas></cas>
+		<dimensions></dimensions>
+		<supplier></supplier>
+		<supplierCode></supplierCode>
+		<purity></purity>
+		<typicalAnalysis></typicalAnalysis>
+		<prep></prep>
+		<additionalNotes></additionalNotes>
+	</sample>
 	<relatedWebsite>
 		<location></location>
 		<title></title>
