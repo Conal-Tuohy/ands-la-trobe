@@ -47,6 +47,20 @@
 			<subject type="anzsrc-for">020406</subject>
 			<subject type="anzsrc-for">030603</subject>
 			<subject type="anzsrc-for">030301</subject>
+			<xsl:for-each select="boss:logsheet/boss:table[@name='sampletable']/boss:row">
+				<sample>
+					<name><xsl:value-of select="boss:column[3]"/></name>
+					<id><xsl:value-of select="boss:column[1]"/></id>
+					<cas></cas>
+					<dimensions></dimensions>
+					<supplier></supplier>
+					<supplierCode></supplierCode>
+					<purity></purity>
+					<typicalAnalysis></typicalAnalysis>
+					<prep></prep>
+					<additionalNotes><xsl:value-of select="boss:column[2]"/></additionalNotes>
+				</sample>
+			</xsl:for-each>
 			<briefDescription><xsl:value-of select="boss:logsheet/boss:value[@name='GeneralDescription']"/></briefDescription>
 			<fullDescription><xsl:value-of select="boss:logsheet/boss:value[@name='GeneralDescription']"/><xsl:text>
 </xsl:text>

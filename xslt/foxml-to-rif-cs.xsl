@@ -26,7 +26,7 @@
 			xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/1.2.0/schema/registryObjects.xsd">
 			<registryObject group="La Trobe University">
 				<key><xsl:value-of select="$handle"/></key>
-				<originatingSource>http://andsdb-dc19-dev.latrobe.edu.au/</originatingSource>
+				<originatingSource>http://cmss.latrobe.edu.au/</originatingSource>
 				<xsl:apply-templates select="$descriptive-datastream"/>
 			</registryObject>
 		</registryObjects>
