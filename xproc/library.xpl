@@ -261,12 +261,24 @@
 		<p:load name="load-pids-identity-file">
 			<p:with-option name="href" select="$pids-identity-file"/>
 		</p:load>
-		<lib:http-request method="post">
-			<p:with-option name="uri" select="concat($pids-uri, '/mint?type=URL&amp;value=', fn:encode-for-uri($uri))"/>
-			<p:input port="source">
-				<p:pipe step="load-pids-identity-file" port="result"/>
-			</p:input>
-		</lib:http-request>
+		<p:try>
+			<p:group>
+				<lib:http-request method="post">
+					<p:with-option name="uri" select="concat($pids-uri, '/mint?type=URL&amp;value=', fn:encode-for-uri($uri))"/>
+					<p:input port="source">
+						<p:pipe step="load-pids-identity-file" port="result"/>
+					</p:input>
+				</lib:http-request>
+			</p:group>
+			<p:catch name="http-error">
+				<!-- an error occurred - return the error message -->
+				<p:identity>
+					<p:input port="source">
+						<p:pipe step="http-error" port="error"/>
+					</p:input>
+				</p:identity>
+			</p:catch>
+		</p:try>
 	</p:declare-step>
 	
 	<!-- checks if an object has a handle datastream, and if not, it creates one -->
