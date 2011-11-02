@@ -27,6 +27,18 @@
 				border-bottom-color: #172A73; 
 			}
 			
+			.xml {
+				padding-top: 0.5em;
+				padding-bottom: 0.5em;
+				padding-left: 1em;
+				padding-right: 1em;
+				background-color: #D0DFEE;
+				border-style: solid;
+				border-width: 1px;
+				border-color: #405469;
+				width: 65em;
+			}
+
 			.command {
 				padding-top: 0.5em;
 				padding-bottom: 0.5em;
@@ -60,46 +72,57 @@
 		</div>
 		<p>Ant will execute the <code>build.xml</code> file to build the application, which will be output to <code>build/fedora-update-handler.jar</code></p>
 		<h2>How to run the application</h2>
-		<p>The application should be run on the same host as the Fedora service itself. </p>
+		<p>First you will need to have installed <a href="http://www.java.com/en/download/manual.jsp">Java</a> version 1.5 or later.</p>
 		<p>You will need to <a href="https://wiki.duraspace.org/display/FCR30/Messaging#Messaging-config">enable Fedora's message service</a>.</p>
 		<p>You will need to copy the <code>fedora-update-handler.jar</code> into a folder along with all the jars in the <code>lib</code> folder.</p>
+		<p>The application may run on the Fedora host itself, or with explicit configuration it may run on a different host and listen to Fedora notifications over the network.</p>
 		<p>To run the application:</p>
 <p>FedoraUpdateHandler expects either one or two parameters:</p>
 <ol>
 	<li>The first parameter is either 'start' or 'stop' to control the listener.</li>
-	<li>The second (and optional) parameter is the name of a Java properties XML file to configure the listener.</li>
+	<li>The second (and optional) parameter is the name of a Java properties XML file to configure the listener. It's possible to run several instances of the application at the same time, each with their own configuration file, to perform different tasks. </li>
 </ol>
 <p>e.g.</p>
+<p>To start listening to Fedora notifications, using the configuration file <code>handle-ingest.xml</code>:</p>
 <p class="command">java -jar FedoraUpdateHandler.jar start handle-ingest.xml</p>
+<p>To start listening to Fedora notifications, using the configuration file <code>handle-dc-update.xml</code>:</p>
 <p class="command">java -jar FedoraUpdateHandler.jar start handle-dc-update.xml</p>
+<p>To stop listening to Fedora notifications, using the configuration file <code>handle-dc-update.xml</code>:</p>
 <p class="command">java -jar FedoraUpdateHandler.jar stop handle-dc-update.xml</p>
-<p>The following properties are documented at https://wiki.duraspace.org/display/FCR30/Messaging</p>
+<h2>Configuring the application</h2>
+<p>The application is configured using a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Properties.html">Java Properties XML file</a>.</p>
+
+<p>The first four properties are documented at <a href="https://wiki.duraspace.org/display/FCR30/Messaging">https://wiki.duraspace.org/display/FCR30/Messaging</a></p>
 <ul>
-	<li>java.naming.factory.initial</li>
-	<li>java.naming.provider.url</li>
-	<li>connection.factory.name</li>
-	<li>topic.fedora</li>
-<ul>
-<p>The property "handler.jms.clientid" identifies the listener to Fedora. This value must be unique (i.e. each simultaneous client must use a different value for this property).</p>
-<p>The property "handler.command" specifies the application which the listener will run to handle the event.
+	<li><code>java.naming.factory.initial</code></li>
+	<li><code>java.naming.provider.url</code></li>
+	<li><code>connection.factory.name</code></li>
+	<li><code>topic.fedora</code></li>
+</ul>
+<p>The property <code>handler.jms.clientid</code> identifies the listener to Fedora. This value must be unique (i.e. each simultaneous client must use a different value for this property).</p>
+<p>The property <code>handler.command</code> specifies the application which the listener will run to handle the event.
 FedoraUpdateHandler will execute this application and pipe the Fedora message (an Atom XML document)
 to the application's standard input stream. </p>
 <p>Any properties not defined in the properties file will use defaults as shown below:</p>
-<![CDATA[
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties version="1.0">
-	<entry key="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</entry>
-	<entry key="java.naming.provider.url">failover://tcp://localhost:61616</entry>
-	<entry key="connection.factory.name">ConnectionFactory</entry>
-	<entry key="topic.fedora">fedora.apim.update</entry>
-	<entry key="handler.jms.clientid">FedoraUpdateHandler</entry>
-	<entry key="handler.command">cat</entry>
-</properties>
-]]>
-<p>Obsolete docs follow:</p>
-		<p class="command"><kbd>java -jar fedora-update-handler.jar</kbd> <var>command-line to execute to handle message</var></p>
-		<p>The fedora-update-handler application will connect to Fedora and subscribe to update notifications. When a notification message is received, the application will execute the specified command, and pass the notification message to it as the standard input stream.</p>
-		<p>For instance, to forward the notifications by email, using the <var>email</var> program, you might enter the following command:</p>
-		<p class="command"><kbd>java -jar fedora-update-handler.jar</kbd> <var>mail -s 'Fedora Update Notification' address@example.com</var></p>
+<pre class="xml">
+&lt;!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"&gt;
+&lt;properties version="1.0"&gt;
+   &lt;entry key="java.naming.factory.initial"&gt;org.apache.activemq.jndi.ActiveMQInitialContextFactory&lt;/entry&gt;
+   &lt;entry key="java.naming.provider.url"&gt;failover://tcp://localhost:61616&lt;/entry&gt;
+   &lt;entry key="connection.factory.name"&gt;ConnectionFactory&lt;/entry&gt;
+   &lt;entry key="topic.fedora"&gt;fedora.apim.update&lt;/entry&gt;
+   &lt;entry key="handler.jms.clientid"&gt;FedoraUpdateHandler&lt;/entry&gt;
+   &lt;entry key="handler.command"&gt;cat&lt;/entry&gt;
+&lt;/properties&gt;
+</pre>
+
+<p>An example properties file to forward all notifications to an example mailbox:</p>
+<pre class="xml">
+&lt;!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"&gt;
+&lt;properties version="1.0"&gt;
+   &lt;entry key="handler.jms.clientid"&gt;EmailForwarder&lt;/entry&gt;
+   &lt;entry key="handler.command"&gt;mail -s 'Fedora Update Notification' address@example.com&lt;/entry&gt;
+&lt;/properties&gt;
+</pre>
 	</body>
 </html>
