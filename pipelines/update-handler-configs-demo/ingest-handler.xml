@@ -1,0 +1,5 @@
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties version="1.0">
+	<entry key="handler.jms.clientid">Ingest Handler</entry>
+	<entry key="handler.command">java -Dcom.xmlcalabash.phonehome=false -Djava.util.logging.config.file=../calabash-logging.properties -Xmx1024m -cp ../calabash/calabash.jar:../calabash/lib/commons-codec-1.3.jar:../calabash/lib/commons-logging-1.1.1.jar:../calabash/lib/commons-httpclient-3.1.jar:../calabash/lib/saxon9he.jar:../calabash/lib/ com.xmlcalabash.drivers.Main -isource=- ../xproc/ingest-handler.xpl fedora-username=fedoraAdmin fedora-password=password pids-identity-file=/home/fedora-user/pipelines/pids-identity.xml pids-uri=https://test.ands.org.au:8443/pids/</entry>
+</properties>

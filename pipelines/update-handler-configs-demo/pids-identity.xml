@@ -1,0 +1,7 @@
+<request>
+	<properties>
+		<property name="appId" value="Longval"/>
+		<property name="identifier" value="CMSS"/>
+		<property name="authDomain" value="latrobe.edu.au"/>
+	</properties>
+</request>
