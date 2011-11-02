@@ -53,13 +53,26 @@
 
 			<!-- convert the aggregate metadata into RIF-CS -->
 			<lib:crosswalk xslt="../xslt/foxml-to-rif-cs.xsl" name="create-rif-cs"/>
+
+                        <!-- store RIF-CS to Fedora datastream (not really necessary, but may be handy for debugging) -->
+                        <lib:fedora-save-datastream name="rif-cs-to-fedora">
+                                <p:input port="source">
+                                        <p:pipe step="create-rif-cs" port="result"/>
+                                </p:input>
+                                <p:with-option name="username" select="$fedora-username"/>
+                                <p:with-option name="password" select="$fedora-password"/>
+                                <p:with-option name="uri" select="concat($item-base-uri, '/datastreams/rif-cs')"/>
+                        </lib:fedora-save-datastream>
 			
 			<!-- validate the result, and if valid, send it to the OAI-PMH harvester -->
 			<!-- otherwise, remove any corresponding stale record from the OAI-PMH provider -->
 			<p:try name="to-publish-valid-rif-cs">
 				<p:group name="validate-and-publish-rif-cs">
 					<p:validate-with-xml-schema>
-						<p:input  port="schema">
+						<p:input port="source">
+							<p:pipe step="create-rif-cs" port="result"/>
+						</p:input>
+						<p:input port="schema">
 							<p:document href="../schemas/rif-cs/registryObjects.xsd"/>
 						</p:input>
 					</p:validate-with-xml-schema>
@@ -76,17 +89,6 @@
 				</p:catch>
 			</p:try>
 			
-			<!-- store RIF-CS to Fedora datastream (not really necessary, but may be handy for debugging) -->			
-			<lib:fedora-save-datastream name="rif-cs-to-fedora">
-				<p:input port="source">
-					<p:pipe step="create-rif-cs" port="result"/>
-				</p:input>
-				<p:with-option name="username" select="$fedora-username"/>
-				<p:with-option name="password" select="$fedora-password"/>
-				<p:with-option name="uri" select="concat($item-base-uri, '/datastreams/rif-cs')"/>
-			</lib:fedora-save-datastream>
-			<p:sink name="ignore-fedora-response"/>
-
 			<!-- convert the RIF-CS to OAI_DC for the Fedora simple search -->
 			<lib:crosswalk xslt="../xslt/rif-cs-to-oai_dc.xsl" name="dc">
 				<p:input port="source">
@@ -108,7 +110,7 @@
 				</p:input>
 			</lib:crosswalk>
 			<!-- post the solr stream to the solr server -->
-			<lib:http-request method="post" uri="http://localhost:8080/solr-example/update"/>
+			<lib:http-request method="post" uri="http://localhost:8080/solr/update"/><!-- this path is defined by solr's setup and is different from install to install -->
 			<!-- save the solr record in fedora too -->
 			<lib:fedora-save-datastream name="solr-to-fedora">
 				<p:input port="source">
