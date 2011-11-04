@@ -1,11 +1,11 @@
-<dataset xmlns="http://hdl.handle.net/102.100.100/6976">
-	<hasCollector id="pid">asdfasfd</hasCollector>
-	<hasCollector id="pid2">someone else</hasCollector>
+<dataset xmlns="http://hdl.handle.net/102.100.100/6976" embargoDate="">
+	<hasCollector id="pid"></hasCollector>
+	<hasCollector id="pid2"></hasCollector>
 	<abbreviatedName></abbreviatedName>
 	<name>Sample Dataset Name</name>
 	<otherElectronic type=""></otherElectronic>
 	<otherElectronic type=""></otherElectronic>
-	<startDate>1993-01-04T21:05:00+1100</startDate>
+	<startDate></startDate>
 	<endDate></endDate>
 	<url response=""></url>
 	<subject type="anzsrc-for" code="020406">020406 Something or other</subject>
@@ -25,7 +25,7 @@
 		<typicalAnalysis></typicalAnalysis>
 		<prep></prep>
 		<additionalNotes></additionalNotes>
-	</sample>	
+	</sample>
 	<sample>
 		<name></name>
 		<id></id>

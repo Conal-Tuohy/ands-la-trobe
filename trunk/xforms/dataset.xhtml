@@ -55,6 +55,7 @@
 			
 			<xf:bind nodeset="instance('dataset-metadata')/my:startDate" type="xf:dateTime" />
 			<xf:bind nodeset="instance('dataset-metadata')/my:endDate" type="xf:dateTime" />
+			<xf:bind nodeset="instance('dataset-metadata')/@embargoDate" type="xf:dateTime" />
 <!--	                <xf:bind nodeset="instance('dataset-metadata')/my:url" type="xf:anyURI" constraint="(.='' or starts-with(.,'http://') or starts-with(.,'https://')) and not(contains(.,' '))" /> -->
 
 			
@@ -203,6 +204,12 @@
 				<xf:label>End Date</xf:label>
 				<xf:hint></xf:hint>
 			</xf:input>
+			<br/>
+			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/@embargoDate">
+				<xf:label>Embargo Date</xf:label>
+				<xf:hint>This data will not be publicly available until this date. Leave this field blank if an embargo is not required</xf:hint>
+			</xf:input>
+
 			<div class="panel">
 				<xf:textarea model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:briefDescription">
 					<xf:label>Brief Description</xf:label>
@@ -214,52 +221,49 @@
 					<xf:hint>A summary of dataset contents, including relevant sample data, coverage, and any other relevant details</xf:hint>
 				</xf:textarea>
 			</div>
-	
-				<xf:repeat nodeset="instance('dataset-metadata')/my:sample">
-						<h3>Sample:
-								<xf:trigger>
-								<xf:label>Remove</xf:label>
-								<xf:delete ev:event="DOMActivate" nodeset="." />
-								</xf:trigger>
-						</h3>
-						<xf:input ref="./my:name">
-							<xf:label>Sample Name: </xf:label>
-						</xf:input><br />
-						<xf:input ref="./my:id">
-							<xf:label>Sample ID: </xf:label>
-						</xf:input><br />
-						<xf:input ref="./my:cas">
-							<xf:label>CAS Number: </xf:label>
-						</xf:input><br />
-						<xf:input ref="./my:dimensions">
-							<xf:label>Dimensions: </xf:label>
-						</xf:input><br />
-						<xf:input ref="./my:supplier">
-							<xf:label>Supplier: </xf:label>
-						</xf:input><br />
-						<xf:input ref="./my:supplierCode">
-							<xf:label>Supplier Code: </xf:label>
-						</xf:input><br />
-						<xf:input ref="./my:purity">
-							<xf:label>Purity: </xf:label>
-						</xf:input><br />
-						<xf:input ref="./my:typicalAnalysis">
-							<xf:label>Typical Analysis: </xf:label>
-						</xf:input><br />
-						<xf:input ref="./my:prep">
-							<xf:label>Prep: </xf:label>
-						</xf:input><br />
-						<xf:input ref="./my:additionalNotes">
-							<xf:label>Additional Notes: </xf:label>
-						</xf:input><br />
-				</xf:repeat>
-				<xf:trigger>
-					<xf:label>Add Sample</xf:label>
-					<xf:insert ev:event="DOMActivate" origin="instance('dataset-template')/my:sample[1]" position="after"/>
-				</xf:trigger>
 
-
-	
+			<xf:repeat nodeset="instance('dataset-metadata')/my:sample">
+				<h3>Sample:
+					<xf:trigger>
+						<xf:label>Remove</xf:label>
+						<xf:delete ev:event="DOMActivate" nodeset="." />
+					</xf:trigger>
+				</h3>
+				<xf:input ref="./my:name">
+					<xf:label>Sample Name: </xf:label>
+				</xf:input><br />
+				<xf:input ref="./my:id">
+					<xf:label>Sample ID: </xf:label>
+				</xf:input><br />
+				<xf:input ref="./my:cas">
+					<xf:label>CAS Number: </xf:label>
+				</xf:input><br />
+				<xf:input ref="./my:dimensions">
+					<xf:label>Dimensions: </xf:label>
+				</xf:input><br />
+				<xf:input ref="./my:supplier">
+					<xf:label>Supplier: </xf:label>
+				</xf:input><br />
+				<xf:input ref="./my:supplierCode">
+					<xf:label>Supplier Code: </xf:label>
+				</xf:input><br />
+				<xf:input ref="./my:purity">
+					<xf:label>Purity: </xf:label>
+				</xf:input><br />
+				<xf:input ref="./my:typicalAnalysis">
+					<xf:label>Typical Analysis: </xf:label>
+				</xf:input><br />
+				<xf:input ref="./my:prep">
+					<xf:label>Prep: </xf:label>
+				</xf:input><br />
+				<xf:input ref="./my:additionalNotes">
+					<xf:label>Additional Notes: </xf:label>
+				</xf:input><br />
+			</xf:repeat>
+			<xf:trigger>
+				<xf:label>Add Sample</xf:label>
+				<xf:insert ev:event="DOMActivate" origin="instance('dataset-template')/my:sample[1]" position="after"/>
+			</xf:trigger>
 
 			<xf:repeat nodeset="instance('dataset-metadata')/my:subject">
 				<div class="panel">
