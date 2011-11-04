@@ -134,3 +134,7 @@ And the following (at line 538):
 
 
 }}}
+
+How to configure Solr to parse queries specified using multiple URL parameters:
+
+http://wiki.apache.org/solr/FunctionQuery#query
