@@ -1,4 +1,5 @@
 #summary Notes on stripping back data and expected results and outcomes
+#labels DC19
 
 = Introduction =
 
@@ -98,9 +99,12 @@ This crosswalk performs the following roles:
 
 This crosswalk performs the following roles:
 
-
-
+ * push vamas file to Java XML converter
+ * add resulting 'vamas-xml' stream to the record
 
 ==== surfacelab-update-handler ====
 
 This crosswalk performs the following roles:
+
+ * push .itm file to Java XML converter
+ * add resulting 'surfacelab-xml' stream to the record
