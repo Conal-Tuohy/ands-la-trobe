@@ -1,0 +1,48 @@
+#summary Notes on stripping back data and expected results and outcomes
+
+= Introduction =
+
+A list of things to do and/or check when deploying or retesting this system.
+
+
+== Fedora ==
+
+Fedora stores data simultaneously in the relational and pairtree databases. Both of these need to be cleared in order to purge the system of records.
+
+The fedora applicaion should not be running when the procedure is carried out if you don't want to see hundreds of null pointer exceptions in your servlet handler logs.
+
+=== Database ===
+
+Issuing the following sequence of commands from with the DBMS will purge the database of records:
+
+{{{
+use database fedora3;
+truncate doFields;
+truncate doRegistry;
+truncate pidGen;
+}}}
+
+=== Disk ===
+
+The following commands will purge the pairtree and resourceIndex.
+
+{{{
+cd $FEDORA_HOME/data
+rm -rf /activemq-data/*
+rm -rf /datastreamStore/*
+rm -rf /resourceIndex/* 
+}}}
+
+== Result testing ==
+
+=== local ingest (sword/fedora) ===
+
+=== crosswalks ===
+
+==== ingest-handler ====
+
+==== metadata-update-handler ====
+
+==== vamas-update-handler ====
+
+==== surfacelab-update-handler ====
