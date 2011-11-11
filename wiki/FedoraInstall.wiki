@@ -46,6 +46,37 @@ Fedora Commons is a repository system which we are using to store RIF-CS and oth
 
  * ran installer (./java -jar fcrepo-installer-3.4.2.jar)
 
+{{{
+ri.enabled=true
+messaging.enabled=true
+apia.auth.required=false
+database.jdbcDriverClass=com.mysql.jdbc.Driver
+ssl.available=false
+database.jdbcURL=jdbc\:mysql\://localhost/fedora3?useUnicode\=true&amp;characterEncoding\=UTF-8&amp;autoReconnect\=true
+messaging.uri=vm\:(broker\:(tcp\://localhost\:61616))
+database.password=<password>
+database.mysql.driver=included
+database.username=fedora
+fesl.authz.enabled=false
+tomcat.shutdown.port=8005
+deploy.local.services=false
+xacml.enabled=true
+database.mysql.jdbcDriverClass=com.mysql.jdbc.Driver
+tomcat.http.port=8080
+fedora.serverHost=localhost
+database=mysql
+database.driver=included
+fedora.serverContext=fedora
+llstore.type=akubra-fs
+tomcat.home=/usr/share/tomcat6
+fesl.authn.enabled=true
+fedora.home=/ands/fedora
+database.mysql.jdbcURL=jdbc\:mysql\://localhost/fedora3?useUnicode\=true&amp;characterEncoding\=UTF-8&amp;autoReconnect\=true
+install.type=custom
+servlet.engine=existingTomcat
+fedora.admin.pass=<password>
+}}}
+
  NOTE: Was missing /usr/share/tomcat6/common/lib/mysql-connector-java-5.1.6.jar for JDBC connector. Located and added manually (@ http://dev.mysql.com/downloads/connector/j/ ).
 
  ADDENDUM: Was ACTUALLY missing apache packages commons-dbcp (http://commons.apache.org/dbcp/download_dbcp.cgi) and commons-pool (http://commons.apache.org/pool/download_pool.cgi) as well. These should be placed in the same directory as the mysql-connector-java.jar and this path should be reported in the appropriate place when running the fcrepo installer. Note that catalina.properties does not appear to build the CLASSPATH envvar as reported, so these files will need to be placed somewhere tomcat can access them. The obvious place is /usr/share/tomcat6/lib.
