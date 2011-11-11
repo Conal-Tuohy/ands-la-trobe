@@ -142,8 +142,13 @@ Disabled the auto-generation of file extensions (when downloading files) by edit
 
 (see http://code.google.com/p/ands-la-trobe/issues/detail?id=41 for requirement)
 
-== LDAP auth ==
+== Access Control ==
+
+=== Embargos ===
+http://fedora-commons.1317035.n2.nabble.com/fcrepo-user-Some-library-use-case-solicitations-td5683099.html
+
+=== LDAP auth ===
 https://wiki.duraspace.org/display/FEDORA34/Security
 
-== XACML policy guide ==
+=== XACML policy guide ===
 https://wiki.duraspace.org/display/FEDORA34/Fedora+XACML+Policy+Writing+Guide
