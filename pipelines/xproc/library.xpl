@@ -249,7 +249,7 @@
 		<p:http-request name="execute-request"/>
 	</p:declare-step>
 	
-	<p:declare-step type="lib:mint-handle">
+	<p:declare-step type="lib:mint-handle" name="mint-handle">
 		<p:input port="source"/>
 		<p:output port="result"/>
 
