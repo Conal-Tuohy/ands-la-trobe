@@ -144,3 +144,6 @@ Disabled the auto-generation of file extensions (when downloading files) by edit
 
 == LDAP auth ==
 https://wiki.duraspace.org/display/FEDORA34/Security
+
+== XACML policy guide ==
+https://wiki.duraspace.org/display/FEDORA34/Fedora+XACML+Policy+Writing+Guide
