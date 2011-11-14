@@ -20,13 +20,13 @@
 	</xsl:template>
 	
 	<xsl:template match="latrobe:person">
+		<!-- the owner of a person record is the person themself -->
+		<xsl:value-of select="/f:digitalObject/@PID"/>
 	</xsl:template>
 
-	<xsl:template match="latrobe:group">
-	</xsl:template>
-
-	<xsl:template match="latrobe:dataset">
-		<xsl:for-each select="latrobe:hasCollector/@id">
+	<!-- the owners of a group or project are the members of the group or project -->
+	<xsl:template match="latrobe:group | latrobe:project">
+		<xsl:for-each select="latrobe:hasMember/@id">
 			<xsl:value-of select="normalize-space(substring-after(., ':'))"/>
 			<xsl:if test="position() &lt; last()">
 				<xsl:text>,</xsl:text>
@@ -34,7 +34,14 @@
 		</xsl:for-each>
 	</xsl:template>
 
-	<xsl:template match="latrobe:project">
+	<!-- the owners of a dataset are the collectors of that dataset -->
+	<xsl:template match="latrobe:dataset">
+		<xsl:for-each select="latrobe:hasCollector/@id">
+			<xsl:value-of select="normalize-space(substring-after(., ':'))"/>
+			<xsl:if test="position() &lt; last()">
+				<xsl:text>,</xsl:text>
+			</xsl:if>
+		</xsl:for-each>
 	</xsl:template>
 	
 </xsl:stylesheet>
