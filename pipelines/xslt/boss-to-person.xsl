@@ -37,6 +37,7 @@
 			<dateOfBirth></dateOfBirth>
 			<alternativeName></alternativeName>
 			<abbreviatedName></abbreviatedName>
+			<nlaPartyIdentifier></nlaPartyIdentifier>
 			<url></url>
 			<email><xsl:value-of select="$request-values[@name='Users Email']" /></email>
 			<phone public="false"><xsl:value-of select="$request-values[@name='Users Telephone']" /></phone>
