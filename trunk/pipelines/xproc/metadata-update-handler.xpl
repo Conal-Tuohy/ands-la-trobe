@@ -103,6 +103,24 @@
 				<p:with-option name="uri" select="concat($item-base-uri, '/datastreams/DC')"/>
 			</lib:http-request>
 
+			<!-- update the owner(s) of the object -->
+			<lib:crosswalk xslt="../xslt/foxml-to-owners-list.xsl" name="extract-object-owners-from-foxml">
+				<p:input port="source">
+					<p:pipe step="foxml" port="result"/>
+				</p:input>
+			</lib:crosswalk>
+			<!--
+			<p:store name="owners-list" href="file:///tmp/owners-list.xml"/>
+			-->
+			
+			<lib:http-request name="set-object-owners">
+				<p:with-option name="username" select="$fedora-username"/>
+				<p:with-option name="password" select="$fedora-password"/>
+				<p:with-option name="method" select="'put'"/>
+				<p:with-option name="uri" select="concat($item-base-uri, '?ownerId=', normalize-space(.))"/>
+				<p:with-option name="accept" select="'*/*'"/>
+			</lib:http-request>
+
 			<!-- Convert the foxml to solr and update the Solr index -->
 			<lib:crosswalk xslt="../xslt/foxml-to-solr.xsl" name="foxml-to-solr">
 				<p:input port="source">
