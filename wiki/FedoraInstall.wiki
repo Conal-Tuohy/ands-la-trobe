@@ -97,7 +97,8 @@ fedora/server/config/akubra-llstore.cfg contains paths for the datastreamStore a
  * add record to fstab: 
 {{{
 rdprojects:/fs1/systems/server.name /mnt/rdprojects nfs defaults,soft,nolock,_netdev 0 0 
-rdprojects:/fs1/systems/server.name/data /path/to/fedora/data nfs defaults,soft,nolock,_netdev 0 0
+rdprojects:/fs1/systems/server.name/fedora/data /path/to/fedora/data nfs defaults,soft,nolock,_netdev 0 0
+rdprojects:/fs1/systems/server.name/fedora/mysql /var/lib/mysql nfs defaults,soft,nolock,_netdev 0 0
 }}}
 
 
