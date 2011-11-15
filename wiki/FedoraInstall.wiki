@@ -93,11 +93,13 @@ fedora.admin.pass=<password>
 
 fedora/server/config/akubra-llstore.cfg contains paths for the datastreamStore and objectStore. Our install stores these databases on the /mnt/rdprojects nfs partition. Similarly, the mysql databases should be in this location.
 
- * moved mysql dbs from /var/lib/mysql to /mnt/rdprojects/fedora/mysql
- * `ln -s /mnt/rdprojects/fedora/mysql /var/lib/mysql`
- * changed akubra filestore locations to:
-  * datastreamStore: /mnt/rdprojects/fedora/datastreamStore
-  * objectStore: /mnt/rdprojects/fedora/objectStore
+ * move mysql dbs from /var/lib/mysql to /mnt/rdprojects/fedora/mysql
+ * add record to fstab: 
+{{{
+rdprojects:/fs1/systems/server.name /mnt/rdprojects nfs defaults,soft,nolock,_netdev 0 0 
+rdprojects:/fs1/systems/server.name/data /path/to/fedora/data nfs defaults,soft,nolock,_netdev 0 0
+}}}
+
 
 == Reverse Proxy ==
 
