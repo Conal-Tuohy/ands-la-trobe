@@ -1,0 +1,14 @@
+#summary Setup Guide for the CMSS System
+#labels DC19
+
+= Introduction =
+
+A list of procedures for setting up the CMSS Repository and Metadata Capture system.
+
+= Details =
+
+  # follow the [http://code.google.com/p/ands-la-trobe/wiki/FedoraInstall FedoraInstall guide].
+  # follow the [http://code.google.com/p/ands-la-trobe/wiki/SWORD SWORD install guide].
+  # follow the [http://code.google.com/p/ands-la-trobe/wiki/SolrInstall SolrInstall guide].
+  # follow the [http://code.google.com/p/ands-la-trobe/wiki/Calabash Calabash guide].
+  # follow the [http://code.google.com/p/ands-la-trobe/wiki/jOAI jOAI guide].
