@@ -1,0 +1,34 @@
+#summary Details on removing all data from the CMSS system
+#labels DC19
+
+== Fedora ==
+
+Fedora stores data simultaneously in relational and filesystem databases. Both of these need to be cleared in order to purge the system of records.
+
+The fedora applicaion should not be running when the procedure is carried out if you don't want to see hundreds of null pointer exceptions in your servlet handler logs.
+
+=== Database ===
+
+Issuing the following sequence of commands from with the DBMS will purge the database of records:
+
+{{{
+use database fedora3;
+truncate datastreamPaths;
+truncate dcDates;
+truncate doFields;
+truncate doRegistry;
+truncate modelDeploymentMap;
+truncate objectPaths;
+truncate pidGen;
+}}}
+
+=== Disk ===
+
+The following commands will purge the pairtree and resourceIndex.
+
+{{{
+cd $FEDORA_HOME/data
+rm -rf /activemq-data/*
+rm -rf /datastreamStore/*
+rm -rf /resourceIndex/* 
+}}}
