@@ -32,3 +32,11 @@ rm -rf /activemq-data/*
 rm -rf /datastreamStore/*
 rm -rf /resourceIndex/* 
 }}}
+
+=== Solr ===
+
+It's also necessary to delete the Solr index. Details?
+
+=== jOAI ===
+
+The jOAI repository needs to be cleared too. Details?
