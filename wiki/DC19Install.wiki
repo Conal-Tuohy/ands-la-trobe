@@ -51,7 +51,7 @@ Add: information on installing the FedoraUpdateHandler, pipelines, crosswalks, V
 
 SurfaceLab6 is a Windows application we use to extract metadata from ITM files. 
 
-Need to install the FedoraUpdateHandler, an XProc pipeline, and the Javascript for automating SurfaceLab6.
+Need to install the FedoraUpdateHandler, an XProc pipeline, and the Javascript for automating SurfaceLab6. Details?
 
 == Deposit client ==
 
