@@ -47,7 +47,7 @@ Currently, a test deposit should contain the following:
 
 ==== Sword ingest ====
 
-By default (and if no mets.xml is present in the injest package), Sword generates something similar to the following in the DC stream:
+By default (and if no mets.xml is present in the ingest package), Sword generates something similar to the following in the DC stream:
 
 {{{
 <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
