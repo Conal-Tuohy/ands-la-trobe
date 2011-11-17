@@ -45,4 +45,22 @@ The following guides will assist in setting up the CMSS system. Note that the pa
   # follow the [http://code.google.com/p/ands-la-trobe/wiki/Calabash Calabash guide].
   # follow the [http://code.google.com/p/ands-la-trobe/wiki/jOAI jOAI guide].
 
+Add: information on installing the FedoraUpdateHandler, pipelines, crosswalks, VAMAS converter, etc.
+
+== SurfaceLab6 ==
+
+SurfaceLab6 is a Windows application we use to extract metadata from ITM files. 
+
+Need to install the FedoraUpdateHandler, an XProc pipeline, and the Javascript for automating SurfaceLab6.
+
+== Deposit client ==
+
+A basic SWORD deposit client application is used to deposit data into Fedora.
+
+It consists of a batch (.cmd) file and a "SendTo" shortcut. Details
+
+Dependencies are: zip and wget. Details?
+
+== 
+
 == Additional Notes ==
