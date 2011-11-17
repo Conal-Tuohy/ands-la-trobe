@@ -1,5 +1,5 @@
 #summary Notes on the installation of Fedora Commons to Tomcat on andsdb-server
-#sidebar TableOfContents
+
 
 = Introduction =
 
