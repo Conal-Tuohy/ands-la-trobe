@@ -33,7 +33,7 @@ Note that this data is not used by the CMSS system, but is used to generate the 
 
 ==== Fedora ingest ====
 
-Fedora's primary role in this system is simply that of an object database, with the addition of JMI's notificaiton system. Messages from JMI trigger crosswalks.
+Fedora's primary role in this system is simply that of an object database, with the addition of JMS's notificaiton system. Messages from JMS trigger crosswalks.
 
 === crosswalks ===
 
