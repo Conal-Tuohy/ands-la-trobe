@@ -8,11 +8,41 @@ A list of procedures for setting up the CMSS Repository and Metadata Capture sys
 = General Notes =
 
   # All internal applications listen on tcp port 8080 and use an apache rewrite rule reverse proxy.
+  
+The directory structure must mirror the following, and be fully writable to the owner and to the tomcat user.
+
+{{{
+|css
+|  +solr.css
+|  +CMSS.css
+|data
+| -rif-cs
+|fedora ($FEDORA_HOME)
+| -</snip>
+|pipelines  (checkout from svn)
+| -calabash
+| -fedora-update-handler
+| -log
+| -schemas
+| -update-handler-configs
+| -xproc
+| -xslt
+|solr ($SOLR_HOME, checkout conf from svn)
+| -</snip>
+|xforms (checkout from svn)
+| -css
+| -images
+| -xsltforms
+}}}
 
 = Details =
+
+The following guides will assist in setting up the CMSS system. Note that the path /home/fedora-user/ is assumed to be the base path.
 
   # follow the [http://code.google.com/p/ands-la-trobe/wiki/FedoraInstall FedoraInstall guide].
   # follow the [http://code.google.com/p/ands-la-trobe/wiki/SWORD SWORD install guide].
   # follow the [http://code.google.com/p/ands-la-trobe/wiki/SolrInstall SolrInstall guide].
   # follow the [http://code.google.com/p/ands-la-trobe/wiki/Calabash Calabash guide].
   # follow the [http://code.google.com/p/ands-la-trobe/wiki/jOAI jOAI guide].
+
+== Additional Notes ==
