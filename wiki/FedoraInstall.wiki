@@ -14,20 +14,20 @@ Fedora Commons is a repository system which we are using to store RIF-CS and oth
    * Java (java, java-sdk both @1.6+)
 
   * Other changes
-   * User ands-shared (or equiv) should contain the apache and tomcat users, as well as any developers working on the system
+   * User fedora-user (or equivalent) should contain the apache and tomcat users, as well as any developers working on the system
 
 = Details =
 
  * got Fedora Commons jar installer 
-  * ( fcrepo-installer-3.4.2.jar @ /home/ands-shared/ )
- * Need to add Envvars to tomcat (in this case, /etc/profile to share these envvars with all users. This is probably not correct procedure except with regards to JAVA_HOME).
+  * ( fcrepo-installer-3.4.2.jar @ /home/fedora-user/ )
+ * add environmental variables
   * JAVA_HOME 
   * FEDORA_HOME (e.g. /ands/fedora)
   * PATH (add $FEDORA_HOME/server/bin, $FEDORA_HOME/client/bin and $JAVA_HOME/bin. )
-  * CATALINA_HOME (=/usr/share/tomcat6, or your tomcat install location)
+  * CATALINA_HOME (=/usr/share/tomcat6, or your $CATALINA_HOME location)
   * CLASSPATH (e.g. /usr/share/java:/etc/alternatives/javac:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/bin:/usr/share/java/tomcat6:$PATH)
 
- * modified mysql database -  why can't the installer handle this?
+ * modified mysql database -  why doesn't the installer handle the creation of these tables?
   * set root passwords for localhost and hostname
   * ran mysql_secure_install to remove demo db & user
   * added fedora user 
@@ -47,6 +47,8 @@ Fedora Commons is a repository system which we are using to store RIF-CS and oth
 
  * ran installer (./java -jar fcrepo-installer-3.4.2.jar)
 
+
+
 {{{
 ri.enabled=true
 messaging.enabled=true
@@ -64,14 +66,14 @@ deploy.local.services=false
 xacml.enabled=true
 database.mysql.jdbcDriverClass=com.mysql.jdbc.Driver
 tomcat.http.port=8080
-fedora.serverHost=localhost
+fedora.serverHost=<server.name>
 database=mysql
-database.driver=included
+database.driver=<path/to/file> (see below)
 fedora.serverContext=fedora
 llstore.type=akubra-fs
 tomcat.home=/usr/share/tomcat6
 fesl.authn.enabled=true
-fedora.home=/ands/fedora
+fedora.home=/home/fedora-user/fedora
 database.mysql.jdbcURL=jdbc\:mysql\://localhost/fedora3?useUnicode\=true&amp;characterEncoding\=UTF-8&amp;autoReconnect\=true
 install.type=custom
 servlet.engine=existingTomcat
@@ -80,7 +82,7 @@ fedora.admin.pass=<password>
 
  NOTE: Was missing /usr/share/tomcat6/common/lib/mysql-connector-java-5.1.6.jar for JDBC connector. Located and added manually (@ http://dev.mysql.com/downloads/connector/j/ ).
 
- ADDENDUM: Was ACTUALLY missing apache packages commons-dbcp (http://commons.apache.org/dbcp/download_dbcp.cgi) and commons-pool (http://commons.apache.org/pool/download_pool.cgi) as well. These should be placed in the same directory as the mysql-connector-java.jar and this path should be reported in the appropriate place when running the fcrepo installer. Note that catalina.properties does not appear to build the CLASSPATH envvar as reported, so these files will need to be placed somewhere tomcat can access them. The obvious place is /usr/share/tomcat6/lib.
+ ADDENDUM: Was also missing apache packages commons-dbcp (http://commons.apache.org/dbcp/download_dbcp.cgi) and commons-pool (http://commons.apache.org/pool/download_pool.cgi) as well. These should be placed in the same directory as the mysql-connector-java.jar and this path should be reported in the appropriate place when running the fcrepo installer. Note that catalina.properties does not appear to build the CLASSPATH envvar as reported, so these files will need to be placed somewhere tomcat can access them. The obvious place is /usr/share/tomcat6/lib.
 
  * `cd /usr/share/tomcat6/lib`
  * `ln -s /home/fedora-user/files/commons-dbcp-1.4/commons-dbcp-1.4.jar .`
@@ -88,7 +90,7 @@ fedora.admin.pass=<password>
  * `ln -s /home/fedora-user/files/mysql-connector-java-5.1.18/mysql-connector-java-5.1.18-bin.jar .`
 
 
- NOTE: target dir should be owned by the designated fedora user. Dir will be chmodded 766 by the installer at the beginning of the installation process.
+ NOTE: target dir should be owned by the designated fedora user. Directories created by or interacted with by the fedora installer will often have unusual permissions after the install is complete. In particular, check the contents of $FEDORA_HOME/data.
 
 == Custom file locations ==
 
