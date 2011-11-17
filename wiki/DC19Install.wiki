@@ -9,7 +9,7 @@ A list of procedures for setting up the CMSS Repository and Metadata Capture sys
 
   # All internal applications listen on tcp port 8080 and use an apache rewrite rule reverse proxy.
   
-The directory structure must mirror the following, and be fully writable to the owner and to the tomcat user.
+The directory structure must mirror the following and be fully writable to the owner and to the tomcat user.
 
 {{{
 |css
