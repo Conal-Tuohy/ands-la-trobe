@@ -1,9 +1,9 @@
-#summary Notes on stripping back data and expected results and outcomes
+#summary Notes on expected results from test submissions
 #labels DC19
 
 = Introduction =
 
-A list of things to do and/or check when deploying or retesting this system.
+A list of things to check when deploying or retesting this system.
 
 == Result testing ==
 
@@ -29,11 +29,11 @@ By default (and if no mets.xml is present in the ingest package), Sword generate
 </oai_dc:dc>
 }}}
 
-Note that this data is not used by the CMSS system, but is used to generate the initial fox-ml record in Fedora.
+Note that this data is not used by the CMSS system, but is used to generate the initial fox-ml record in Fedora. Note also that future additions (e.g METS files in ingest packages) may change this output and its usefulness.
 
 ==== Fedora ingest ====
 
-Fedora's primary role in this system is simply that of an object database, with the addition of JMS's notificaiton system. Messages from JMS trigger crosswalks.
+Fedora's primary role in this system is simply that of an object database, with the addition of JMI's notificaiton system. Messages from JMI trigger crosswalks.
 
 === crosswalks ===
 
