@@ -66,14 +66,14 @@ Configured repository through the admin UI:
 
 || Repository name (required): || Centre for Materials and Surface Science (development) ||
 || Repository administrator's e-mail (required): || conal.tuohy@versi.edu.au ||
-|| Repository description (optional): || No description specified ||
-|| Repository namespace identifier (optional): || latrobe.edu.au-cmss ||
-|| Repository base URL (non-editable): || http://andsdb-dc19-dev.latrobe.edu.au/oai/provider ||
+|| Repository description (optional): || The La Trobe University Centre for Materials and Surface Science Data Repository ||
+|| Repository namespace identifier (optional): || cmss.latrobe.edu.au ||
+|| Repository base URL (non-editable): || http://cmss.latrobe.edu.au/oai/provider ||
 
 Added and configured metadata directory:
 
 || Nickname for these files: || La Trobe RIF-CS records ||
 || Format of files: || rif ||
-|| Path to the directory: || /ands/rif-cs ||
+|| Path to the directory: || /home/fedora-user/data/rif-cs ||
 || Metadata namespace: || http://ands.org.au/standards/rif-cs/registryObjects ||
 || Metadata schema: || http://services.ands.org.au/sandbox/orca/schemata/registryObjects.xsd ||
