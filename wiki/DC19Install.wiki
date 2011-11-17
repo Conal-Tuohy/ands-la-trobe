@@ -5,6 +5,10 @@
 
 A list of procedures for setting up the CMSS Repository and Metadata Capture system.
 
+= General Notes =
+
+  # All internal applications listen on tcp port 8080 and use an apache rewrite rule reverse proxy.
+
 = Details =
 
   # follow the [http://code.google.com/p/ands-la-trobe/wiki/FedoraInstall FedoraInstall guide].
