@@ -54,4 +54,4 @@ And the following can be used to stop one:
 
 java -jar fedora-update-handler/fedora-update-handler.jar stop $1
 }}}
-Pending: screen based solution.
+Pending: screen based solution for continued access after automatic startup on server boot.
