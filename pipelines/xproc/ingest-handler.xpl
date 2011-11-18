@@ -8,7 +8,9 @@
 	xmlns:ands="http://www.example.org/" 
 	xmlns:lib="http://code.google.com/p/ands-la-trobe/wiki/XProcLibrary"
 	xmlns:boss="http://hdl.handle.net/102.100.100/7003"
-	xmlns:ft="http://www.fedora.info/definitions/1/0/types/">
+	xmlns:dataset="http://hdl.handle.net/102.100.100/6976"
+	xmlns:ft="http://www.fedora.info/definitions/1/0/types/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
 <!-- 
 	Handle the ingestion of a new Fedora object.
 
@@ -108,8 +110,15 @@
 					<p:viewport name="boss-datastream-within-http-response" match="/c:response/c:body/*">
 						<p:identity name="boss"/>
 
-						<!-- convert boss to dataset metadata and store in fedora -->
+						<!-- convert boss to dataset metadata -->
 						<lib:crosswalk xslt="../xslt/boss-to-dataset.xsl" name="dataset"/>
+						
+						<!-- add a default embargo date of 3 years in the future -->
+						<p:add-attribute match="dataset:dataset" attribute-name="embargoDate">
+							<p:with-option name="attribute-value" select="fn:current-date() + xs:yearMonthDuration('P1Y')"/>
+						</p:add-attribute>
+						
+						<!-- store the dataset metadata in fedora -->
 						<lib:fedora-save-datastream name="dataset-to-fedora">
 							<p:with-option name="username" select="$fedora-username"/>
 							<p:with-option name="password" select="$fedora-password"/>
