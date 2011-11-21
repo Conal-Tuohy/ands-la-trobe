@@ -5,6 +5,16 @@
 >
 	<xsl:template match="boss:job">
 		<dataset xmlns="http://hdl.handle.net/102.100.100/6976">
+			<xsl:attribute name="embargoDate">
+				<!-- one year in the future -->
+				<xsl:value-of select="concat(
+					1 + number(boss:logsheet/boss:value[@name='fYear']), 
+					'-', 
+					format-number(boss:logsheet/boss:value[@name='fMonth'], '00'), 
+					'-', 
+					format-number(boss:logsheet/boss:value[@name='fDay'], '00')
+				)" />
+			</xsl:attribute>
 			<hasCollector id="person:{boss:request/boss:value[@name='Users ID']}"><xsl:value-of select="
 				concat(
 					boss:request/boss:value[@name='Users Name'],

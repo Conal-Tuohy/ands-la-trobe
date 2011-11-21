@@ -113,11 +113,6 @@
 						<!-- convert boss to dataset metadata -->
 						<lib:crosswalk xslt="../xslt/boss-to-dataset.xsl" name="dataset"/>
 						
-						<!-- add a default embargo date of 3 years in the future -->
-						<p:add-attribute match="dataset:dataset" attribute-name="embargoDate">
-							<p:with-option name="attribute-value" select="fn:current-date() + xs:yearMonthDuration('P1Y')"/>
-						</p:add-attribute>
-						
 						<!-- store the dataset metadata in fedora -->
 						<lib:fedora-save-datastream name="dataset-to-fedora">
 							<p:with-option name="username" select="$fedora-username"/>
