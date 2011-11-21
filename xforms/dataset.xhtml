@@ -55,7 +55,7 @@
 			
 			<xf:bind nodeset="instance('dataset-metadata')/my:startDate" type="xf:dateTime" />
 			<xf:bind nodeset="instance('dataset-metadata')/my:endDate" type="xf:dateTime" />
-			<xf:bind nodeset="instance('dataset-metadata')/@embargoDate" type="xf:dateTime" />
+			<xf:bind nodeset="instance('dataset-metadata')/@embargoDate" type="xf:date" />
 <!--	                <xf:bind nodeset="instance('dataset-metadata')/my:url" type="xf:anyURI" constraint="(.='' or starts-with(.,'http://') or starts-with(.,'https://')) and not(contains(.,' '))" /> -->
 
 			
@@ -69,7 +69,7 @@
 				instance="persons-result">
 				<xf:dispatch name="xforms-refresh"/>
 			</xf:submission>
-			<xf:instance id="handle" src="handle"/>		
+			<xf:instance id="handle" src="handle"/>
 		</xf:model>
 	
 	</head>
@@ -97,6 +97,12 @@
 			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:name" incremental="true">
 				<xf:label>Name</xf:label>
 				<xf:hint>Name used to reference the dataset</xf:hint>
+			</xf:input>
+			<br/>
+			
+			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/@embargoDate">
+				<xf:label>Embargo Date</xf:label>
+				<xf:hint>This data will not be publicly available until this date. Leave this field blank if an embargo is not required</xf:hint>
 			</xf:input>
 			<br/>
 			
@@ -205,10 +211,6 @@
 				<xf:hint></xf:hint>
 			</xf:input>
 			<br/>
-			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/@embargoDate">
-				<xf:label>Embargo Date</xf:label>
-				<xf:hint>This data will not be publicly available until this date. Leave this field blank if an embargo is not required</xf:hint>
-			</xf:input>
 
 			<div class="panel">
 				<xf:textarea model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:briefDescription">
