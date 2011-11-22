@@ -44,7 +44,7 @@
 	<p:variable name="handle-datastream-uri" select="concat($item-base-uri, '/datastreams/handle')"/>
 	<p:variable name="dataset-datastream-uri" select="concat($item-base-uri, '/datastreams/dataset')"/>
 	<p:variable name="sword-package-datastream-uri" select="concat($item-base-uri, '/datastreams/upload')"/>
-	<!-- e.g. http://andsdb-dc19-dev.latrobe.edu.au/solr/select/?q=id%3A10378.3%5C%2F394938 -->
+	<!-- e.g. http://andsdb-dc19-dev.latrobe.edu.au/solr/select/?id=namespace:pid -->
 	<p:variable name="public-item-uri" select="concat('http://', $local-host-name, '/solr/select/?id=', $uri-encoded-identifier)"/>
    	
 	<p:choose>
