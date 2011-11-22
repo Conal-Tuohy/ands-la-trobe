@@ -23,7 +23,7 @@
 			<abbreviatedName></abbreviatedName>
 			<name><xsl:value-of select="boss:request/boss:value[@name='technique']"/>
 				<xsl:text>: </xsl:text>
-				<xsl:for-each select="boss:logsheet/boss:value[@name='sampletable']/boss:row">
+				<xsl:for-each select="boss:logsheet/boss:table[@name='sampletable']/boss:row">
 					<xsl:value-of select="boss:column[2]"/>
 					<xsl:if test="position() = last() - 1"><!-- there is exactly one more sample -->
 						<xsl:text> and </xsl:text>
