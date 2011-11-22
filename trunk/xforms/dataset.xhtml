@@ -32,7 +32,9 @@
 					<xml>true</xml>
 				</search>
 			</xf:instance>
-			<xf:instance id="persons-result">
+			<xf:instance id="persons-result" src="/fedora/search?pid=true&amp;title=true&amp;query=type~person&amp;maxResults=1000&amp;xml=true"/>
+			
+			<xf:instance id="sample-persons-result">
 				<!-- sample result -->
 				<result xmlns="http://www.fedora.info/definitions/1/0/types/">
 					<resultList>
@@ -106,6 +108,8 @@
 			</xf:input>
 			<br/>
 			
+			<!--
+			
 			<xf:output id="debug-output-identifier" model="dataset-metadata-editor-model"  ref="instance('dataset-metadata')/my:hasCollector/@id">
 				<xf:label>Debugging output of identifier</xf:label>
 			</xf:output>
@@ -120,41 +124,28 @@
 				<xf:label>Debugging output of result (first pid)</xf:label>
 			</xf:output>
 			<br/>
-			
-			<xf:repeat nodeset="instance('dataset-metadata')/my:hasCollector"> <!--start id search autocomplete -->
-				<xf:input ref="." incremental="true" id="my:hasCollector">
+
+			-->
+			<xf:repeat nodeset="instance('dataset-metadata')/my:hasCollector">			
+				<xf:select1 id="collectors-list" ref="@id" appearance="minimal">
 					<xf:label>Collector</xf:label>
 					<xf:hint>Any person involved in the acquisition of this dataset</xf:hint>
-					<!-- when the value in the field changes, construct a new query and submit it -->
-					<xf:action ev:event="xforms-value-changed">
-						<xf:setvalue ref="instance('persons-query')/query" value="concat('type~person title~', context(), '*')"/>
-						<xf:send submission="search-persons"/>
-					</xf:action>
-				</xf:input>
-				<div class="hover hidden">
-				<xf:select1 id="collectors-list" ref="@id" appearance="compact">
 					<xf:itemset model="dataset-metadata-editor-model" nodeset="instance('persons-result')/fedora:resultList/fedora:objectFields">
 						<xf:label ref="fedora:title"/>
 						<xf:value ref="fedora:pid"/>
 					</xf:itemset>
 					<xf:action ev:event="xforms-value-changed">
 						<xf:setvalue ref="context()/.." value="instance('persons-result')/fedora:resultList/fedora:objectFields[fedora:pid=context()]/fedora:title"/>
-
-						<!--
-						<xf:setvalue ref="context()/.." value="'foo'"/>
-						-->
-						<!--
-						<xf:message level="modal">Value changed</xf:message>
-						-->
 					</xf:action>
 				</xf:select1>
-				</div>
+				
 				
 				<xf:trigger>
 					<xf:label>Remove</xf:label>
 					<xf:delete ev:event="DOMActivate" nodeset="." />
 				</xf:trigger>
 			</xf:repeat>
+			
 			<xf:trigger>
 				<xf:label>Add Collector</xf:label>
 				<xf:insert ev:event="DOMActivate" origin="instance('dataset-template')/my:hasCollector[1]" position="after" />
