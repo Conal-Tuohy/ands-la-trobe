@@ -59,7 +59,7 @@
 			<subject type="anzsrc-for">030301</subject>
 			<xsl:for-each select="boss:logsheet/boss:table[@name='sampletable']/boss:row">
 				<sample>
-					<name><xsl:value-of select="boss:column[3]"/></name>
+					<name><xsl:value-of select="boss:column[2]"/></name>
 					<id><xsl:value-of select="boss:column[1]"/></id>
 					<cas></cas>
 					<dimensions></dimensions>
@@ -68,7 +68,7 @@
 					<purity></purity>
 					<typicalAnalysis></typicalAnalysis>
 					<prep></prep>
-					<additionalNotes><xsl:value-of select="boss:column[2]"/></additionalNotes>
+					<additionalNotes><xsl:value-of select="boss:column[3]"/></additionalNotes>
 				</sample>
 			</xsl:for-each>
 			<briefDescription><xsl:value-of select="boss:logsheet/boss:value[@name='GeneralDescription']"/></briefDescription>
