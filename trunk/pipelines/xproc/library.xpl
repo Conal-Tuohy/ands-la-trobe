@@ -18,6 +18,18 @@
 		<p:exec name="mail" command="mail" result-is-xml="false" source-is-xml="false" arg-separator="|">
 			<p:with-option name="args" select="concat('-s ', $subject, '|-r ', $from, '|', $to)"/>
 		</p:exec>
+<!--
+				<p:store name="message-sent" href="file:///tmp/send-email-result.xml">
+					<p:input port="source"><p:pipe step="send-mail" port="message"/></p:input>
+				</p:store>
+				<p:store name="message-sending-result" href="file:///tmp/send-email-result.xml">
+					<p:input port="source"><p:pipe step="send-mail" port="result"/></p:input>
+				</p:store>-->
+				<!--
+		<p:identity>
+			<p:pipe step="send-mail" port="message"/>
+		</p:identity>
+		-->
 	</p:declare-step>
 	
 	<p:declare-step type="lib:fedora-create-object" name="fedora-create-object">
