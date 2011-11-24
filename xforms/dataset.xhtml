@@ -240,18 +240,20 @@
 				<xf:input ref="./my:supplierCode">
 					<xf:label>Supplier Code: </xf:label>
 				</xf:input><br />
+				<!--
 				<xf:input ref="./my:purity">
 					<xf:label>Purity: </xf:label>
 				</xf:input><br />
 				<xf:input ref="./my:typicalAnalysis">
 					<xf:label>Typical Analysis: </xf:label>
 				</xf:input><br />
-				<xf:input ref="./my:prep">
-					<xf:label>Prep: </xf:label>
-				</xf:input><br />
-				<xf:input ref="./my:additionalNotes">
+				-->
+				<xf:textarea ref="./my:prep">
+					<xf:label>Preparation: </xf:label>
+				</xf:textarea><br />
+				<xf:textarea ref="./my:additionalNotes">
 					<xf:label>Additional Notes: </xf:label>
-				</xf:input><br />
+				</xf:textarea><br />
 			</xf:repeat>
 			<xf:trigger>
 				<xf:label>Add Sample</xf:label>
