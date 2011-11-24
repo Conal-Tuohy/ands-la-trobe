@@ -51,21 +51,15 @@
 				)
 			"/>
 			<xsl:variable name="email" select="document($person-datastream-uri)/latrobe:person/latrobe:email"/>
-			<!--<message
+			<message
 				to="{normalize-space($email)}"
 				subject="Update notification for dataset &quot;{$dataset-name}&quot;">Dear <xsl:value-of select="$person-name"/>,
 Your dataset record entitled "<xsl:value-of select="$dataset-name"/>" has been updated.
 To review and edit the updated record, visit this page: 
 <xsl:value-of select="$edit-uri"/>
-			</message>-->
-			<message
-				to="R.Jones@latrobe.edu.au"
-				subject="Update notification for dataset &quot;{$dataset-name}&quot;">The dataset record entitled "<xsl:value-of select="$dataset-name"/>" has been updated.
-To review and edit the updated record, visit this page: 
-<xsl:value-of select="$edit-uri"/>
 			</message>
 			<message
-				to="conal.tuohy@gmail.com"
+				to="R.Jones@latrobe.edu.au"
 				subject="Update notification for dataset &quot;{$dataset-name}&quot;">The dataset record entitled "<xsl:value-of select="$dataset-name"/>" has been updated.
 To review and edit the updated record, visit this page: 
 <xsl:value-of select="$edit-uri"/>
