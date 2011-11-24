@@ -139,26 +139,37 @@
 				<p:with-option name="uri" select="concat($item-base-uri, '/datastreams/solr')"/>
 			</lib:fedora-save-datastream>
 			<p:sink name="ignore-response-from-solr"/>
+			
+			<!-- test of sending email -->
+			<lib:crosswalk name="create-email-message" xslt="../xslt/foxml-to-email-notification.xsl">
+				<p:input port="source">
+					<p:pipe step="foxml" port="result"/>
+				</p:input>
+			</lib:crosswalk>
+			
+			<p:viewport name="for-each-notification-message" match="/messages/message">
+			
+				<lib:send-mail name="send-email">
+					<!--
+					<p:input port="message">
+						<p:inline><message>Dear Conal Tuohy,
+			Your dataset was updated.
+			Please visit http://andsdb-dc19-dev.latrobe.edu.au/ to see it.</message></p:inline>
+					</p:input>-->
+					<p:with-option name="from" select="'conal.tuohy@versi.edu.au'"/>
+					<p:with-option name="to" select="/*/@to"/>
+					<p:with-option name="subject" select="/*/@subject"/>
+				</lib:send-mail>
+			</p:viewport>
+			<!--
+
+-->
+			<p:sink name="ignore-mail-result"/>
 		</p:when>
 		<p:otherwise>
 			<p:sink name="ignore-non-source-metadata-stream-update"/>
 		</p:otherwise>
 	</p:choose>
 	
-	<!-- test of sending email -->
-	<!--
-	<lib:send-mail name="send-test-email">
-		<p:input port="message">
-			<p:inline><message>Dear Conal Tuohy,
-Your dataset was updated.
-Please visit http://andsdb-dc19-dev.latrobe.edu.au/ to see it.</message></p:inline>
-		</p:input>
-		<p:with-option name="from" select="'conal.tuohy@versi.edu.au'"/>
-		<p:with-option name="to" select="'conal.tuohy@gmail.com'"/>
-		<p:with-option name="subject" select="'test of sending email from pipeline'"/>
-	</lib:send-mail>
-	<p:store name="message-sending-result" href="file:///tmp/send-email-result.xml"/>
-	-->
-
 </p:declare-step>
 
