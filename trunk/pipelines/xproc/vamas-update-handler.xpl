@@ -52,10 +52,10 @@
 			
 			<!-- execute a bash script to download the VAMAS file from Fedora and run the (Java) XML converter over it -->
 			<p:exec name="download-vamas-and-convert-to-xml" command="bash" result-is-xml="false">
-				<p:with-option name="args" select="concat('../xproc/get-vamas-xml.sh ', $fedora-username, ' ', $fedora-password, ' ', $vamas-datastream-uri)"/>
+				<p:with-option name="args" select="concat('xproc/get-vamas-xml.sh ', $fedora-username, ' ', $fedora-password, ' ', $vamas-datastream-uri)"/>
 			</p:exec>
 			<!-- load the vamas xml file created by the previous step -->
-			<p:load href="../tmp/vamas-xml.xml" name="vamas-xml"/>
+			<p:load href="/tmp/vamas-xml.xml" name="vamas-xml"/>
 
 			<!-- put the vamas-xml stream back into fedora -->
 			<lib:fedora-save-datastream name="save-vamas-xml">
