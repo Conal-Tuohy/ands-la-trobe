@@ -138,8 +138,14 @@
 						<xf:setvalue ref="context()/.." value="instance('persons-result')/fedora:resultList/fedora:objectFields[fedora:pid=context()]/fedora:title"/>
 					</xf:action>
 				</xf:select1>
-				
-				
+				<xf:trigger appearance="minimal">
+					<xf:label>View record</xf:label>
+					<xf:action ev:event="DOMActivate">
+						<xf:load>
+							<xf:resource value="concat('/fedora-objects/', @id, '/datastreams/person.xhtml')" />
+						</xf:load>
+					</xf:action>
+				</xf:trigger>		
 				<xf:trigger>
 					<xf:label>Remove</xf:label>
 					<xf:delete ev:event="DOMActivate" nodeset="." />
