@@ -154,11 +154,15 @@ Disabled the auto-generation of file extensions (when downloading files) by edit
 
 == Access Control ==
 
+https://wiki.duraspace.org/display/FEDORA35/Spring+Security
+
+"Fedora security configuration via spring was introduced in Fedora 3.5. In general, security in Fedora is provided by a series of servlet filters. Each filter provides some security-related purpose, such as policy enforcement, authentication, or ssl redirection. The set of active security-related filters and their individual configuration settings is determined by Spring, using configuration files present in FEDORA_HOME/server/config/spring/web/. This method of configuring security replaces the pre-3.5 technique of specifying security-related servlet filters directly in web.xml."
+
 === Embargos ===
 http://fedora-commons.1317035.n2.nabble.com/fcrepo-user-Some-library-use-case-solicitations-td5683099.html
 
 === LDAP auth ===
-https://wiki.duraspace.org/display/FEDORA34/Security
+https://wiki.duraspace.org/display/FEDORA35/Security
 
 === XACML policy guide ===
-https://wiki.duraspace.org/display/FEDORA34/Fedora+XACML+Policy+Writing+Guide
+https://wiki.duraspace.org/display/FEDORA35/Fedora+XACML+Policy+Writing+Guide
