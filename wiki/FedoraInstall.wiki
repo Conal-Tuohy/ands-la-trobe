@@ -18,7 +18,7 @@ Fedora Commons is a repository system which we are using to store RIF-CS and oth
 
 = Details =
 
- * download Fedora Commons jar installer from http://www.fedora-commons.org/software to /home/fedora-user/fedora-install/fcrepo-installer-3.5.jar
+ * download Fedora Commons 3.5 installer from [http://www.fedora-commons.org/software] to `/home/fedora-user/fedora-install/fcrepo-installer-3.5.jar`
  * add environmental variables
   * JAVA_HOME 
   * FEDORA_HOME (e.g. /ands/fedora)
