@@ -143,19 +143,13 @@ ProxyPassReverse http://localhost:8080/fedora
 
 == Fedora.fcfg ==
 
-fedoraServerHost, pidNamespace, adminEmailList, and OAI profile are all contained in fedora.fcfg and need to be manually set to appropriate values for your installation.
+fedoraServerHost, pidNamespace, and adminEmailList are all contained in `fedora/server/config/fedora.fcfg` and need to be manually set to appropriate values for your installation.
 
 In some cases (fedora 3.3-3.5(?)), in the case that FeSL and XACML are enabled, datastreamContentDispositionInlineEnabled must be set to false or every datastream request will return a http 401 response.
 
-=== Enabling JMS ===
-
-Enabled the JMS interface so that we can listen for updates to datastreams, by editing /ands/fedora/server/config/fedora.fcfg
-
-Changed the `//module[@class="org.fcrepo.server.messaging.MessagingModule"]/param[@name="enabled"]/@value` to "true"
-
 === MIME Types ===
 
-Disabled the auto-generation of file extensions (when downloading files) by editing `/ands/fedora/server/config/fedora.fcfg` and changing the value of `/server/param[@name='datastreamExtensionMappingLabel']/@value` from "always" to "ifmissing".
+Disabled the auto-generation of file extensions (when downloading files) by editing `fedora/server/config/fedora.fcfg` and changing the value of `/server/param[@name='datastreamExtensionMappingLabel']/@value` from "always" to "ifmissing".
 
 (see http://code.google.com/p/ands-la-trobe/issues/detail?id=41 for requirement)
 
