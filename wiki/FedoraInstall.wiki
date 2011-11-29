@@ -18,8 +18,7 @@ Fedora Commons is a repository system which we are using to store RIF-CS and oth
 
 = Details =
 
- * got Fedora Commons jar installer 
-  * ( fcrepo-installer-3.4.2.jar @ /home/fedora-user/ )
+ * download Fedora Commons jar installer from http://www.fedora-commons.org/software to /home/fedora-user/fedora-install/fcrepo-installer-3.5.jar
  * add environmental variables
   * JAVA_HOME 
   * FEDORA_HOME (e.g. /ands/fedora)
@@ -40,7 +39,7 @@ Fedora Commons is a repository system which we are using to store RIF-CS and oth
    * `use fedora3`
    * `grant all on * to fedora`
 
- NOTE: there were some issues with our install and java versions. RSUS-LTU locally listed both 1.5 and openjdk 1.6, but up2date-local installed only 1.5 by default. The following commands were used to install the newer versions:
+NOTE: there were some issues with our install and java versions. RSUS-LTU locally listed both 1.5 and openjdk 1.6, but up2date-local installed only 1.5 by default. The following commands were used to install the newer versions:
  * `yum install java-1.6.0-openjdk.x86_64`
  * `yum install java-1.6.0-openjdk-devel.x86_64`
  * `yum install java-1.6.0-openjdk-javadoc.x86_64` 
