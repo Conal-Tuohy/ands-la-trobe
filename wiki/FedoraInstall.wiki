@@ -45,7 +45,11 @@ NOTE: there were some issues with our install and java versions. RSUS-LTU locall
  * `yum install java-1.6.0-openjdk-devel.x86_64`
  * `yum install java-1.6.0-openjdk-javadoc.x86_64` 
 
- * ran installer (./java -jar fcrepo-installer-3.5.jar)
+ * ran installer:
+
+{{{
+java -jar fcrepo-installer-3.5.jar
+}}}
 
 
 
