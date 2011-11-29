@@ -12,7 +12,8 @@ The fedora applicaion should not be running when the procedure is carried out if
 Issuing the following sequence of commands from with the DBMS will purge the database of records:
 
 {{{
-use database fedora3;
+mysql -u fedora -p
+use fedora3;
 truncate datastreamPaths;
 truncate dcDates;
 truncate doFields;
@@ -30,7 +31,7 @@ The following commands will purge the pairtree and resourceIndex.
 cd $FEDORA_HOME/data
 rm -rf activemq-data/*
 rm -rf datastreamStore/*
-rm -rf resourceIndex/* 
+rm -rf objectStore/*
 }}}
 
 === Solr ===
