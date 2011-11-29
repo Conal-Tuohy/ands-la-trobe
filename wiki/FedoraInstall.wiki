@@ -140,6 +140,8 @@ ProxyPassReverse http://localhost:8080/fedora
 
 fedoraServerHost, pidNamespace, adminEmailList, and OAI profile are all contained in fedora.fcfg and need to be manually set to appropriate values for your installation.
 
+In some cases (fedora 3.3-3.5(?)), in the case that FeSL and XACML are enabled, datastreamContentDispositionInlineEnabled must be set to false or every datastream request will return a http 401 response.
+
 === Enabling JMS ===
 
 Enabled the JMS interface so that we can listen for updates to datastreams, by editing /ands/fedora/server/config/fedora.fcfg
