@@ -51,6 +51,7 @@ NOTE: there were some issues with our install and java versions. RSUS-LTU locall
 java -jar fcrepo-installer-3.5.jar
 }}}
 
+Stepped through, entering the following data, which the installer saves as "install.properties":
 
 
 {{{
