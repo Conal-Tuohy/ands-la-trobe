@@ -19,9 +19,9 @@ Fedora Commons is a repository system which we are using to store RIF-CS and oth
 = Details =
 
  * download Fedora Commons 3.5 installer from [http://www.fedora-commons.org/software] to `/home/fedora-user/fedora-install/fcrepo-installer-3.5.jar`
- * add environmental variables
+ * add environmental variables (*how/where are they set?*)
   * JAVA_HOME 
-  * FEDORA_HOME (e.g. /ands/fedora)
+  * FEDORA_HOME (e.g. /home/fedora-user/fedora)
   * PATH (add $FEDORA_HOME/server/bin, $FEDORA_HOME/client/bin and $JAVA_HOME/bin. )
   * CATALINA_HOME (=/usr/share/tomcat6, or your $CATALINA_HOME location)
   * CLASSPATH (e.g. /usr/share/java:/etc/alternatives/javac:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/bin:/usr/share/java/tomcat6:$PATH)
@@ -44,7 +44,7 @@ NOTE: there were some issues with our install and java versions. RSUS-LTU locall
  * `yum install java-1.6.0-openjdk-devel.x86_64`
  * `yum install java-1.6.0-openjdk-javadoc.x86_64` 
 
- * ran installer (./java -jar fcrepo-installer-3.4.2.jar)
+ * ran installer (./java -jar fcrepo-installer-3.5.jar)
 
 
 
