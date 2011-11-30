@@ -25,13 +25,20 @@ truncate pidGen;
 
 === Disk ===
 
-The following commands will purge the pairtree and resourceIndex.
+The following commands will purge the pairtree and objectStore.
 
 {{{
 cd $FEDORA_HOME/data
 rm -rf activemq-data/*
 rm -rf datastreamStore/*
 rm -rf objectStore/*
+}}}
+
+If the resourceIndex is enabled, you should do the following to purge it:
+
+{{{
+cd $FEDORA_HOME/data
+rm -rf resourceIndex/*
 }}}
 
 === Solr ===
