@@ -33,6 +33,15 @@
 	</xsl:template>
 	
 	<xsl:template match="*"/>
+	
+	<xsl:template name="convert-technical-datastream-contents">
+		<xsl:apply-templates select="$vamas-datastream | $surfacelab-datastream"/>
+	</xsl:template>
+	
+	<xsl:template match="vamas:dataset">
+		<description>Technique: <xsl:apply-templates select="vamas:block/vamas:technique"/>
+Instrument Model: <xsl:apply-templates select="vamas:instrumentModel"/></description>
+	</xsl:template>
 
 	<xsl:template name="convert-descriptive-datastream-contents">
 		<!-- some of these elements need to be wrapped in a rif-cs:location element -->
@@ -74,6 +83,7 @@
 	<xsl:template match="latrobe:dataset">
 		<collection type="dataset">
 			<xsl:call-template name="convert-descriptive-datastream-contents"/>
+			<xsl:call-template name="convert-technical-datastream-contents"/>
 		</collection>
 	</xsl:template>
 
