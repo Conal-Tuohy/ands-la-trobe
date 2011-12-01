@@ -6,7 +6,7 @@
 	xmlns:latrobe="http://hdl.handle.net/102.100.100/6976"
 	exclude-result-prefixes="f vamas latrobe"
 >
-
+	<xsl:variable name="from-address">cmss-request@latrobe.edu.au</xsl:variable>
 	<xsl:variable name="handle-datastream" select="/f:digitalObject/f:datastream[@ID='handle']/f:datastreamVersion[last()]/f:xmlContent/*"/>
 	<xsl:variable name="handle" select="$handle-datastream//response/identifier/@handle"/>
 	<xsl:variable name="solr-uri" select="$handle-datastream//response/identifier/property[@type='URL']/@value"/>
@@ -52,6 +52,7 @@
 			"/>
 			<xsl:variable name="email" select="document($person-datastream-uri)/latrobe:person/latrobe:email"/>
 			<message
+				from="{$from-address}"
 				to="{normalize-space($email)}"
 				subject="Update notification for dataset &quot;{$dataset-name}&quot;">Dear <xsl:value-of select="$person-name"/>,
 Your dataset record entitled "<xsl:value-of select="$dataset-name"/>" has been updated.

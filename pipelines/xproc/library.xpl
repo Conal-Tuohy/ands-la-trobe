@@ -8,9 +8,9 @@
 	<p:declare-step type="lib:send-mail" name="send-mail">
 		<p:input port="message" primary="true"/>
 		<p:output port="result" primary="true"/>
-		<p:option name="from" required="true"/>
-		<p:option name="to" required="true"/>
-		<p:option name="subject" required="true"/>
+		<p:variable name="from" select="/*/@from"/>
+		<p:variable name="to" select="/*/@to"/>
+		<p:variable name="subject" select="/*/@to"/>
 		<!-- 
 			mail -s subject -r from-address to-address
 		-->
@@ -336,5 +336,7 @@
 		</p:for-each>
 		<p:sink name="return-nothing"/>
 	</p:declare-step>
+	
+
 	
 </p:library>
