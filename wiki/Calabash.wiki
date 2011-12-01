@@ -21,6 +21,13 @@ java -Xmx1024m -cp /home/fedora-user/pipelines/calabash/calabash.jar:/home/fedor
 
 [http://code.google.com/p/ands-la-trobe/source/browse/#svn%2Ftrunk%2Fpipelines This location] contains the pipelines used by XMLCalabash on the CMSS production system. They should also be checked out to the /home/fedora-user/pipelines directory.
 
+Check out the processing pipelines from the repository:
+
+{{{
+cd /home/fedora-user
+svn checkout https://ands-la-trobe.googlecode.com/svn/trunk/pipelines
+}}}
+
 == Starting Calabash pipelines ==
 
 Note: this should be done only after JMI has been enabled on the Fedora Commons install.
