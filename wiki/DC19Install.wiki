@@ -61,6 +61,14 @@ It consists of a batch (.cmd) file and a "SendTo" shortcut. Details
 
 Dependencies are: zip and wget. Details?
 
+shortcuts in C:\Documents and Settings\Administrator\SendTo
+
+
+
+executables in C:\Program Files\deposit
+
+
+
 == 
 
 == Additional Notes ==
