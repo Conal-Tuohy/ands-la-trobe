@@ -156,9 +156,11 @@
 			Your dataset was updated.
 			Please visit http://andsdb-dc19-dev.latrobe.edu.au/ to see it.</message></p:inline>
 					</p:input>-->
-					<p:with-option name="from" select="'conal.tuohy@versi.edu.au'"/>
+					<!--
+					<p:with-option name="from" select="/*/@from"/>
 					<p:with-option name="to" select="/*/@to"/>
 					<p:with-option name="subject" select="/*/@subject"/>
+					-->
 				</lib:send-mail>
 			</p:viewport>
 			<!--
