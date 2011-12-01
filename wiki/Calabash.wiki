@@ -97,5 +97,5 @@ Note that if you have checked out init.sh and added it to /etc/rc.d/rc.local it 
 The following Windows command will initiate the surfacelab-update-handler.xpl pipeline:
 
 {{{
-@java -Xmx1024m -jar "C:\XML\Calabash\0.9.32\calabash.jar" "C:\XML\Calabash\Pipelines\surfacelab-update-handler.xpl"
+java -Xmx1024m -jar "C:\XML\Calabash\0.9.32\calabash.jar" "C:\XML\Calabash\Pipelines\surfacelab-update-handler.xpl"
 }}}
