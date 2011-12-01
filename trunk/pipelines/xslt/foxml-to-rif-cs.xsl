@@ -10,8 +10,8 @@
 
 	<xsl:variable name="handle-datastream" select="/f:digitalObject/f:datastream[@ID='handle']/f:datastreamVersion[last()]/f:xmlContent/*"/>
 	<xsl:variable name="handle" select="$handle-datastream//response/identifier/@handle"/>
-	<xsl:variable name="vamas-datastream" select="/f:digitalObject/f:datastream[@ID='vamas-xml']/f:datastreamVersion[last()]/f:xmlContent/*"/>
-	<xsl:variable name="surfacelab-datastream" select="/f:digitalObject/f:datastream[@ID='vamas-xml']/f:datastreamVersion[last()]/f:xmlContent/*"/>
+	<xsl:variable name="vamas-datastream" select="/f:digitalObject/f:datastream/f:datastreamVersion[@MIMETYPE='application/vamas+xml'][last()]/f:xmlContent/*"/>
+	<xsl:variable name="surfacelab-datastream" select="/f:digitalObject/f:datastream/f:datastreamVersion[@MIMETYPE='application/surfacelab+xml'][last()]/f:xmlContent/*"/>
 	<xsl:variable name="dataset-datastream" select="/f:digitalObject/f:datastream[@ID='dataset']/f:datastreamVersion[last()]/f:xmlContent/*"/>
 	<xsl:variable name="person-datastream" select="/f:digitalObject/f:datastream[@ID='person']/f:datastreamVersion[last()]/f:xmlContent/*"/>
 	<xsl:variable name="group-datastream" select="/f:digitalObject/f:datastream[@ID='group']/f:datastreamVersion[last()]/f:xmlContent/*"/>
@@ -39,8 +39,8 @@
 	</xsl:template>
 	
 	<xsl:template match="vamas:dataset">
-		<description>Technique: <xsl:apply-templates select="vamas:block/vamas:technique"/>
-Instrument Model: <xsl:apply-templates select="vamas:instrumentModel"/></description>
+		<description>Technique: <xsl:value-of select="vamas:block/vamas:technique"/>.
+Instrument Model: <xsl:value-of select="vamas:instrumentModel"/>.</description>
 	</xsl:template>
 
 	<xsl:template name="convert-descriptive-datastream-contents">
