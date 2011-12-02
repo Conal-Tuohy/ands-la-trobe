@@ -43,12 +43,17 @@ rm -rf resourceIndex/*
 
 === Solr ===
 
-The following commands will clear the solr index of data:
+Solr can be purged with the following curl syntax: 
+
+{{{
+curl -u admin -p admin -h 'Content-type:text/xml; charset=utf-8' -d '<delete><query>*</query></delete>' http://localhost/solr/update
+}}}
+
+Alternatively, the following commands will clear the solr index of data:
 
 {{{
 cd $SOLR_HOME/data
 rm -rf index/*
-
 }}}
 
 === jOAI ===
