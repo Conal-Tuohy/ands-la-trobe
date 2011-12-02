@@ -29,7 +29,7 @@ import java.io.PrintStream;
 import java.io.IOException;
 
 /**
- *  Description of the Class
+ *  FedoraUpdateHandler listens for Fedora update messages and executes an external program to handle them.
  *
  *@author     ctuohy
  *@created    1 August 2011
@@ -80,7 +80,9 @@ public class FedoraUpdateHandler implements MessagingListener {
 		}
 	}
 
-
+	/**
+	 *  Output a help message
+	 */
 	private static void printUsage() {
 			System.out.println("FedoraUpdateHandler listens for Fedora update messages and executes an external program to handle them.");
 			System.out.println("For more information, visit http://code.google.com/p/ands-la-trobe/");
@@ -120,7 +122,8 @@ public class FedoraUpdateHandler implements MessagingListener {
 	}		
 	
 	/**
-	 *  The main program for the FedoraUpdateHandler class
+	 *  The main program for the FedoraUpdateHandler class.
+	 *  Parses parameters, reads input file, constructs a instance of the class and starts it running.
 	 *
 	 *@param  args  The command line arguments
 	 */
@@ -237,10 +240,10 @@ public class FedoraUpdateHandler implements MessagingListener {
 
 
 	/**
-	 *  Description of the Method
+	 *  Handles a message from Fedora
 	 *
-	 *@param  clientId  Description of the Parameter
-	 *@param  message   Description of the Parameter
+	 *@param  clientId  The id of this listener (which we used earlier to subscribe)
+	 *@param  message   The Atom format message sent to us by Fedora
 	 */
 	public void onMessage(String clientId, Message message) {
 		String messageText = "";
