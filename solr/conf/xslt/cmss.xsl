@@ -152,7 +152,7 @@
 		<xsl:param name="handle"/>
 		<xsl:if test="$handle[normalize-space()]">
 			<h2>Citation</h2>
-			<p>Use this URL to cite this dataset: <a href="{$handle}"><xsl:value-of select="$handle"/></a></p>
+      <p>Use this URL to cite this <xsl:value-of select="result/doc/str[@name='type']"/>: <a href="{$handle}"><xsl:value-of select="$handle"/></a></p>
 		</xsl:if>
 	</xsl:template>
 
