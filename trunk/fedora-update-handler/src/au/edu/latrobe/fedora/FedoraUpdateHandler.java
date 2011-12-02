@@ -12,6 +12,9 @@
    * See the License for the specific language governing permissions and
    * limitations under the License.package au.edu.latrobe.fedora;
    */
+   
+package au.edu.latrobe.fedora;
+ 
 import org.fcrepo.client.messaging.*;
 import javax.jms.Message;
 import javax.jms.TextMessage;
@@ -125,7 +128,7 @@ public class FedoraUpdateHandler implements MessagingListener {
 	 *  The main program for the FedoraUpdateHandler class.
 	 *  Parses parameters, reads input file, constructs a instance of the class and starts it running.
 	 *
-	 *@param  args  The command line arguments
+	 *@param  args  The first parameter is "start" or "stop". Optional second parameter is the name of a configuration file. 
 	 */
 	public static void main(String[] args) {
 		/*
@@ -168,7 +171,7 @@ public class FedoraUpdateHandler implements MessagingListener {
 	/**
 	 *  Start the messaging client
 	 *
-	 *@exception  MessagingException  Description of the Exception
+	 *@exception  MessagingException  Represents a failure to communicate with Fedora
 	 */
 	public void start() throws MessagingException {
 		System.out.println("Messaging Client starting...");
@@ -189,7 +192,7 @@ public class FedoraUpdateHandler implements MessagingListener {
 	/**
 	 *  Stop the messaging client
 	 *
-	 *@exception  MessagingException  Description of the Exception
+	 *@exception  MessagingException  Represents a failure to communicate with Fedora
 	 */
 	public void stop() throws MessagingException {
 		System.out.println("Messaging Client stopping...");
