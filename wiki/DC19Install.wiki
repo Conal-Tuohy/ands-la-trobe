@@ -47,28 +47,28 @@ The following guides will assist in setting up the CMSS system. Note that the pa
 
 Add: information on installing the FedoraUpdateHandler, pipelines, crosswalks, VAMAS converter, etc.
 
-== SurfaceLab6 ==
-
-SurfaceLab6 is a Windows application we use to extract metadata from ITM files. 
-
-Need to install the FedoraUpdateHandler, an XProc pipeline, and the Javascript for automating SurfaceLab6. Details?
-
 == Deposit client ==
 
 A basic SWORD deposit client application is used to deposit data into Fedora.
 
 It consists of a batch (.cmd) file and a "SendTo" shortcut. Details
 
-Dependencies are: zip and wget. Details?
+Dependencies are: zip and wget. 
 
-shortcuts in C:\Documents and Settings\Administrator\SendTo
+Zip can be obtained from http://stahlworks.com/dev/index.php?tool=zipunzip
+wget is taken from the GnuWin32 tools, and can be obtained from http://gnuwin32.sourceforge.net/packages/wget.htm or as part of the GnuWin32 package from http://gnuwin32.sourceforge.net/
 
+Both these programs should be made accessible via PATH.
 
+The following windows batch file can be used to automatically retrieve a boss.xml job manifest from the RLI booking system and submit it and associated data to the repository via SWORD:
+{{{
+cd %1
+for %%f in ("%cd%") do set EPN=%%~nf
+if not exist boss.xml wget --no-check-certificate -O boss.xml https://rli.latrobe.edu.au/dbDump/RLI-ANDS-XML.php?password=Tu04y^&EPN=%EPN%
+zip -r ..\%EPN%.zip *
+wget --header="Content-Type: application/zip" --user=fedoraAdmin --password=<password> --post-file=..\%EPN%.zip http://cmss.latrobe.edu.au/sword/collection:open
+pause
+}}}
+The script should be added to the sendTo menu (e.g. C:\Documents And Settings\All Users\SendTo under WindowsXP, or %APPDATA%\Roaming\Microsoft\Windows\SendTo under Windows7). 
 
-executables in C:\Program Files\deposit
-
-
-
-== 
-
-== Additional Notes ==
+To use the script, add all the relevant resources from the job in question to a folder and rename that folder to the relevant RLI job number. Use the rightclick SendTo menu to locate and activate the script.
