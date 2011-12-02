@@ -50,13 +50,13 @@ screen -r vamas
 
 The surfacelab-update-handler.xpl script executes SL.js as the core of of its processing, relies on the COM objects installed with SurfaceLab6 and will not operate without this software installed. Given that the software is a windows only application, XMLCalabash must be set up under Windows.
 
-As per http://xmlcalabash.com/docs/, download calabash distro from http://xmlcalabash.com/download/calabash-0.9.32.zip
+As per http://xmlcalabash.com/docs/, download calabash distro from http://xmlcalabash.com/download/calabash-0.9.32.zip (or later).
 
-unzip to C:\XML\Calabash
+place contents in C:\XML\Calabash
 
 ensure that a C:\temp directory exists and is writable.
 
-check out surfacelab-update-handler.xpl and SL.js from svn to C:\XML\Calabash\Pipelines
+check out surfacelab-update-handler.xpl, library.xpl and SL.js from svn to C:\XML\Calabash\Pipelines
 
 == Starting Calabash pipelines ==
 
@@ -97,5 +97,5 @@ Note that if you have checked out init.sh and added it to /etc/rc.d/rc.local it 
 The following Windows command will initiate the surfacelab-update-handler.xpl pipeline:
 
 {{{
-java -Xmx1024m -jar "C:\XML\Calabash\0.9.32\calabash.jar" "C:\XML\Calabash\Pipelines\surfacelab-update-handler.xpl"
+java -Xmx1024m -jar "C:\XML\Calabash\calabash.jar" "C:\XML\Pipelines\surfacelab-update-handler.xpl"
 }}}
