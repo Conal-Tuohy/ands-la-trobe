@@ -5,7 +5,7 @@
 
 As per http://xmlcalabash.com/docs/, as brief as it is.
 
-Download calabash distro from http://xmlcalabash.com/download/calabash-0.9.32.zip
+Download latest calabash distro from http://xmlcalabash.com/download/
 unzipped to /home/fedora-user/pipelines/calabash
 
 == Simple test ==
