@@ -109,19 +109,17 @@
 						<xsl:with-param name="title" select="$title" />
 					</xsl:call-template>
 					<div class="clear">
-						<xsl:call-template name="citation">
-							<xsl:with-param name="handle" select="$handle"/>
-						</xsl:call-template>
-						<xsl:call-template name="primary-metadata">
-							<xsl:with-param name="metadata-stream" select="$metadata-stream" />
-						</xsl:call-template>
-						<xsl:call-template name="secondary-metadata">
-							<xsl:with-param name="metadata-stream" select="$metadata-stream" />
-						</xsl:call-template>
+ 
 						<xsl:call-template name="sample-metadata">
 							<xsl:with-param name="metadata-stream" select="$metadata-stream" />
 						</xsl:call-template>
 						<xsl:call-template name="description-metadata">
+							<xsl:with-param name="metadata-stream" select="$metadata-stream" />
+						</xsl:call-template>
+            <xsl:call-template name="primary-metadata">
+							<xsl:with-param name="metadata-stream" select="$metadata-stream" />
+						</xsl:call-template>
+						<xsl:call-template name="secondary-metadata">
 							<xsl:with-param name="metadata-stream" select="$metadata-stream" />
 						</xsl:call-template>
 						
@@ -129,6 +127,9 @@
 						<!-- plot vamas data using Google Charts -->
 						<xsl:call-template name="vamas-graphs"/>
 						
+            <xsl:call-template name="citation">
+							<xsl:with-param name="handle" select="$handle"/>
+						</xsl:call-template>
 						
 						<xsl:if test="$download-links">
 							<h2>Download data files</h2>
@@ -349,14 +350,7 @@
 			
 			<xsl:for-each select="my:startDate[normalize-space()]">
 				<div>
-					<b>Start Date: </b>
-					<xsl:value-of select="."/>
-				</div>
-			</xsl:for-each>
-			
-			<xsl:for-each select="my:endDate[normalize-space()]">
-				<div>
-					<b>End Date: </b>
+					<b>Date: </b>
 					<xsl:value-of select="."/>
 				</div>
 			</xsl:for-each>
