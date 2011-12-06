@@ -17,7 +17,9 @@
  
  --> 
 <?xml-stylesheet href=" /xforms/xsltforms/xsltforms.xsl" type="text/xsl"?>
+<!--
 <?xsltforms-options debug="yes" lang="en"?>
+-->
 <?css-conversion no?>
 <html 
 	xmlns="http://www.w3.org/1999/xhtml" 
@@ -72,8 +74,8 @@
 				</result>
 			</xf:instance>
 			
-			<xf:bind nodeset="instance('dataset-metadata')/my:startDate" type="xf:dateTime" />
-			<xf:bind nodeset="instance('dataset-metadata')/my:endDate" type="xf:dateTime" />
+			<xf:bind nodeset="instance('dataset-metadata')/my:startDate" type="xf:date" />
+			<xf:bind nodeset="instance('dataset-metadata')/my:endDate" type="xf:date" />
 			<xf:bind nodeset="instance('dataset-metadata')/@embargoDate" type="xf:date" />
 <!--	                <xf:bind nodeset="instance('dataset-metadata')/my:url" type="xf:anyURI" constraint="(.='' or starts-with(.,'http://') or starts-with(.,'https://')) and not(contains(.,' '))" /> -->
 
@@ -100,19 +102,19 @@
 			<h1>
 				<xf:output ref="instance('dataset-metadata')/my:name" />
 			</h1>
-			
 		</div>
+
 		<div id="body">
 			<!--
 			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/key" >
 				<xf:label>Key</xf:label>
 			</xf:input>
 			<br/>-->
+
 			<div id="logos">
 				<img style="position: relative" src="/xforms/images/cmss_logo.gif" />
 				<img src="/xforms/images/VeRSI.gif" />
 			</div>
-			
 			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:name" incremental="true">
 				<xf:label>Name</xf:label>
 				<xf:hint>Name used to reference the dataset</xf:hint>
@@ -144,7 +146,7 @@
 
 			-->
 			<xf:repeat nodeset="instance('dataset-metadata')/my:hasCollector">			
-				<xf:select1 id="collectors-list" ref="@id" appearance="minimal">
+				<xf:select1 id="collectors-list" ref="@id" appearance="minimal" style="width: 18em">
 					<xf:label>Collector</xf:label>
 					<xf:hint>Any person involved in the acquisition of this dataset</xf:hint>
 					<xf:itemset model="dataset-metadata-editor-model" nodeset="instance('persons-result')/fedora:resultList/fedora:objectFields">
@@ -173,7 +175,7 @@
 				<xf:label>Add Collector</xf:label>
 				<xf:insert ev:event="DOMActivate" origin="instance('dataset-template')/my:hasCollector[1]" position="after" />
 			</xf:trigger> <!-- end id search autocomplete -->
-			<br />
+			<br /><br />
 			
 			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:abbreviatedName">
 				<xf:label>Abbreviated Name</xf:label>
@@ -202,19 +204,13 @@
 					<xf:input ref=".">
 						<xf:label>Address</xf:label>
 					</xf:input>
-					<!--
-					<xf:trigger>
-						<xf:label>Remove</xf:label>
-						<xf:delete ev:event="DOMActivate" nodeset="." />
-					</xf:trigger>
-					-->
 				</div>
 			</xf:repeat>
 			<xf:trigger>
 				<xf:label>Add other electronic address</xf:label>
 				<xf:insert ev:event="DOMActivate" origin="instance('dataset-template')/my:otherElectronic[1]" position="after"/>
 			</xf:trigger>
-			<br />
+			<br /><br /><br />
 			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:startDate">
 				<xf:label>Start Date</xf:label>
 				<xf:hint></xf:hint>
@@ -282,6 +278,7 @@
 				<xf:label>Add Sample</xf:label>
 				<xf:insert ev:event="DOMActivate" origin="instance('dataset-template')/my:sample[1]" position="after"/>
 			</xf:trigger>
+			<br /><br /><br />
 
 			<xf:repeat nodeset="instance('dataset-metadata')/my:subject">
 				<div class="panel">
@@ -309,6 +306,7 @@
 				<xf:label>Add Subject</xf:label>
 				<xf:insert ev:event="DOMActivate" origin="instance('dataset-template')/my:subject[1]" position="after"/>
 			</xf:trigger>
+			<br /><br /><br />
 			
 			
 			<xf:repeat nodeset="instance('dataset-metadata')/my:relatedWebsite">
@@ -341,8 +339,8 @@
 					<!-- @at specifies at which node in the nodeset to make the insertion (evaluated within @context) --> 
 					<!-- @position says to insert the content before or after the nodeset -->
 				<xf:insert ev:event="DOMActivate" origin="instance('dataset-template')/my:relatedWebsite[1]" position="after"/>
-			
 			</xf:trigger>
+			<br /><br /><br />
 			
 			<xf:repeat nodeset="instance('dataset-metadata')/my:relatedPublication">
 				<div class="panel">
@@ -378,6 +376,8 @@
 			</xf:trigger>
 		
 		</div>
+
+			
 		<xf:trigger>
 			<xf:label>Save</xf:label>
 				<!-- send data to server (invoking xf:submission[@id='save']) when button pressed (=DOMActivate) -->
