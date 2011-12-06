@@ -64,6 +64,11 @@ textarea {
 	margin-top: 3pt;
 	margin-right: 4pt;
 }
+
+select.xforms-value {
+	width: 18em;
+}
+
 .xforms-value {
 	width: 30em;
 }
