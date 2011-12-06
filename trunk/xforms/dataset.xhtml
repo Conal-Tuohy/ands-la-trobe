@@ -75,7 +75,6 @@
 			</xf:instance>
 			
 			<xf:bind nodeset="instance('dataset-metadata')/my:startDate" type="xf:date" />
-			<xf:bind nodeset="instance('dataset-metadata')/my:endDate" type="xf:date" />
 			<xf:bind nodeset="instance('dataset-metadata')/@embargoDate" type="xf:date" />
 <!--	                <xf:bind nodeset="instance('dataset-metadata')/my:url" type="xf:anyURI" constraint="(.='' or starts-with(.,'http://') or starts-with(.,'https://')) and not(contains(.,' '))" /> -->
 
@@ -212,12 +211,7 @@
 			</xf:trigger>
 			<br /><br /><br />
 			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:startDate">
-				<xf:label>Start Date</xf:label>
-				<xf:hint></xf:hint>
-			</xf:input>
-			<br/>
-			<xf:input model="dataset-metadata-editor-model" ref="instance('dataset-metadata')/my:endDate">
-				<xf:label>End Date</xf:label>
+				<xf:label>Date</xf:label>
 				<xf:hint></xf:hint>
 			</xf:input>
 			<br/>
