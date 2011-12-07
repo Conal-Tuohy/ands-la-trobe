@@ -5,6 +5,8 @@
 
 Workflow in the DC19 is carried out by scripts written in the W3C's XML Pipeline Language [http://www.w3.org/TR/xproc/ XProc]
 
+The XProc scripts are within the [http://code.google.com/p/ands-la-trobe/source/browse/#svn%2Ftrunk%2Fpipelines%2Fxproc xproc] folder of the repository.
+
 == XProc Documentation ==
 
  * [http://www.w3.org/TR/xproc/ The language spec]
