@@ -1,0 +1,82 @@
+#summary Directions on installing the custom XForms used in DC19
+#labels DC19
+
+= Introduction = 
+
+XForms are used in DC19 to give end users a nicer and quicker interface to work with than xml editing in the fedora admin application. They also provide a mechanism for validating some content.
+
+= Details =
+
+The XForms system relies on an XSLT interpreter. For the purposes of this project we used XSLTForms because of its stability across most browser platforms (application/xhtml+xml mime type is normally required, but text/xml can be used as a substitute in the case of IE, et al).
+
+The XForms we created for the project are specific to the schema detailed [http://code.google.com/p/ands-la-trobe/wiki/CMSSDescriptiveMetadata here], but can be used as a general guide for building an XForms system for metadata editing.
+
+== Installation ==
+
+Checkout the XForms tree from svn.
+{{{
+cd /home/fedora-user/
+svn checkout https://ands-la-trobe.googlecode.com/svn/trunk/xforms
+}}}
+
+Add the following to /etc/httpd/conf.d/xforms.conf
+{{{
+# XForms are located in the /home/fedora-user/xforms folder
+
+Alias /xforms /home/fedora-user/xforms
+
+RewriteEngine on
+
+# Rewrite requests for /fedora-objects/{item-pid}/datastreams/{datastream-name}.xhtml to
+# point to the appropriate XForm editor, i.e. /xforms/{datastream-name}.xhtml
+# The user agent will retrieve an XForm, and the XForm itself can then refer to the
+# metadata stream using the relative URI "{datastream-name}". e.g. an XForm called
+# "person.xhtml" will internally refer to the editable instance by the URI "person".
+#
+# XForm accessed as "/fedora-objects/{item-pid}/datastreams/{datastream-name}.xhtml"
+# XForm internally retrieved from "/xforms/{datastream-name}.xhtml"
+# Metadata instance accessed from "/fedora-objects/{item-pid}/datastreams/{datastream-name}
+
+RewriteCond %{REQUEST_URI} /fedora-objects/(.*)/datastreams/(.*)\.xhtml
+RewriteRule /fedora-objects/(.*)/datastreams/(.*)\.xhtml /xforms/$2.xhtml [P]
+
+
+# To avoid problems with Safari (see <http://code.google.com/p/ands-la-trobe/issues/detail?id=68>),
+# access to the XForms requires HTTP Basic authentication.
+# There are two authentication providers here:
+# 1) the VeRSI LDAP repository (which Fedora also uses), and failing that;
+# 2) the /etc/httpd/.htpasswd file (which includes the same principals as /home/fedora-user/fedora/server/config/fedora-users.xml)
+
+<Directory /home/fedora-user/xforms>
+# Use HTTP Basic authentication
+AuthType Basic
+
+# authenticate against the LDAP repository first, and failing that, against the password file
+AuthBasicProvider ldap file
+
+# to see the form, a user must be known to one of the two authentication systems
+Require valid-user
+
+# Same authentication realm name as Fedora sends
+AuthName "!!Fedora Repository Server"
+
+# LDAP bind details
+AuthLDAPURL ldap://128.250.148.11/?uid?sub
+AuthLDAPBindDN cn=root,dc=versi,dc=edu,dc=au
+AuthLDAPBindPassword v3rs1adm1n
+
+# The password file location
+AuthUserFile /etc/httpd/.htpasswd
+</Directory>
+}}}
+
+Optionally, you can also alter the mimetype table (at /etc/mime.types) to make .xhtml files report as text/xml or alternatively use the following additional rewrite directives:
+
+{{{
+#To send .xhtml text/xml mimetype to IE 
+RewriteCond %{HTTP_USER_AGENT} .*MSIE.*
+RewriteCond %{REQUEST_URI} \.xhtml$
+RewriteRule .* - [T=text/xml]
+}}}
+
+Forms should now be used automatically from the fedora-objects/$objectName/datastreams/$type.xhtml, and will be directed there by the Edit link on the Solr results page.
