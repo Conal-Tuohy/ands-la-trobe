@@ -24,10 +24,9 @@
    * [DC19Purge]
 
  * Technology and architecture
-   * [ProjectArchitectureDC19] - edit
+   * [ProjectArchitectureDC19]
    * [Dataflow]
    * [XProc]
-   * [XForms] - edit
    * [VAMASParser]
    * [FedoraUpdateHandler]
    * [FedoraSearch]
@@ -40,3 +39,4 @@
    * [ANZSRCFORCodes]
    * [EasyDeposit]
    * [Authorities]
+   * [XForms]
