@@ -19,31 +19,39 @@ Fedora Commons is a repository system which we are using to store RIF-CS and oth
 = Details =
 
  * download Fedora Commons 3.5 installer from [http://www.fedora-commons.org/software] to `/home/fedora-user/fedora-install/fcrepo-installer-3.5.jar`
- * add environmental variables (*how/where are they set?*)
+
+ You will need to set the following environmental variables. There are several locations from which this can be done, and they vary from system to system. Most commonly these should be applied to the user responsible for the execution of the fedora application (e.g. tomcat or fedora-user, depending on how your system is organized), and thus should be added to their relevant ~/.`*`rc file (e.g. ~/.bashrc)
+
   * JAVA_HOME 
   * FEDORA_HOME (e.g. /home/fedora-user/fedora)
-  * PATH (add $FEDORA_HOME/server/bin, $FEDORA_HOME/client/bin and $JAVA_HOME/bin. )
-  * CATALINA_HOME (=/usr/share/tomcat6, or your $CATALINA_HOME location)
-  * CLASSPATH (e.g. /usr/share/java:/etc/alternatives/javac:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/bin:/usr/share/java/tomcat6:$PATH)
+ * PATH (add $FEDORA_HOME/server/bin, $FEDORA_HOME/client/bin and $JAVA_HOME/bin. )
+ * CATALINA_HOME (=/usr/share/tomcat6, or your $CATALINA_HOME location)
+ * CLASSPATH (e.g. /usr/share/java:/etc/alternatives/javac:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/bin:/usr/share/java/tomcat6:$PATH.) 
 
-*This section is a bit vague as to how you actually do some of these things*
- * modified mysql database -  why doesn't the installer handle the creation of these tables?
+Note also that tomcat builds a classpath according to details [http://tomcat.apache.org/tomcat-6.0-doc/class-loader-howto.html here], so all required libs should be placed either in tomcat's common lib directories or within the /WEB-INF/lib/ directory of the webapp itself. 
+
+ * modified mysql database using the following steps:
   * set root passwords for localhost and hostname
+   * from shell, as root: `mysqladmin password`
   * ran mysql_secure_install to remove demo db & user
-  * added fedora user 
-   * `create user fedora with password ********`
+  * added fedora user, taking note of the password which will be required later
+   * in mysql: `create user fedora with password ********`
   * added fedora3 database
-   * `create database fedora3`
+   * in mysql: `create database fedora3`
   * added authority database 
-   * `create database authority`
-  * Gave relevant permissions over these dbs to fedora user. For example:
-   * `use fedora3`
-   * `grant all on * to fedora`
+   * in mysql: `create database authority`
+  * Gave relevant permissions over these dbs to fedora user. 
+   * in mysql: `use fedora3`
+   * in mysql: `grant all on * to 'fedora'@'localhost'`
+   * in mysql: `grant all on * to 'fedora'@'<hostname>'`
+   * in mysql: `use authority`
+   * in mysql: `grant all on * to 'fedora'@'localhost'`
+   * in mysql: `grant all on * to 'fedora'@'<hostname>'`
 
 NOTE: there were some issues with our install and java versions. RSUS-LTU locally listed both 1.5 and openjdk 1.6, but up2date-local installed only 1.5 by default. The following commands were used to install the newer versions:
- * `yum install java-1.6.0-openjdk.x86_64`
- * `yum install java-1.6.0-openjdk-devel.x86_64`
- * `yum install java-1.6.0-openjdk-javadoc.x86_64` 
+ * from shell, as root: `yum install java-1.6.0-openjdk.x86_64`
+ * from shell, as root: `yum install java-1.6.0-openjdk-devel.x86_64`
+ * from shell, as root: `yum install java-1.6.0-openjdk-javadoc.x86_64` 
 
  * ran installer:
 
@@ -87,7 +95,7 @@ fedora.admin.pass=<password>
 
  NOTE: Was missing /usr/share/tomcat6/common/lib/mysql-connector-java-5.1.6.jar for JDBC connector. Located and added manually (@ http://dev.mysql.com/downloads/connector/j/ ).
 
- ADDENDUM: Was also missing apache packages commons-dbcp (http://commons.apache.org/dbcp/download_dbcp.cgi) and commons-pool (http://commons.apache.org/pool/download_pool.cgi) as well. These should be placed in the same directory as the mysql-connector-java.jar and this path should be reported in the appropriate place when running the fcrepo installer. Note that catalina.properties does not appear to build the CLASSPATH envvar as reported, so these files will need to be placed somewhere tomcat can access them. The obvious place is /usr/share/tomcat6/lib.
+ ADDENDUM: Was also missing apache packages commons-dbcp (http://commons.apache.org/dbcp/download_dbcp.cgi) and commons-pool (http://commons.apache.org/pool/download_pool.cgi) as well. These should be placed in the same directory as the mysql-connector-java.jar and this path should be reported in the appropriate place when running the fcrepo installer. As noted above, the system classpath is not used by tomcat. The libraries in question must be placed in a location accessible to tomcat. e.g:
 
  * `cd /usr/share/tomcat6/lib`
  * `ln -s /home/fedora-user/files/commons-dbcp-1.4/commons-dbcp-1.4.jar .`
@@ -95,11 +103,11 @@ fedora.admin.pass=<password>
  * `ln -s /home/fedora-user/files/mysql-connector-java-5.1.18/mysql-connector-java-5.1.18-bin.jar .`
 
 
- NOTE: target dir should be owned by the designated fedora user. Directories created by or interacted with by the fedora installer will often have unusual permissions after the install is complete. In particular, check the contents of $FEDORA_HOME/data.
+ NOTE: target dir should be owned by tomcat. Directories created by or interacted with by the fedora installer will often have unusual permissions after the install is complete. In particular, check the contents of $FEDORA_HOME/data, as a failure to write to this directory after startup will break database synchronization.
 
 == Custom file locations ==
 
-fedora/server/config/akubra-llstore.cfg contains paths for the datastreamStore and objectStore. Our install stores these databases on the /mnt/rdprojects nfs partition. Similarly, the mysql databases should be in this location.
+fedora/server/config/akubra-llstore.cfg contains paths for the datastreamStore and objectStore. Our install stores these databases on the /mnt/rdprojects nfs partition for mass storage. Similarly, the mysql databases should be in this location.
 
  * move mysql dbs from /var/lib/mysql to /mnt/rdprojects/fedora/mysql
  * add record to fstab: 
