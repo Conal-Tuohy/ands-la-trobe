@@ -1,4 +1,5 @@
 #summary Directions for installing a SWORD deposit client on a client computer
+#labels DC19
 
 = SWORD deposit client installation and use ==
 
