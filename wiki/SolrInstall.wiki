@@ -1,4 +1,5 @@
 #summary Notes on the installation and configuration of Solr under Tomcat
+#labels DC19
 
 = Introduction =
 
