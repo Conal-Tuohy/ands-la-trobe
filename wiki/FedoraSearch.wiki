@@ -1,13 +1,13 @@
 #summary Information on Fedora's native search
 #labels DC19
 
+We are using fedora's native search (over Dublin Core metadata) to output an XML list of Fedora objects with 4 possible Type values: dataset, person, group and project.
 
-We are using fedora's native search (over Dublin Core metadata) to output an xml list with 4 possible Type values: dataset, person, group and project.
+The following url returns an xml Dataset list from a fedora test server:
 
-The following url returns and xml Dataset list from a fedora test server:
 http://host/fedora/search?pid=true&label=true&state=true&ownerId=true&cDate=true&mDate=true&dcmDate=true&title=true&creator=true&subject=true&description=true&publisher=true&contributor=true&date=true&format=true&identifier=true&source=true&language=true&relation=true&coverage=true&rights=true&terms=&query=type~dataset&maxResults=100&xml=true
 
-This is too ungainly for end users. Lets make it neater.
+We create an Apache httpd reverse proxy which calls the Fedora search and exposes a simpler URL. NB since Fedora listens on port 8080 and our website is on port 80, a proxy is needed anyway, but we also take the opportunity to simply the URL.
 
 === conf.d ===
 
@@ -18,4 +18,4 @@ RewriteRule ^/search/(dataset|person|group|project)/$ /fedora/search?pid=true&la
 RewriteRule ^/search/(dataset|person|group|project)/(.*) /fedora/search?pid=true&label=true&state=true&ownerId=true&cDate=true&mDate=true&dcmDate=true&title=true&creator=true&subject=true&description=true&publisher=true&contributor=true&date=true&format=true&identifier=true&source=true&language=true&relation=true&coverage=true&rights=true&terms=&query=title\~$2+type\~$1&maxResults=100&xml=true [P]
 }}}
 
-Note: this was deprecated in favor of solr for search interface and record retrieval. It is still used by the xforms editing system.
+This search service is used by the [XForms] user interface to populate drop-down lists of related entities.
