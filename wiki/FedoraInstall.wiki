@@ -112,10 +112,10 @@ rdprojects:/fs1/systems/server.name/fedora/mysql /var/lib/mysql nfs defaults,sof
 
 == Reverse Proxy ==
 
-LTU has a mildly restrictive firewall, but it is useful to have fedora on (the externally inaccessable) port 8080. The following proxy file can help.
+LTU has a mildly restrictive firewall, but it is useful to have fedora on (the externally inaccessable) port 8080. The following proxy files can help.
 
 {{{
-# Settings for accessing Fedora - Placeholder.
+# Settings for accessing Fedora
 
 # Don't access HTTP proxy requests
 # (this is a reverse proxy, not a forward proxy)
@@ -132,6 +132,62 @@ Allow from all
 
 RewriteEngine on
 
+##################################################################################
+#
+# XForms
+#
+##################################################################################
+
+# Rewrite requests for /fedora-objects/{item-pid}/datastreams/{datastream-name}.xhtml to
+# point to the appropriate XForm editor, i.e. /xforms/{datastream-name}.xhtml
+# The user agent will retrieve an XForm, and the XForm itself can then refer to the
+# metadata stream using the relative URI "{datastream-name}". e.g. an XForm called
+# "person.xhtml" will internally refer to the editable instance by the URI "person".
+#
+# XForm accessed as "/fedora-objects/{item-pid}/datastreams/{datastream-name}.xhtml"
+# XForm internally retrieved from "/xforms/{datastream-name}.xhtml"
+# Metadata instance accessed from "/fedora-objects/{item-pid}/datastreams/{datastream-name}
+
+RewriteCond %{REQUEST_URI} /fedora-objects/(.*)/datastreams/(.*)\.xhtml
+RewriteRule /fedora-objects/(.*)/datastreams/(.*)\.xhtml /xforms/$2.xhtml [P]
+
+##################################################################################
+#
+# Fedora REST interface tweak
+#
+##################################################################################
+
+# Rewrite all GET and HEAD requests to redirect from
+# /fedora-rest/{pid}/{dsid} to:
+# /fedora/objects/{pid}/datastreams/{dsid}/content
+# but other HTTP methods to:
+# /fedora/objects/{pid}/datastreams/{dsid}
+# This is because of a bug in Fedora; the URIs for getting and putting the same resource are different!
+# This makes them the same.
+# For more information about the technique used here, see
+# http://stackoverflow.com/questions/1298171/apache-as-reverse-proxy-for-couchdb
+
+RewriteCond %{REQUEST_METHOD} GET|HEAD
+RewriteRule /fedora-objects/(.*)/datastreams/(.*) http://localhost:8080/fedora/objects/$1/datastreams/$2/content [P]
+RewriteCond %{REQUEST_METHOD} PUT
+RewriteRule /fedora-objects/(.*)/datastreams/(.*) http://localhost:8080/fedora/objects/$1/datastreams/$2 [P]
+
+
+#################################################################################
+#
+# Proxy to Tomcat
+#
+#################################################################################
+
+# Proxy from /fedora-objects to /fedora/objects on Tomcat's port 8080
+# These redirections will work with the rewrite rules above.
+
+<Location /fedora-objects>
+ProxyPass        http://localhost:8080/fedora/objects
+ProxyPassReverse http://localhost:8080/fedora/objects
+</Location>
+
+
 # Proxy other requests to Fedora listening on port 8080
 # This is so we have an unmodified version of Fedora's http interface,
 # alongside the modified version under /fedora-objects
@@ -139,6 +195,28 @@ RewriteEngine on
 ProxyPass        http://localhost:8080/fedora
 ProxyPassReverse http://localhost:8080/fedora
 </Location>
+}}}
+
+{{{
+# Settings for accessing Fedora
+
+# Don't access HTTP proxy requests
+# (this is a reverse proxy, not a forward proxy)
+ProxyRequests off
+
+# Any user may connect
+<Proxy *>
+Order deny,allow
+Allow from all
+</Proxy>
+
+
+# URL rewriting required to handle content negotiation and work around bug in Fedora "RESTful" interface
+
+RewriteEngine on
+
+RewriteRule ^/search/(dataset|person|group|project)/$ /fedora/search?pid=true&label=true&state=true&ownerId=true&cDate=true&mDate=true&dcmDate=true&title=true&creator=true&subject=true&description=true&publisher=true&contributor=true&date=true&format=true&identifier=true&source=true&language=true&relation=true&coverage=true&rights=true&terms=&query=type\~$1&maxResults=100&xml=true [P]
+RewriteRule ^/search/(dataset|person|group|project)/(.*) /fedora/search?pid=true&label=true&state=true&ownerId=true&cDate=true&mDate=true&dcmDate=true&title=true&creator=true&subject=true&description=true&publisher=true&contributor=true&date=true&format=true&identifier=true&source=true&language=true&relation=true&coverage=true&rights=true&terms=&query=title\~$2+type\~$1&maxResults=100&xml=true [P]
 }}}
 
 == Fedora.fcfg ==
