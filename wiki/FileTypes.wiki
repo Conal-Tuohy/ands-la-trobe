@@ -1,0 +1,1 @@
+#summary List of file types used in the project
