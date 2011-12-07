@@ -1,2 +1,12 @@
 #summary List of file types used in the project
 #labels DC19
+
+= File types used in the DC19 project =
+
+ * [BOSSXML]
+ * [CMSSDescriptiveMetadata]
+ * [SurfaceLabXML]
+ * [SurfaceLabITMFile]
+ * [KratosVisionDataset]
+ * [VAMASXML]
+ * [RIFCS]
