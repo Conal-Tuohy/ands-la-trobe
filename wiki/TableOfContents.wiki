@@ -26,7 +26,6 @@
  * Technology and architecture
    * [ProjectArchitectureDC19]
    * [Dataflow]
-   * [Authorities]
 
  * [XProc]
  * [FedoraSearch]
@@ -41,3 +40,4 @@
    * [UnusedTechnologies]
    * [ANZSRCFORCodes]
    * [EasyDeposit]
+   * [Authorities]
