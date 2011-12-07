@@ -5,22 +5,21 @@
 
 The installation of Solr is only the first step.
 
-
 = Installation =
 
- * created solr home directory at /ands/solr-home/
- * extracted solr tar to temp directory (/ands/files/apache-solr-1.4.1/)
- * moved example config to /ands/solr-home/
- * created /ands/solr-home/data
- * moved contents of /ands/solr-home/solr to /ands/solr-home/
- * chown ands-shared:ands-shared `*` -R
- * chmod 775 to relevant files and dirs (especially /ands/solr-home/data)
- * added solr-example.xml to /usr/share/tomcat6/conf/Catalina/localhost with the following content: 
+ * created solr home directory at /home/fedora-user/solr
+ * extracted solr tar to temp directory (/home/fedora-user/files/apache-solr-1.4.1/)
+ * moved example config to /home/fedora-user/solr
+ * created /home/fedora-user/solr/data
+ * moved contents of /home/fedora-user/solr/solr to /home/fedora-user/solr
+ * chown fedora-user:fedora-user `*` -R
+ * chmod 775 to relevant files and dirs (especially /home/fedora-user/solr/data)
+ * added solr.xml to /usr/share/tomcat6/conf/Catalina/localhost with the following content: 
 
 {{{
 <?xml version="1.0" encoding="utf-8"?>
-<Context docBase="/ands/solr-home/solr.war" debug="0" crossContext="true">
-  <Environment name="solr/home" type="java.lang.String" value="/ands/solr-home" override="true"/>
+<Context docBase="/home/fedora-user/solr/solr.war" debug="0" crossContext="true">
+  <Environment name="solr/home" type="java.lang.String" value="/home/fedora-user/solr" override="true"/>
 </Context>
 }}}
 
@@ -46,8 +45,8 @@ AuthName "Solr administration"
 AuthBasicProvider
 AuthUserFile /etc/httpd/.htpasswd
 Require user admin
-ProxyPass        http://localhost:8080/solr-example/admin
-ProxyPassReverse http://localhost:8080/solr-example/admin
+ProxyPass        http://localhost:8080/solr/admin
+ProxyPassReverse http://localhost:8080/solr/admin
 </Location>
 
 # Access control for proxying to the indexing interface
@@ -57,14 +56,14 @@ AuthName "Solr indexer"
 AuthBasicProvider
 AuthUserFile /etc/httpd/.htpasswd
 Require user admin
-ProxyPass        http://localhost:8080/solr-example/update
-ProxyPassReverse http://localhost:8080/solr-example/update
+ProxyPass        http://localhost:8080/solr/update
+ProxyPassReverse http://localhost:8080/solr/update
 </Location>
 
 # Other parts of the Solr server are open to all
 <Location /solr>
-ProxyPass        http://localhost:8080/solr-example
-ProxyPassReverse http://localhost:8080/solr-example
+ProxyPass        http://localhost:8080/solr
+ProxyPassReverse http://localhost:8080/solr
 </Location>
 }}}
 
@@ -73,67 +72,13 @@ ProxyPassReverse http://localhost:8080/solr-example
 
 = Configuration =
 
-Solr has a large scope for customization, including definition of custom datatypes and fields. In future we may make use of these facilities, but at the moment the schema used by solr is similar to the default, with the following changes (from solr-home/conf/schema.xml, line 429 onward): 
-
+Check out schema.xml, solrconfig.xml and cmss.xsl from svn:
 {{{
-   <!-- New or retained fields -->
-   <field name="id" type="string" indexed="true" stored="true" required="true" />
-   <field name="title" type="text" indexed="true" stored="true" multiValued="true"/>
-   <field name="technique" type="string" stored="true" required="true" multiValued="true" />
-   <field name="instrument_model" type="string" stored="true" required="true" />
-   <field name="date" type="date" indexed="true" stored="true" required="true" />
-   <!--Commented out:
-   <field name="sku" type="textTight" indexed="true" stored="true" omitNorms="true"/>
-   <field name="name" type="textgen" indexed="true" stored="true"/>
-   <field name="alphaNameSort" type="alphaOnlySort" indexed="true" stored="false"/>
-   <field name="manu" type="textgen" indexed="true" stored="true" omitNorms="true"/>
-   <field name="cat" type="text_ws" indexed="true" stored="true" multiValued="true" omitNorms="true" />
-   <field name="features" type="text" indexed="true" stored="true" multiValued="true"/>
-   <field name="includes" type="text" indexed="true" stored="true" 
-      termVectors="true" termPositions="true" termOffsets="true" />
-
-   <field name="weight" type="float" indexed="true" stored="true"/>
-   <field name="price"  type="float" indexed="true" stored="true"/>
-   <field name="popularity" type="int" indexed="true" stored="true" />
-   <field name="inStock" type="boolean" indexed="true" stored="true" />
-   -->
-
-   <!-- Common metadata fields, named specifically to match up with
-     SolrCell metadata when parsing rich documents such as Word, PDF.
-     Some fields are multiValued only because Tika currently may return
-     multiple values for them.
-   -->
-   <!-- Commented out:
-   <field name="title" type="text" indexed="true" stored="true" multiValued="true"/>
-   <field name="subject" type="text" indexed="true" stored="true"/>
-   <field name="description" type="text" indexed="true" stored="true"/>
-   <field name="comments" type="text" indexed="true" stored="true"/>
-   <field name="author" type="textgen" indexed="true" stored="true"/>
-   <field name="keywords" type="textgen" indexed="true" stored="true"/>
-   <field name="category" type="textgen" indexed="true" stored="true"/>
-   <field name="content_type" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="last_modified" type="date" indexed="true" stored="true"/>
-   <field name="links" type="string" indexed="true" stored="true" multiValued="true"/>
-   -->
-}}}
-
-And the following (at line 538):
-{{{
-   <!-- new or retained -->
-   <copyField source="title" dest="text" />
-   <copyField source="instrument_model" dest="text" />
-   <copyField source="technique" dest="text" />
-   <copyField source="date" dest="text" />
-<!--Commented out:
-   <copyField source="cat" dest="text"/>
-   <copyField source="name" dest="text"/>
-   <copyField source="manu" dest="text"/>
-   <copyField source="features" dest="text"/>
-   <copyField source="includes" dest="text"/>
-   <copyField source="manu" dest="manu_exact"/>
--->
-
-
+cd /home/fedora-user/solr/conf
+svn checkout http://code.google.com/p/ands-la-trobe/source/browse/trunk/solr/conf/schema.xml
+svn checkout http://code.google.com/p/ands-la-trobe/source/browse/trunk/solr/conf/solrconfig.xml
+cd xslt
+svn checkout http://code.google.com/p/ands-la-trobe/source/browse/trunk/solr/conf/xslt/cmss.xsl
 }}}
 
 How to configure Solr to parse queries specified using multiple URL parameters:
