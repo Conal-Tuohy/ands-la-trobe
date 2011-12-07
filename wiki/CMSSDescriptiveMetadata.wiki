@@ -3,6 +3,8 @@
 
 = Introduction =
 
+Here is a list of schema used by the DC19 CMSS system. Note that these are not the authoritative schema files. Those are located [http://code.google.com/p/ands-la-trobe/source/browse/#svn%2Ftrunk%2Fxforms here].
+
 ===LTU dataset===
 {{{
 <dataset xmlns="http://hdl.handle.net/102.100.100/6976">
