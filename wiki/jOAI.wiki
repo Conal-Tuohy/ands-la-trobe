@@ -1,4 +1,5 @@
 #summary jOAI installation/configuration log
+#labels DC19
 
 = jOAI installation/configuration log =
 
