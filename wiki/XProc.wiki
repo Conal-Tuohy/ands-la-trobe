@@ -1,17 +1,16 @@
 #summary Notes about XProc
 #labels DC19
 
-*Needs more detail*
-
 = XProc =
 
-XProc is the W3C's XML Pipeline Language.
+Workflow in the DC19 is carried out by scripts written in the W3C's XML Pipeline Language [http://www.w3.org/TR/xproc/ XProc]
 
+== XProc Documentation ==
 
-http://www.w3.org/TR/xproc/
+ * [http://www.w3.org/TR/xproc/ The language spec]
+ * [http://xprocbook.com/book/book-1.html An online book (in draft stages)]
+ * [http://tests.xproc.org/testsuite/ Test suite]
 
-http://xprocbook.com/book/book-1.html
+== Implementation ==
 
-http://xmlcalabash.com/
-
-http://tests.xproc.org/testsuite/
+We are using [http://xmlcalabash.com/ XML Calabash] as our XProc interpreter. See the [Calabash] page on this wiki for details of installation.
