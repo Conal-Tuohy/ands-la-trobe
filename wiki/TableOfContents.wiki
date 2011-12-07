@@ -19,14 +19,20 @@
    * [VAMASXML]
    * [RIFCS]
 
- * [UnusedTechnologies]
- * [ANZSRCFORCodes]
+ * Notes
+   * [UnusedTechnologies]
+   * [ANZSRCFORCodes]
+   * [EasyDeposit]
+
+ * Testing
+   * [DC19TestPlan]
+   * [DC19Purge]
+
  * [ProjectArchitectureDC19]
  * [Dataflow]
  * [Authorities]
 
  * [XProc]
- * [EasyDeposit]
  * [FedoraSearch]
  * [Fedora]
  * [XProcLibrary]
@@ -34,5 +40,3 @@
  * [XForms]
  * [VAMASParser]
  * [FedoraUpdateHandler]
- * [DC19Purge]
- * [DC19TestPlan]
