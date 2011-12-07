@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary Directions for installing a SWORD deposit client on a client computer
 
 = SWORD deposit client installation and use ==
 
