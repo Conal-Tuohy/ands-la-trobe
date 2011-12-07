@@ -143,25 +143,6 @@ RewriteEngine on
 
 ##################################################################################
 #
-# XForms
-#
-##################################################################################
-
-# Rewrite requests for /fedora-objects/{item-pid}/datastreams/{datastream-name}.xhtml to
-# point to the appropriate XForm editor, i.e. /xforms/{datastream-name}.xhtml
-# The user agent will retrieve an XForm, and the XForm itself can then refer to the
-# metadata stream using the relative URI "{datastream-name}". e.g. an XForm called
-# "person.xhtml" will internally refer to the editable instance by the URI "person".
-#
-# XForm accessed as "/fedora-objects/{item-pid}/datastreams/{datastream-name}.xhtml"
-# XForm internally retrieved from "/xforms/{datastream-name}.xhtml"
-# Metadata instance accessed from "/fedora-objects/{item-pid}/datastreams/{datastream-name}
-
-RewriteCond %{REQUEST_URI} /fedora-objects/(.*)/datastreams/(.*)\.xhtml
-RewriteRule /fedora-objects/(.*)/datastreams/(.*)\.xhtml /xforms/$2.xhtml [P]
-
-##################################################################################
-#
 # Fedora REST interface tweak
 #
 ##################################################################################
