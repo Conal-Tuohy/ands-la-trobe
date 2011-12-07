@@ -1,4 +1,5 @@
 #summary ANZSRC Field of Research codes
+#labels DC19
 
 The now depleted ADFI still publishes a SKOS version of this vocabulary, but how does this relate to the codes required in RIF-CS? Doesn't RIF-CS just include the numeric code?
 
