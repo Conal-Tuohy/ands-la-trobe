@@ -1,4 +1,5 @@
 #summary Fedora security
+#labels DC19
 
 [https://wiki.duraspace.org/display/FEDORA35/Security Fedora Security]
 
