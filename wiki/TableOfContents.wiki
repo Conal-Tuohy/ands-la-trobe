@@ -11,13 +11,13 @@
    * [SWORDClientInstall SWORD client]
 
  * [FileTypes File types used in the project]
-   * [RIFCS]
+   * [BOSSXML]
+   * [CMSSDescriptiveMetadata]
    * [SurfaceLabXML]
    * [SurfaceLabITMFile]
    * [KratosVisionDataset]
    * [VAMASXML]
-   * [BOSSXML]
-   * [CMSSDescriptiveMetadata]
+   * [RIFCS]
 
  * [UnusedTechnologies]
  * [ANZSRCFORCodes]
