@@ -1,0 +1,26 @@
+#summary One-sentence summary of this page.
+
+= SWORD deposit client installation and use ==
+
+A basic SWORD deposit client application is used to deposit data into Fedora. It consists of a batch (.cmd) file and a "SendTo" shortcut. 
+
+Dependencies are: zip and wget. 
+
+ * Zip can be obtained from http://stahlworks.com/dev/index.php?tool=zipunzip
+ * wget is taken from the GnuWin32 tools, and can be obtained from http://gnuwin32.sourceforge.net/packages/wget.htm or as part of the !GnuWin32 package from http://gnuwin32.sourceforge.net/
+
+Both these programs should installed and added to the PATH system variable.
+
+The following windows batch script is used to automatically retrieve a boss.xml job manifest from the RLI booking system and submit it and associated data to the repository via SWORD:
+{{{
+cd %1
+for %%f in ("%cd%") do set EPN=%%~nf
+if not exist boss.xml wget --no-check-certificate -O boss.xml https://rli.latrobe.edu.au/dbDump/RLI-ANDS-XML.php?password=Tu04y^&EPN=%EPN%
+zip -r ..\%EPN%.zip *
+wget --header="Content-Type: application/zip" --user=fedoraAdmin --password=<password> --post-file=..\%EPN%.zip http://cmss.latrobe.edu.au/sword/collection:open
+pause
+}}}
+
+The script should be saved as `C:\Program Files\deposit\deposit.cmd` and a shortcut to the script should be added to the sendTo menu (e.g. C:\Documents And Settings\All Users\SendTo under WindowsXP, or %APPDATA%\Roaming\Microsoft\Windows\SendTo under Windows7). To create the shortcut, right-click `deposit.cmd` and choose Create Shortcut. Rename the short-cut to `CMSS data repository` and move it to the `sendTo` folder as above.
+
+To use the script, add all the relevant resources from the job in question to a folder and rename that folder to the relevant RLI job number. Right-click the folder, and from the menu, choose `CMSS data repository` to activate the script.
