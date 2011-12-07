@@ -3,10 +3,10 @@
 = Table of Contents =
 
  * [DC19Install Installation]
+   * [FedoraInstall Fedora repository server]
    * [Calabash XML Calabash pipeline scripting]
    * [SolrInstall Solr discovery server]
    * [jOAI jOAI OAI-PMH server]
-   * [FedoraInstall Fedora repository server]
    * [SWORD SWORD server]
    * [SWORDClientInstall SWORD client]
 
