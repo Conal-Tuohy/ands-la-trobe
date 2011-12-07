@@ -1,4 +1,37 @@
 #summary A set of XProc Library functions
 #labels DC19
 
-http-request
+= XProc Library =
+
+The DC19 project uses [XProc] scripts to automate data flow. These scripts make use of a shared library of common XProc steps:
+
+http://ands-la-trobe.googlecode.com/svn/trunk/pipelines/xproc/library.xpl
+
+The steps in this library are named with globally unique XML Qualified Names, and the namespace URI for these names is http://code.google.com/p/ands-la-trobe/wiki/XProcLibrary hence this page is the "namespace document" for those steps.
+
+== lib:send-mail ==
+
+Sends an email specified in the following form:
+{{{
+<message 
+   subject="example email"
+   from="sender@example.com" 
+   to="addressee@example.com">
+Dear Addressee,
+
+...
+
+Sincerely,
+Sender
+</message>
+
+== lib:check-embargo ==
+== lib:fedora-create-object ==
+== lib:fedora-purge-datastream ==
+== lib:fedora-tag-datastreams ==
+== lib:fedora-set-datastream-format ==
+== lib:fedora-save-datastream ==
+== lib:crosswalk ==
+== lib:http-request ==
+== lib:mint-handle ==
+== lib:ensure-fedora-object-has-handle ==
