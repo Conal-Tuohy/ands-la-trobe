@@ -83,7 +83,6 @@ Instrument Model: <xsl:value-of select="vamas:instrumentModel"/>.</description>
 	<xsl:template match="latrobe:dataset">
 		<collection type="dataset">
 			<xsl:call-template name="convert-descriptive-datastream-contents"/>
-			<xsl:call-template name="convert-technical-datastream-contents"/>
 		</collection>
 	</xsl:template>
 
