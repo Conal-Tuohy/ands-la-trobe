@@ -4,6 +4,9 @@
 
  * [DC19Install]
    * [SolrInstall]
+   * [SWORDClientInstall]
+   * [FedoraInstall]
+   * [Calabash]
 
 
  * [RIFCS]
@@ -28,9 +31,6 @@
  * [XForms]
  * [VAMASParser]
  * [FedoraUpdateHandler]
- * [SWORDClientInstall]
- * [FedoraInstall]
- * [Calabash]
  * [DC19Purge]
  * [DC19TestPlan]
  * [Dataflow]
