@@ -2,6 +2,10 @@
 
 = Table of Contents =
 
+ * [DC19Install]
+   * [SolrInstall]
+
+
  * [RIFCS]
  * [UnusedTechnologies]
  * [ANZSRCFORCodes]
@@ -19,7 +23,6 @@
  * [VAMASXML]
  * [SWORD]
  * [BOSSXML]
- * [SolrInstall]
  * [CMSSDescriptiveMetadata]
  * [jOAI]
  * [XForms]
@@ -27,7 +30,6 @@
  * [FedoraUpdateHandler]
  * [SWORDClientInstall]
  * [FedoraInstall]
- * [DC19Install]
  * [Calabash]
  * [DC19Purge]
  * [DC19TestPlan]
