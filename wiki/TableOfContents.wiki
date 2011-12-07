@@ -28,16 +28,15 @@
    * [Dataflow]
    * [XProc]
    * [XForms] - edit
+   * [VAMASParser]
+   * [FedoraUpdateHandler]
+   * [FedoraSearch]
+   * [XProcLibrary]
+   * [Security]
 
- * [FedoraSearch]
- * [Fedora]
- * [XProcLibrary]
- * [Security]
- * [VAMASParser]
- * [FedoraUpdateHandler]
-
- * Rough notes
+ * Working notes
    * [UnusedTechnologies]
+   * [Fedora]
    * [ANZSRCFORCodes]
    * [EasyDeposit]
    * [Authorities]
