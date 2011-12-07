@@ -24,14 +24,44 @@ Dear Addressee,
 Sincerely,
 Sender
 </message>
+}}}
 
 == lib:check-embargo ==
+
+Checks a [FOXML] record to see whether the record can be published or whether on the contrary the record must remain embargoed. If the record is embargoed, the step throws an exception.
+
 == lib:fedora-create-object ==
+
+Creates a Fedora object with a specified persistent identifier. Used to create Person records in response to ingestion of a Dataset.
+
 == lib:fedora-purge-datastream ==
+
+Remove a datastream by name from a Fedora object.
+
 == lib:fedora-tag-datastreams ==
+
+Accepts a reference to a Fedora object, and an XML document defining a map between file extensions and data types. Checks the extensions of the datastreams contained in the object, and tags them with the appropriate type information.
+
 == lib:fedora-set-datastream-format ==
+
+Tags a single datastream with type information.
+
 == lib:fedora-save-datastream ==
+
+Saves a datastream into Fedora. If the datastream exists, it is overwritten. If it does not exist, it is created.
+
 == lib:crosswalk ==
+
+Executes an XSLT crosswalk.
+
 == lib:http-request ==
+
+Helper step to make an HTTP request.
+
 == lib:mint-handle ==
+
+Uses a PIDS server to mint a handle for a URI.
+
 == lib:ensure-fedora-object-has-handle ==
+
+Checks that a Fedora object contains a datastream called "handle" and if not, mints a handle and saves the result into the object as a datastream called "handle".
