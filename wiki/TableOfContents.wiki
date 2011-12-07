@@ -1,6 +1,6 @@
 #summary Table of contents for DC19 project
 
-= Table of Contents =
+= [TableOfContents Table of Contents] =
 
  * [DC19Install Installation]
    * [FedoraInstall Fedora repository server]
