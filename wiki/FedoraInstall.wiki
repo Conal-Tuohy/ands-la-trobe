@@ -33,7 +33,7 @@ Note also that tomcat builds a classpath according to details [http://tomcat.apa
  * modified mysql database using the following steps:
   * set root passwords for localhost and hostname
    * from shell, as root: `mysqladmin password`
-  * ran mysql_secure_install to remove demo db & user
+  * ran mysql_secure_install from shell to remove demo db & user
   * added fedora user, taking note of the password which will be required later
    * in mysql: `create user fedora with password ********`
   * added fedora3 database
