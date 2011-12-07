@@ -1,4 +1,5 @@
 #summary Information on Fedora's native search
+#labels DC19
 
 
 We are using fedora's native search (over Dublin Core metadata) to output an xml list with 4 possible Type values: dataset, person, group and project.
@@ -16,3 +17,5 @@ Using the following rewrite rules, the http://site/search/$1 url can be made to 
 RewriteRule ^/search/(dataset|person|group|project)/$ /fedora/search?pid=true&label=true&state=true&ownerId=true&cDate=true&mDate=true&dcmDate=true&title=true&creator=true&subject=true&description=true&publisher=true&contributor=true&date=true&format=true&identifier=true&source=true&language=true&relation=true&coverage=true&rights=true&terms=&query=type\~$1&maxResults=100&xml=true [P]
 RewriteRule ^/search/(dataset|person|group|project)/(.*) /fedora/search?pid=true&label=true&state=true&ownerId=true&cDate=true&mDate=true&dcmDate=true&title=true&creator=true&subject=true&description=true&publisher=true&contributor=true&date=true&format=true&identifier=true&source=true&language=true&relation=true&coverage=true&rights=true&terms=&query=title\~$2+type\~$1&maxResults=100&xml=true [P]
 }}}
+
+Note: this was deprecated in favor of solr for search interface and record retrieval. It is still used by the xforms editing system.
