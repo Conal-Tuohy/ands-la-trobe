@@ -26,13 +26,13 @@
  * Technology and architecture
    * [ProjectArchitectureDC19]
    * [Dataflow]
+   * [XProc]
+   * [XForms]
 
- * [XProc]
  * [FedoraSearch]
  * [Fedora]
  * [XProcLibrary]
  * [Security]
- * [XForms]
  * [VAMASParser]
  * [FedoraUpdateHandler]
 
