@@ -1,4 +1,5 @@
 #summary The Registry Interchange Format - Collections and Services
+#labels DC19
 
 
 [http://www.ands.org.au/resource/rif-cs.html  RIF-CS documentation at ANDS]
