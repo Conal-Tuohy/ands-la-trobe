@@ -1,4 +1,5 @@
 #summary Namespace document for VAMAS-XML produced by the VAMAS parser
+#labels DC19
 
 This is the namespace document for VAMAS-XML, corresponding to the namespace URI http://hdl.handle.net/102.100.100/6919
 
