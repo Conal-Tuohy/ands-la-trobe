@@ -24,10 +24,10 @@
    * [DC19Purge]
 
  * Technology and architecture
-   * [ProjectArchitectureDC19]
+   * [ProjectArchitectureDC19] - edit
    * [Dataflow]
    * [XProc]
-   * [XForms]
+   * [XForms] - edit
 
  * [FedoraSearch]
  * [Fedora]
