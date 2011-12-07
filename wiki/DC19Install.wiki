@@ -69,6 +69,7 @@ zip -r ..\%EPN%.zip *
 wget --header="Content-Type: application/zip" --user=fedoraAdmin --password=<password> --post-file=..\%EPN%.zip http://cmss.latrobe.edu.au/sword/collection:open
 pause
 }}}
-The script should be added to the sendTo menu (e.g. C:\Documents And Settings\All Users\SendTo under WindowsXP, or %APPDATA%\Roaming\Microsoft\Windows\SendTo under Windows7). 
 
-To use the script, add all the relevant resources from the job in question to a folder and rename that folder to the relevant RLI job number. Use the rightclick SendTo menu to locate and activate the script.
+The script should be saved as `C:\Program Files\deposit\deposit.cmd` and a shortcut to the script should be added to the sendTo menu (e.g. C:\Documents And Settings\All Users\SendTo under WindowsXP, or %APPDATA%\Roaming\Microsoft\Windows\SendTo under Windows7). To create the shortcut, right-click `deposit.cmd` and choose Create Shortcut. Rename the short-cut to `CMSS data repository` and move it to the `sendTo` folder as above.
+
+To use the script, add all the relevant resources from the job in question to a folder and rename that folder to the relevant RLI job number. Right-click the folder, and from the menu, choose `CMSS data repository` to activate the script.
