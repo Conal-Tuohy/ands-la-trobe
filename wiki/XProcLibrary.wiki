@@ -57,6 +57,7 @@ Accepts a reference to a Fedora object, and an XML document defining a map betwe
 		format-uri="http://hdl.handle.net/102.100.100/6972" 
 		content-type="application/x-iontof-surfacelab-measurement"/>
 </map>
+}}}
 
 The step then checks the extensions of the datastreams contained in the object, and tags them with the appropriate type information.
 
