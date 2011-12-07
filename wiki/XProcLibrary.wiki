@@ -7,7 +7,7 @@ The DC19 project uses [XProc] scripts to automate data flow. These scripts make 
 
 http://ands-la-trobe.googlecode.com/svn/trunk/pipelines/xproc/library.xpl
 
-The steps in this library are named with globally unique XML Qualified Names, and the namespace URI for these names is http://code.google.com/p/ands-la-trobe/wiki/XProcLibrary hence this page is the "namespace document" for those steps.
+The steps in this library are named with globally unique XML Qualified Names, and the namespace URI for these names is http://code.google.com/p/ands-la-trobe/wiki/XProcLibrary hence this page is the [http://www.w3.org/TR/webarch/#namespace-document namespace document] for those steps.
 
 == lib:send-mail ==
 
