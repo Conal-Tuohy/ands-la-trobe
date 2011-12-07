@@ -1,4 +1,5 @@
 #summary Information on the installation of the SWORD package for Fedora
+#labels DC19
 
 = Introduction =
 
