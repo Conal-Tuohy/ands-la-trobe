@@ -1,4 +1,5 @@
 #summary Utility program to convert VAMAS files into VAMAS-XML
+#labels DC19
 
 The VAMAS Parser is a small Java utility which converts VAMAS data exchange files into a custom XML format [VAMASXML]. The program takes a single .vms file as an argument and outputs directly to STDOUT.
 
