@@ -105,18 +105,27 @@
 			</head>
 			<body>
 				<div class="container">
+					<!-- title -->
 					<xsl:call-template name="template-header">
 						<xsl:with-param name="title" select="$title" />
 					</xsl:call-template>
+					<!-- summary and complete description -->
+					<xsl:call-template name="description-metadata">
+						<xsl:with-param name="metadata-stream" select="$metadata-stream" />
+					</xsl:call-template>
+					<!-- sample id, etc, up to "preparation" -->
+					<xsl:call-template name="sample-metadata">
+						<xsl:with-param name="metadata-stream" select="$metadata-stream" />
+					</xsl:call-template>
+					<!-- plot vamas data using Google Charts -->
+					<xsl:call-template name="vamas-graphs"/>
+					<!-- everything else -->
 					<div class="clear">
- 
-						<xsl:call-template name="sample-metadata">
-							<xsl:with-param name="metadata-stream" select="$metadata-stream" />
+						<!-- citation -->
+						<xsl:call-template name="citation">
+							<xsl:with-param name="handle" select="$handle"/>
 						</xsl:call-template>
-						<xsl:call-template name="description-metadata">
-							<xsl:with-param name="metadata-stream" select="$metadata-stream" />
-						</xsl:call-template>
-            <xsl:call-template name="primary-metadata">
+						<xsl:call-template name="primary-metadata">
 							<xsl:with-param name="metadata-stream" select="$metadata-stream" />
 						</xsl:call-template>
 						<xsl:call-template name="secondary-metadata">
@@ -124,12 +133,6 @@
 						</xsl:call-template>
 						
 	
-						<!-- plot vamas data using Google Charts -->
-						<xsl:call-template name="vamas-graphs"/>
-						
-            <xsl:call-template name="citation">
-							<xsl:with-param name="handle" select="$handle"/>
-						</xsl:call-template>
 						
 						<xsl:if test="$download-links">
 							<h2>Download data files</h2>
@@ -151,9 +154,24 @@
 
 	<xsl:template name="citation">
 		<xsl:param name="handle"/>
-		<xsl:if test="$handle[normalize-space()]">
-			<h2>Citation</h2>
-      <p>Use this URL to cite this <xsl:value-of select="result/doc/str[@name='type']"/>: <a href="{$handle}"><xsl:value-of select="$handle"/></a></p>
+		<xsl:if test="normalize-space($handle)">
+			<h3>Citation</h3>
+			<p>Use this URL to cite this <xsl:value-of select="result/doc/str[@name='type']"/>: <a href="{$handle}"><xsl:value-of select="$handle"/></a></p>
+			<!-- AddThis Button BEGIN -->
+			<!--
+			<div class="addthis_toolbox addthis_default_style addthis_32x32_style" xmlns:addthis="http://www.addthis.com/help/api-spec">
+				<a class="addthis_button_preferred_1" addthis:url="{$handle}"></a>
+				<a class="addthis_button_preferred_2" addthis:url="{$handle}"></a>
+				<a class="addthis_button_preferred_3" addthis:url="{$handle}"></a>
+				<a class="addthis_button_preferred_4" addthis:url="{$handle}"></a>
+				<a class="addthis_button_compact" addthis:url="{$handle}"></a>
+				<a class="addthis_counter addthis_bubble_style" addthis:url="{$handle}"></a>
+			</div>
+			<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4ed5d2a0140045e1">
+			//
+			</script>
+			-->
+			<!-- AddThis Button END -->
 		</xsl:if>
 	</xsl:template>
 
@@ -226,16 +244,16 @@
 						<a href="/index.html">CMSS Repository Search</a>
 					</li>
 					<li>
-						<a href="http://www.latrobe.edu.au/home">La‌ Trobe‌ Home</a>
+						<a href="http://www.latrobe.edu.au/home">La Trobe Home</a>
 					</li>
 					<li>
 						<a href="http://www.latrobe.edu.au/eresearch/">e-Research</a>
 					</li>
 					<li>
-						<a href="http://www.latrobe.edu.au/surface/">CMSS‌ Home</a>
+						<a href="http://www.latrobe.edu.au/surface/">CMSS  Home</a>
 					</li>
 					<li>
-						<a href="https://rli.latrobe.edu.au/index.php">RLI‌ Home</a>
+						<a href="https://rli.latrobe.edu.au/index.php">RLI  Home</a>
 					</li>
 				</ul>
 			</div>
@@ -449,13 +467,11 @@
 	<xsl:template name="render-link-to-object">
 		<xsl:param name="object"/>
 				<xsl:variable name="encoded-id">
-					<xsl:with-param name="string">
-						<xsl:call-template name="encode-for-uri">
-							<xsl:with-param name="string" select="@id"/>
-						</xsl:call-template>
-					</xsl:with-param>
+					<xsl:call-template name="encode-for-uri">
+						<xsl:with-param name="string" select="@id"/>
+					</xsl:call-template>
 				</xsl:variable>
-				<a href="?q=&quot;{$encoded-id}&quot;"><xsl:value-of select="." /></a>
+				<a href="?id={$encoded-id}"><xsl:value-of select="." /></a>
 				<br />
 	</xsl:template>
 
@@ -714,11 +730,8 @@
 <xsl:template name="sample-metadata">
 	<xsl:param name="metadata-stream" />
 	<xsl:if test="$metadata-stream/my:sample[normalize-space()]">
-		<div><h3>Sample Data</h3>
+		<div><h3>Sample: <xsl:value-of select="my:name[normalize-space()]" /></h3>
 			<xsl:for-each select="$metadata-stream/my:sample">
-				<xsl:if test="my:name[normalize-space()]">
-					<b>Name: </b> <xsl:value-of select="my:name[normalize-space()]" /><br />
-				</xsl:if>	
 				<xsl:if test="my:id[normalize-space()]">
 					<b>Sample ID: </b> <xsl:value-of select="my:id[normalize-space()]" /><br />
 				</xsl:if>	
@@ -732,7 +745,7 @@
 					<b>Supplier: </b> <xsl:value-of select="my:supplier[normalize-space()]" /><br />
 				</xsl:if>	
 				<xsl:if test="my:supplierCode[normalize-space()]">
-					<b>Supplier ID: </b> <xsl:value-of select="my:supplierCode[normalize-space()]" /><br />
+					<b>Supplier's Product Code: </b> <xsl:value-of select="my:supplierCode[normalize-space()]" /><br />
 				</xsl:if>	
 				<xsl:if test="my:purity[normalize-space()]">
 					<b>Purity: </b> <xsl:value-of select="my:purity[normalize-space()]" /><br />
