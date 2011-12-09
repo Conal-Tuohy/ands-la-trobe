@@ -3,7 +3,7 @@
 
 = Introduction =
 
-The installation of Solr is only the first step.
+Solr needs to be installed and then configured to specify a custom schema to suit the domain (in our case, we've defined metadata fields relating to e.g. X-Ray Photoelectron Spectrosopy), and a custom display XSLT (in our case, customised to display boilerplate headers and styles, display our custom metadata fields, and to transclude information from data files stored in Fedora, and generate graphs).
 
 = Installation =
 
@@ -72,15 +72,13 @@ ProxyPassReverse http://localhost:8080/solr
 
 = Configuration =
 
-Check out schema.xml, solrconfig.xml and cmss.xsl from svn:
+Check out schema.xml, solrconfig.xml and cmss.xsl from svn into a temporary folder, and then copy this over the default Solr configuration files:
 {{{
-cd /home/fedora-user/solr/conf
-svn checkout https://ands-la-trobe.googlecode.com/svn/trunk/solr/conf/schema.xml
-svn checkout https://ands-la-trobe.googlecode.com/svn/trunk/solr/conf/solrconfig.xml
-cd xslt
-svn checkout https://ands-la-trobe.googlecode.com/svn/trunk/solr/conf/xslt/cmss.xsl
+cd /tmp
+svn checkout https://ands-la-trobe.googlecode.com/svn/trunk/solr/conf conf
+cp -r -f conf /home/fedora-user/solr/
 }}}
 
-How to configure Solr to parse queries specified using multiple URL parameters:
+The solrconfig.xml file configures Solr to parse queries specified using multiple URL parameters. More information is available here:
 
 http://wiki.apache.org/solr/FunctionQuery#query
