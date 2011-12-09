@@ -487,6 +487,30 @@
      If no qt is defined, the requestHandler that declares default="true"
      will be used.
   -->
+
+  <requestHandler name="standard" class="solr.SearchHandler" default="true">
+      <!-- default values for query parameters -->
+     <lst name="defaults">
+     <str name="echoParams">all</str>
+     <str name="wt">xslt</str>
+     <str name="tr">cmss.xsl</str>
+     <int name="rows">10</int>
+     <str name="q.op">AND</str>
+     <str name="q.alt">*:*</str>
+     <!--     <str name="technique">XPS</str> --><!-- err.. why? -->
+     <str name="q">
+     _query_:"{!field f=id v=$id}"
+     <!--  _query_:"{!prefix f=technique v=$technique}"
+     _query_:"{!prefix f=type v=$type}" -->
+     _query_:"{!field f=text v=$text}"
+     </str>
+     <!--
+     <str name="fl">*</str>
+     <str name="version">2.1</str>
+     -->
+     </lst>
+  </requestHandler>
+
   <requestHandler name="standard" class="solr.SearchHandler">
     <!-- default values for query parameters -->
      <lst name="defaults">
@@ -501,7 +525,7 @@
      </lst>
   </requestHandler>
 
-  <requestHandler name="standard" class="solr.SearchHandler" default="true">
+  <requestHandler name="standard" class="solr.SearchHandler">
 	<lst name="defaults">	
 		<str name="defType">dismax</str>
 		<str name="echoParams">all</str>
