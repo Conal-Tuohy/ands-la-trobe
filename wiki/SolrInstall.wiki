@@ -75,10 +75,10 @@ ProxyPassReverse http://localhost:8080/solr
 Check out schema.xml, solrconfig.xml and cmss.xsl from svn:
 {{{
 cd /home/fedora-user/solr/conf
-svn checkout http://code.google.com/p/ands-la-trobe/source/browse/trunk/solr/conf/schema.xml
-svn checkout http://code.google.com/p/ands-la-trobe/source/browse/trunk/solr/conf/solrconfig.xml
+svn checkout https://ands-la-trobe.googlecode.com/svn/trunk/solr/conf/schema.xml
+svn checkout https://ands-la-trobe.googlecode.com/svn/trunk/solr/conf/solrconfig.xml
 cd xslt
-svn checkout http://code.google.com/p/ands-la-trobe/source/browse/trunk/solr/conf/xslt/cmss.xsl
+svn checkout https://ands-la-trobe.googlecode.com/svn/trunk/solr/conf/xslt/cmss.xsl
 }}}
 
 How to configure Solr to parse queries specified using multiple URL parameters:
