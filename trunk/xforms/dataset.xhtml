@@ -127,7 +127,15 @@
 			</xf:input>
 			<br/>
 
-
+				
+				<br/>
+			<xf:textarea id="rights-statement"  model="dataset-metadata-editor-model"  ref="instance('dataset-metadata')/@rightsStatement">
+				<xf:label>Copyright statement</xf:label>
+				<xf:hint>Enter the copyright details. e.g. © Joe Bloggs, University of Christmas Island, 2011</xf:hint>
+			</xf:textarea>
+			<br/>
+			
+			
 				<xf:select1 id="licence-uri" 
 					model="dataset-metadata-editor-model" 
 					ref="instance('dataset-metadata')/@licenceType" 

@@ -1,7 +1,8 @@
 <dataset xmlns="http://hdl.handle.net/102.100.100/6976" 
 	embargoDate=""
 	licenceType="http://creativecommons.org/licenses/by/3.0/au/" 
-	licenceText="">
+	licenceText=""
+	rightsStatement="">
 	<hasCollector id="" />
 	<abbreviatedName />
 	<name />
