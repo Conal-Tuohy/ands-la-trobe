@@ -76,6 +76,7 @@
 			
 			<xf:bind nodeset="instance('dataset-metadata')/my:startDate" type="xf:date" />
 			<xf:bind nodeset="instance('dataset-metadata')/@embargoDate" type="xf:date" />
+			<xf:bind nodeset="instance('dataset-metadata')/@licenceText" relevant="../@licenceType='custom'" id="custom-licence-text"/>
 <!--	                <xf:bind nodeset="instance('dataset-metadata')/my:url" type="xf:anyURI" constraint="(.='' or starts-with(.,'http://') or starts-with(.,'https://')) and not(contains(.,' '))" /> -->
 
 			
@@ -125,7 +126,48 @@
 				<xf:hint>This data will not be publicly available until this date. Leave this field blank if an embargo is not required</xf:hint>
 			</xf:input>
 			<br/>
-			
+
+
+				<xf:select1 id="licence-uri" 
+					model="dataset-metadata-editor-model" 
+					ref="instance('dataset-metadata')/@licenceType" 
+					selection="closed" appearance="minimal">
+					<xf:label>Licence type</xf:label>
+					<xf:hint>Choose one of the standard licences to apply to this dataset, or choose to specify a custom licence.</xf:hint>
+					<xf:item>
+						<xf:label>Creative Commons Attribution (Recommended)</xf:label>
+						<xf:value>http://creativecommons.org/licenses/by/3.0/au/</xf:value> 
+					</xf:item>
+					<xf:item>
+						<xf:label>Creative Commons Attribution-NoDerivs</xf:label>
+						<xf:value>http://creativecommons.org/licenses/by-nd/3.0/au/</xf:value> 
+					</xf:item>
+					<xf:item>
+						<xf:label>Creative Commons Attribution-NonCommercial-ShareAlike </xf:label>
+						<xf:value>http://creativecommons.org/licenses/by-nc-sa/3.0/au/</xf:value> 
+					</xf:item>
+					<xf:item>
+						<xf:label>Creative Commons Attribution-NonCommercial  </xf:label>
+						<xf:value>http://creativecommons.org/licenses/by-nc/3.0/au/</xf:value> 
+					</xf:item>
+					<xf:item>
+						<xf:label>Creative Commons Attribution-NonCommercial-NoDerivs </xf:label>
+						<xf:value>http://creativecommons.org/licenses/by-nc-nd/3.0/au/</xf:value> 
+					</xf:item>
+					<xf:item>
+						<xf:label>Specify a custom licence...</xf:label>
+						<xf:value>custom</xf:value>
+					</xf:item>
+				</xf:select1>
+				
+				
+				<br/>
+			<xf:textarea id="licence"  model="dataset-metadata-editor-model"  ref="instance('dataset-metadata')/@licenceText">
+			<!--bind="custom-licence-text">-->
+				<xf:label>Custom licence</xf:label>
+				<xf:hint>Enter the text of a custom licence</xf:hint>
+			</xf:textarea>
+
 			<!--
 			
 			<xf:output id="debug-output-identifier" model="dataset-metadata-editor-model"  ref="instance('dataset-metadata')/my:hasCollector/@id">
