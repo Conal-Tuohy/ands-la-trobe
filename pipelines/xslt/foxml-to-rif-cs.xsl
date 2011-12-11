@@ -23,7 +23,7 @@
 		<registryObjects 
 			xmlns="http://ands.org.au/standards/rif-cs/registryObjects" 
 			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-			xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/1.2.0/schema/registryObjects.xsd">
+			xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/1.3/schema/registryObjects.xsd">
 			<registryObject group="La Trobe University">
 				<key><xsl:value-of select="$handle"/></key>
 				<originatingSource>http://cmss.latrobe.edu.au/</originatingSource>
@@ -66,6 +66,16 @@ Instrument Model: <xsl:value-of select="vamas:instrumentModel"/>.</description>
       		</electronic>
       	</address>
 		</location>
+		<rights>
+			<xsl:choose>
+				<xsl:when test="@licenceType='custom'">
+					<licence><xsl:value-of select="@licenceText"/></licence>
+				</xsl:when>
+				<xsl:otherwise>
+					<licence rightsUri="{@licenceType}"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</rights>
 	</xsl:template>
 	
 	<xsl:template match="latrobe:person">
