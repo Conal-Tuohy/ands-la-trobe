@@ -4,7 +4,10 @@
 	xmlns:boss="http://hdl.handle.net/102.100.100/7003"
 >
 	<xsl:template match="boss:job">
-		<dataset xmlns="http://hdl.handle.net/102.100.100/6976">
+		<dataset xmlns="http://hdl.handle.net/102.100.100/6976"
+			licenceType="http://creativecommons.org/licenses/by/3.0/au/"
+			licenceText=""
+			rightsStatement="© {boss:request/boss:value[@name='Users Name']} {boss:request/boss:value[@name='Users Surname']}, {boss:request/boss:value[@name='Users Institution']}, {boss:logsheet/boss:value[@name='fYear']}">
 			<xsl:attribute name="embargoDate">
 				<!-- one year in the future -->
 				<xsl:value-of select="concat(
@@ -15,6 +18,8 @@
 					format-number(boss:logsheet/boss:value[@name='fDay'], '00')
 				)" />
 			</xsl:attribute>
+			
+			
 			<hasCollector id="person:{boss:request/boss:value[@name='Users ID']}"><xsl:value-of select="
 				concat(
 					boss:request/boss:value[@name='Users Name'],
