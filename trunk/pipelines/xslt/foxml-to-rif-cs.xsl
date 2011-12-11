@@ -66,16 +66,18 @@ Instrument Model: <xsl:value-of select="vamas:instrumentModel"/>.</description>
       		</electronic>
       	</address>
 		</location>
-		<rights>
-			<xsl:choose>
-				<xsl:when test="@licenceType='custom'">
-					<licence><xsl:value-of select="@licenceText"/></licence>
-				</xsl:when>
-				<xsl:otherwise>
-					<licence rightsUri="{@licenceType}"/>
-				</xsl:otherwise>
-			</xsl:choose>
-		</rights>
+		<xsl:if test="@licenceType">
+			<rights>
+				<xsl:choose>
+					<xsl:when test="@licenceType='custom'">
+						<licence><xsl:value-of select="@licenceText"/></licence>
+					</xsl:when>
+					<xsl:otherwise>
+						<licence rightsUri="{@licenceType}"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</rights>
+		</xsl:if>
 	</xsl:template>
 	
 	<xsl:template match="latrobe:person">
@@ -209,7 +211,7 @@ Instrument Model: <xsl:value-of select="vamas:instrumentModel"/>.</description>
 	
 	<xsl:template match="latrobe:relatedWebsite[latrobe:location][normalize-space()]">
 		<relatedInfo>
-			<identifier type="uri"><xsl:apply-templates select="latrobe:location"/></identifier>
+			<identifier type="uri"><xsl:value-of select="latrobe:location"/></identifier>
 			<xsl:apply-templates select="latrobe:title | latrobe:notes"/>
 		</relatedInfo>
 	</xsl:template>
