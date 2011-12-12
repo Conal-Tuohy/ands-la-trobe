@@ -5,6 +5,7 @@
 
  * [DC19Install Installation]
    * [FedoraInstall Fedora repository server]
+   * [DC19XFormsInstall XForms].
    * [Calabash XML Calabash pipeline scripting]
    * [SolrInstall Solr discovery server]
    * [jOAI jOAI OAI-PMH server]
