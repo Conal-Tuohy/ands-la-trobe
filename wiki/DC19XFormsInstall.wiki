@@ -61,8 +61,8 @@ Require valid-user
 AuthName "!!Fedora Repository Server"
 
 # LDAP bind details
-AuthLDAPURL ldap://128.250.148.11/?uid?sub
-AuthLDAPBindDN cn=root,dc=versi,dc=edu,dc=au
+AuthLDAPURL ldap://site.name/?uid?sub
+AuthLDAPBindDN cn=ldapuser,dc=provider,dc=edu,dc=au
 AuthLDAPBindPassword <password>
 
 # The password file location
