@@ -44,6 +44,7 @@ The following guides will assist in setting up the CMSS system. Note that the pa
   # follow the [SolrInstall SolrInstall guide].
   # follow the [Calabash Calabash guide].
   # follow the [jOAI jOAI guide].
+  # follow the [DC19XFormsInstall XForms install guide].
 
 On the data capture machine:
 
