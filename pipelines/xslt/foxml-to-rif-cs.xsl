@@ -68,6 +68,7 @@ Instrument Model: <xsl:value-of select="vamas:instrumentModel"/>.</description>
 		</location>
 		<xsl:if test="@licenceType">
 			<rights>
+				<rightsStatement><xsl:value-of select="@rightsStatement"/></rightsStatement>
 				<xsl:choose>
 					<xsl:when test="@licenceType='custom'">
 						<licence><xsl:value-of select="@licenceText"/></licence>
