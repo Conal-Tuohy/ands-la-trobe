@@ -62,8 +62,6 @@ AuthName "!!Fedora Repository Server"
 
 # LDAP bind details
 AuthLDAPURL ldap://site.name/?uid?sub
-AuthLDAPBindDN cn=ldapuser,dc=provider,dc=edu,dc=au
-AuthLDAPBindPassword <password>
 
 # The password file location
 AuthUserFile /etc/httpd/.htpasswd
