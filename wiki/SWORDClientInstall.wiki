@@ -16,7 +16,7 @@ The following windows batch script is used to automatically retrieve a boss.xml 
 {{{
 cd %1
 for %%f in ("%cd%") do set EPN=%%~nf
-if not exist boss.xml wget --no-check-certificate -O boss.xml https://rli.latrobe.edu.au/dbDump/RLI-ANDS-XML.php?password=Tu04y^&EPN=%EPN%
+if not exist boss.xml wget --no-check-certificate -O boss.xml https://rli.latrobe.edu.au/dbDump/RLI-ANDS-XML.php?password=<password>^&EPN=%EPN%
 zip -r ..\%EPN%.zip *
 wget --header="Content-Type: application/zip" --user=fedoraAdmin --password=<password> --post-file=..\%EPN%.zip http://cmss.latrobe.edu.au/sword/collection:open
 pause
