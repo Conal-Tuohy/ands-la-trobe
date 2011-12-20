@@ -31,7 +31,17 @@
 			</xsl:call-template>
 		</xsl:variable>
 		<person xmlns="http://hdl.handle.net/102.100.100/6976">
-			<name><xsl:value-of select="concat($request-values[@name='Users Name'], ' ', $request-values[@name='Users Surname'])"/></name>
+			<name>
+         <namePart type="title">
+           <xsl:value-of select="$request-values[@name='Users Title']" />
+         </namePart>
+         <namePart type="given">
+           <xsl:value-of select="$request-values[@name='Users Name']" /> 
+         </namePart>
+         <namePart type="family">
+           <xsl:value-of select="$request-values[@name='Users Surname']" />
+         /namePart>
+      </name>
 			<department><xsl:value-of select="$request-values[@name='Users Department']" /></department>
 			<institution><xsl:value-of select="$request-values[@name='Users Institution']" /></institution>
 			<dateOfBirth></dateOfBirth>
