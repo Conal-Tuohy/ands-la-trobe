@@ -195,9 +195,19 @@
 				<xf:hint>The person's family name</xf:hint>
 			</xf:input><br />
 -->
-			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:name" incremental="true" >
-				<xf:label>Name</xf:label>
-				<xf:hint>The person's full name</xf:hint>
+
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:title" incremental="true" >
+				<xf:label>Title</xf:label>
+				<xf:hint>e.g. Mr, Miss</xf:hint>
+			</xf:input><br />
+
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:givenName" incremental="true" >
+				<xf:label>Given Name</xf:label>
+				<xf:hint>The person's common name</xf:hint>
+			</xf:input><br />
+			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:surname" incremental="true" >
+				<xf:label>Surname</xf:label>
+				<xf:hint>The person's family name</xf:hint>
 			</xf:input><br />
 
 			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:department" >
