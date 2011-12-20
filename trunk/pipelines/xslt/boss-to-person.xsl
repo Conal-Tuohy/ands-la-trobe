@@ -31,17 +31,15 @@
 			</xsl:call-template>
 		</xsl:variable>
 		<person xmlns="http://hdl.handle.net/102.100.100/6976">
-			<name>
-         <namePart type="title">
-           <xsl:value-of select="$request-values[@name='Users Title']" />
-         </namePart>
-         <namePart type="given">
-           <xsl:value-of select="$request-values[@name='Users Name']" /> 
-         </namePart>
-         <namePart type="family">
-           <xsl:value-of select="$request-values[@name='Users Surname']" />
-         </namePart>
-      </name>
+        	<title>
+				<xsl:value-of select="$request-values[@name='Users Title']" />
+			</title>
+			<givenName>
+				<xsl:value-of select="$request-values[@name='Users Name']" /> 
+			</givenName>
+			<surname>
+				<xsl:value-of select="$request-values[@name='Users Surname']" />
+			</surname>
 			<department><xsl:value-of select="$request-values[@name='Users Department']" /></department>
 			<institution><xsl:value-of select="$request-values[@name='Users Institution']" /></institution>
 			<dateOfBirth></dateOfBirth>
