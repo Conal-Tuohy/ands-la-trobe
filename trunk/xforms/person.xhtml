@@ -120,7 +120,7 @@
 		<div id="heading">
 			<img width="215" height="82" src="/xforms/images/latrobe_university.gif" />
 			<h1>		
-				<xf:output value="instance('person-metadata')/my:name" />
+				<xf:output value="concat(instance('person-metadata')/my:title, ' ', instance('person-metadata')/my:givenName, ' ', instance(person-metadata)/my:surname)" />
 			</h1>
 		</div>
 		<div id="ardc-pip">
@@ -198,7 +198,7 @@
 
 			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:title" incremental="true" >
 				<xf:label>Title</xf:label>
-				<xf:hint>e.g. Mr, Miss</xf:hint>
+				<xf:hint>e.g. Dr, Professor</xf:hint>
 			</xf:input><br />
 
 			<xf:input model="person-metadata-editor-model" ref="instance('person-metadata')/my:givenName" incremental="true" >

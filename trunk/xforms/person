@@ -2,9 +2,9 @@
 	<nlaPartyIdentifier></nlaPartyIdentifier>
 	<institution>La Trobe University</institution>
 	<department>Department of Physics</department>
-	<title>Mr.</title>
-  <givenName>Robert</givenName>
-  <surname>Jones</surname>
+	<title>Dr.</title>
+	<givenName>Robert</givenName>
+	<surname>Jones</surname>
 	<abbreviatedName>Rob</abbreviatedName>
 	<url response=""></url>
 	<dateOfBirth>1960-01-01</dateOfBirth>
