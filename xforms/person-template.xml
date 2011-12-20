@@ -2,7 +2,9 @@
 	<nlaPartyIdentifier />
 	<institution />
 	<department />
-	<name />
+  <title />
+	<givenName />
+  <surname />
 	<abbreviatedName />
 	<url response=""/>
 	<dateOfBirth />
