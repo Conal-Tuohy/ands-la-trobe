@@ -218,7 +218,7 @@ if (window.XMLHttpRequest) {
 			req.open(method, Core.constructURI(uri), async);
 		}
                 // Added by conal.tuohy@versi.edu.au so xsltforms doesn't accept "text/html" (so that HTTP content negotiation can be used)
-                req.setRequestHeader("Accept", "text/xml;q=0.5,application/xml;q=0.6,application/xhtml+xml;q=0.4");
+                // req.setRequestHeader("Accept", "text/xml;q=0.5,application/xml;q=0.6,application/xhtml+xml;q=0.4");
 		if (Core.isMozilla) {
 			req.overrideMimeType("text/xml");
 		}
@@ -237,7 +237,7 @@ if (window.XMLHttpRequest) {
 		}
 		req.open(method, Core.constructURI(uri), async);
                 // Added by conal.tuohy@versi.edu.au so xsltforms doesn't accept "text/html" (so that HTTP content negotiation can be used)
-                req.setRequestHeader("Accept", "text/xml;q=0.5,application/xml;q=0.6,application/xhtml+xml;q=0.4");
+                // req.setRequestHeader("Accept", "text/xml;q=0.5,application/xml;q=0.6,application/xhtml+xml;q=0.4");
 		return req;
 	};
 } else {
