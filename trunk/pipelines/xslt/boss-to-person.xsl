@@ -31,9 +31,9 @@
 			</xsl:call-template>
 		</xsl:variable>
 		<person xmlns="http://hdl.handle.net/102.100.100/6976">
-        	<title>
+        	<honorific>
 				<xsl:value-of select="$request-values[@name='Users Title']" />
-			</title>
+			</honorific>
 			<givenName>
 				<xsl:value-of select="$request-values[@name='Users Name']" /> 
 			</givenName>

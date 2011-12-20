@@ -44,6 +44,7 @@
 		<xsl:variable name="project-datastream" select="/f:digitalObject/f:datastream[@ID='project']/f:datastreamVersion[last()]/f:xmlContent"/>
 		<xsl:variable name="metadata-datastream" select="$dataset-datastream | $person-datastream | $group-datastream | $project-datastream"/>
 		<xsl:variable name="metadata-datastream-id" select="$metadata-datastream/ancestor::f:datastream/@ID"/>
+		<xsl:variable name="name-parts" select="concat($person-datastream/metadata:*/metadata:honorific, ' ', $person-datastream/metadata:*/metadata:givenName, ' ', $person-datastream/metadata:*/metadata:surname)"/>
 		<add commitWithin="1000">
 			<doc>
 				<!-- searchable metadata fields -->
@@ -59,9 +60,7 @@
 				<xsl:if test="$handle-datastream">
 					<field name="handle"><xsl:value-of select="concat('http://hdl.handle.net/', $handle-datastream//response/identifier/@handle)"/></field>
 				</xsl:if>
-				<xsl:if test="$metadata-datastream">
-					<field name="title"><xsl:value-of select="$metadata-datastream/metadata:*/metadata:name"/></field>
-				</xsl:if>
+				<field name="title"><xsl:value-of select="$metadata-datastream/metadata:*/metadata:name | $name-parts"/></field>
 				<xsl:for-each select="$vamas-datastream-ids">
 					<field name="vamas"><xsl:value-of select="concat(
 						'/fedora/objects/',

@@ -56,8 +56,19 @@ Instrument Model: <xsl:value-of select="vamas:instrumentModel"/>.</description>
 				self::latrobe:postalAddress|
 				self::latrobe:streetAddress
 			]"/>
-		<xsl:variable name="non-location-elements" select="*[count(. | $location-elements) &gt; count($location-elements)][normalize-space()]"/>
-		<xsl:apply-templates select="$non-location-elements"/>
+		<xsl:variable name="name-part-elements" select="
+			 	latrobe:honorific[normalize-space()]|
+			 	latrobe:givenName[normalize-space()]|
+			 	latrobe:surname[normalize-space()]				
+			"/>
+		<xsl:variable name="wrapped-elements" select="$location-elements | $name-part-elements"/>
+		<xsl:variable name="unwrapped-elements" select="*[count(. | $wrapped-elements) &gt; count($wrapped-elements)][normalize-space()]"/>
+		<xsl:apply-templates select="$unwrapped-elements"/>
+		<xsl:if test="$name-part-elements">
+			<name>
+				<xsl:apply-templates select="$name-part-elements"/>
+			</name>
+		</xsl:if>
 		<location>
 			<xsl:apply-templates select="$location-elements"/>
       	<address>
@@ -120,6 +131,18 @@ Instrument Model: <xsl:value-of select="vamas:instrumentModel"/>.</description>
 </xsl:text><xsl:apply-templates/>
 	</xsl:template>
 
+	
+	<!-- person names -->
+	<xsl:template match="latrobe:title[normalize-space()]">
+		<namePart type="title"><xsl:value-of select="."/></namePart>
+	</xsl:template>
+	<xsl:template match="latrobe:givenName[normalize-space()]">
+		<namePart type="given"><xsl:value-of select="."/></namePart>
+	</xsl:template>
+	<xsl:template match="latrobe:surname[normalize-space()]">
+		<namePart type="family"><xsl:value-of select="."/></namePart>
+	</xsl:template>
+
 	<xsl:template match="latrobe:abbreviatedName[normalize-space()]">
 		<name type="abbreviated">
 			<namePart><xsl:apply-templates/></namePart>
@@ -165,6 +188,9 @@ Instrument Model: <xsl:value-of select="vamas:instrumentModel"/>.</description>
 				</physical>
 			</address>
 	</xsl:template>
+
+		
+
 	
 	<!-- add line breaks to the end of each component of an address -->
 	<xsl:template match="latrobe:text[normalize-space()] | latrobe:state[normalize-space()] | latrobe:postcode[normalize-space()] | latrobe:country[normalize-space()]"><xsl:apply-templates/><xsl:text>
