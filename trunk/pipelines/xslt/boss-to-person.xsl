@@ -40,7 +40,7 @@
          </namePart>
          <namePart type="family">
            <xsl:value-of select="$request-values[@name='Users Surname']" />
-         /namePart>
+         </namePart>
       </name>
 			<department><xsl:value-of select="$request-values[@name='Users Department']" /></department>
 			<institution><xsl:value-of select="$request-values[@name='Users Institution']" /></institution>
