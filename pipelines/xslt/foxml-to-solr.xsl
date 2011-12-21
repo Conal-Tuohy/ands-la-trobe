@@ -60,7 +60,7 @@
 				<xsl:if test="$handle-datastream">
 					<field name="handle"><xsl:value-of select="concat('http://hdl.handle.net/', $handle-datastream//response/identifier/@handle)"/></field>
 				</xsl:if>
-				<field name="title"><xsl:value-of select="$metadata-datastream/metadata:*/metadata:name | $name-parts"/></field>
+				<field name="title"><xsl:for-each select="$metadata-datastream/metadata:*/metadata:name | $name-parts"><xsl:value-of select=concat(., ' ') /></xsl:for-each></field>
 				<xsl:for-each select="$vamas-datastream-ids">
 					<field name="vamas"><xsl:value-of select="concat(
 						'/fedora/objects/',
