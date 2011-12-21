@@ -5,4 +5,4 @@
 # When an update event occurs, the fedora-update-handler executes an external program
 # and passes the event message (an Atom XML document) to the program's standard input.
 
-java -jar fedora-update-handler/fedora-update-handler.jar stop $1
+java -jar /home/fedora-user/pipelines/fedora-update-handler/fedora-update-handler.jar stop $1
