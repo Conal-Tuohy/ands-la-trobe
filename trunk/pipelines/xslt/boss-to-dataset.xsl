@@ -44,11 +44,7 @@
 				'-', 
 				format-number(boss:logsheet/boss:value[@name='sMonth'], '00'), 
 				'-', 
-				format-number(boss:logsheet/boss:value[@name='sDay'], '00'), 
-				'T', 
-				boss:logsheet/boss:value[@name='sTime'], 
-				':00+10:00'
-			)" /></startDate>
+				format-number(boss:logsheet/boss:value[@name='sDay'], '00')" /></startDate>
 			<endDate><xsl:value-of select="concat(
 				boss:logsheet/boss:value[@name='fYear'], 
 				'-', 

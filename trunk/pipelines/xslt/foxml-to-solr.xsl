@@ -44,7 +44,7 @@
 		<xsl:variable name="project-datastream" select="/f:digitalObject/f:datastream[@ID='project']/f:datastreamVersion[last()]/f:xmlContent"/>
 		<xsl:variable name="metadata-datastream" select="$dataset-datastream | $person-datastream | $group-datastream | $project-datastream"/>
 		<xsl:variable name="metadata-datastream-id" select="$metadata-datastream/ancestor::f:datastream/@ID"/>
-		<xsl:variable name="name-parts" select="concat($person-datastream/metadata:*/metadata:honorific, ' ', $person-datastream/metadata:*/metadata:givenName, ' ', $person-datastream/metadata:*/metadata:surname)"/>
+		<xsl:variable name="name-parts" select="$person-datastream/metadata:*/metadata:honorific | $person-datastream/metadata:*/metadata:givenName | $person-datastream/metadata:*/metadata:surname"/>
 		<add commitWithin="1000">
 			<doc>
 				<!-- searchable metadata fields -->

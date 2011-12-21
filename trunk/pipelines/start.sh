@@ -6,7 +6,7 @@
 # and passes the event message (an Atom XML document) to the program's standard input.
 while true
 do
-	java -jar fedora-update-handler/fedora-update-handler.jar start $1
+	java -jar /home/fedora-user/pipelines/fedora-update-handler/fedora-update-handler.jar start $1
 	echo "Restarting in 5 seconds. Press [CTRL+C] to stop.."
 	sleep 5
 done

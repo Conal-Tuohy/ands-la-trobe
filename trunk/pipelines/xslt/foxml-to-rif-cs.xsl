@@ -65,7 +65,7 @@ Instrument Model: <xsl:value-of select="vamas:instrumentModel"/>.</description>
 		<xsl:variable name="unwrapped-elements" select="*[count(. | $wrapped-elements) &gt; count($wrapped-elements)][normalize-space()]"/>
 		<xsl:apply-templates select="$unwrapped-elements"/>
 		<xsl:if test="$name-part-elements">
-			<name>
+			<name type="primary">
 				<xsl:apply-templates select="$name-part-elements"/>
 			</name>
 		</xsl:if>
@@ -133,7 +133,7 @@ Instrument Model: <xsl:value-of select="vamas:instrumentModel"/>.</description>
 
 	
 	<!-- person names -->
-	<xsl:template match="latrobe:title[normalize-space()]">
+	<xsl:template match="latrobe:honorific[normalize-space()]">
 		<namePart type="title"><xsl:value-of select="."/></namePart>
 	</xsl:template>
 	<xsl:template match="latrobe:givenName[normalize-space()]">
