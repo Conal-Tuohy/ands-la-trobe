@@ -54,20 +54,25 @@
 			<!-- convert the aggregate metadata into RIF-CS -->
 			<lib:crosswalk xslt="../xslt/foxml-to-rif-cs.xsl" name="create-rif-cs"/>
 
-                        <!-- store RIF-CS to Fedora datastream (not really necessary, but may be handy for debugging) -->
-                        <lib:fedora-save-datastream name="rif-cs-to-fedora">
-                                <p:input port="source">
-                                        <p:pipe step="create-rif-cs" port="result"/>
-                                </p:input>
-                                <p:with-option name="username" select="$fedora-username"/>
-                                <p:with-option name="password" select="$fedora-password"/>
-                                <p:with-option name="uri" select="concat($item-base-uri, '/datastreams/rif-cs')"/>
-                        </lib:fedora-save-datastream>
+			<!-- store RIF-CS to Fedora datastream (not really necessary, but may be handy for debugging) -->
+			<lib:fedora-save-datastream name="rif-cs-to-fedora">
+				<p:input port="source">
+					<p:pipe step="create-rif-cs" port="result"/>
+				</p:input>
+				<p:with-option name="username" select="$fedora-username"/>
+				<p:with-option name="password" select="$fedora-password"/>
+				<p:with-option name="uri" select="concat($item-base-uri, '/datastreams/rif-cs')"/>
+			</lib:fedora-save-datastream>
 			
 			<!-- validate the result, and if valid, send it to the OAI-PMH harvester -->
 			<!-- otherwise, remove any corresponding stale record from the OAI-PMH provider -->
 			<p:try name="to-publish-valid-rif-cs">
 				<p:group name="validate-and-publish-rif-cs">
+					<lib:check-embargo>
+						<p:input port="foxml">
+							<p:pipe step="foxml" port="result"/>
+						</p:input>
+					</lib:check-embargo>
 					<p:validate-with-xml-schema>
 						<p:input port="source">
 							<p:pipe step="create-rif-cs" port="result"/>

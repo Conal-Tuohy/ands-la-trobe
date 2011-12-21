@@ -32,6 +32,29 @@
 		-->
 	</p:declare-step>
 	
+	<p:declare-step type="lib:check-embargo" name="check-embargo" xmlns:latrobe="http://hdl.handle.net/102.100.100/6976">
+		<p:input port="foxml"/>
+		<p:output port="result"/>
+		<!-- check that the record is not an embargoed dataset -->
+		<!-- if the record is embargoed, throw an error -->
+		<p:choose>
+			<p:variable name="embargo-date" select="/foxml:digitalObject/foxml:datastream[@ID='dataset']/foxml:datastreamVersion[last()]/foxml:xmlContent/latrobe:dataset/@embargoDate"/>
+			<p:variable name="current-date" select="substring(string(fn:current-date()), 1, 10)"/><!-- first 10 chars of the date e.g. "2014-05-12" -->
+			<p:when test="$embargo-date and ($embargo-date &lt; $current-date)">
+				<p:error code="embargoes">
+					<p:input port="source">
+						<p:inline>
+							<message>Record is still under embargo</message>
+						</p:inline>
+					</p:input>
+				</p:error>
+			</p:when>
+			<p:otherwise>
+				<p:identity/>
+			</p:otherwise>
+		</p:choose>
+	</p:declare-step>
+	
 	<p:declare-step type="lib:fedora-create-object" name="fedora-create-object">
 		<p:output port="fedora-response" primary="true"/>
 		<p:option name="pid" required="true"/>
