@@ -1,0 +1,45 @@
+#summary CMSS Data Repository User Guide
+
+= About the repository =
+
+The Centre for Materials and Surface Science Data Repository is a shared system for management of datasets generated using the CMSS scientific instruments.
+After you have generated your data files, you can deposit them directly into the repository. Descriptive information about your data will be automatically extracted from the instrument booking system, and deposited along with the data. When the repository has received your deposit, it will automatically email you a receipt containing a link to a form where you can enhance the dataset with detailed descriptions and classification (“metadata”), and links to other information online.
+The repository will automatically assign your dataset a unique and persistent identifier (a “handle”) which you can use to cite the data in online or print publications.
+The repository provides a facility to search for datasets, read the descriptions, view spectral graphs, and download the data files. http://cmss.latrobe.edu.au/
+Information about datasets is also automatically published through the Australian National Data Service's online portal Research Data Australia. http://services.ands.org.au/home/orca/rda/
+
+= Depositing your data into the repository =
+
+After you have generated your data files, it is recommended to also create a VAMAS exchange format (ISO 14976:1998) version of each your data files, and deposit them along with the data files in their native format. The repository will interpret the VAMAS files and use them to generate spectral graphs. 
+How to deposit your data files:
+ # Create a new folder and name it after your job number, as specified in the instrument booking system.
+ # For instance, your folder should be called something like this: *XPS-Ultra-10010*
+ # Place your data files, including any VAMAS files, into the folder.
+ # To deposit the folder, right-click with your mouse, and from the *Send To* menu, choose *CMSS Data Repository*. 
+Within a few minutes you should receive an email receipt containing a link to a page where you can edit the description of your dataset.
+If this is the first time you have deposited data into the repository, you should also receive a link to a page where you can edit your personal information.
+
+= Editing your personal data =
+
+The first time you deposit a dataset, you will be sent a link to a page where you can edit your personal information for online publication. 
+This record can contain name and contact information, as well as information about your research interests, publications, and links to related online information such as your home page, your Twitter account, or whatever other information you wish to publish.
+Enter details into the data entry form and click the *save* button at the bottom of the form to save your details into the repository. 
+Hover your mouse over the blue information icons *image placeholder*  for hints.
+
+*image placeholder*
+
+Information entered will be published through the CMSS repository and also the Research Data Australia portal.
+
+= Describing your dataset =
+
+After you deposit data into the repository, you will be sent a link to a page where you can edit information about the dataset.
+The form allows you to set an embargo date for the publication of the dataset, to declare copyright in the data, specify a licence, describe the dataset in general and to describe the individual samples which were analysed.
+Enter details into the data entry form and click the *save* button at the bottom of the form to save your details into the repository. 
+Hover your mouse over the blue information icons  *image placeholder* for hints.
+
+*image placeholder*
+
+
+
+
+
