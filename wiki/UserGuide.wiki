@@ -17,7 +17,10 @@ How to deposit your data files:
  # Place your data files, including any VAMAS files, into the folder.
  # To deposit the folder, right-click with your mouse, and from the *Send To* menu, choose *CMSS Data Repository*. 
 Within a few minutes you should receive an email receipt containing a link to a page where you can edit the description of your dataset.
-If this is the first time you have deposited data into the repository, you should also receive a link to a page where you can edit your personal information.
+
+If this is the first time you have deposited data into the repository,
+you should also receive a link to a page where you can edit your 
+personal information.
 
 = Editing your personal data =
 
@@ -38,6 +41,4 @@ Enter details into the data entry form and click the *save* button at the bottom
 Hover your mouse over the blue information icons  http://ands-la-trobe.googlecode.com/svn/wiki/info.jpg for hints.
 
 *image placeholder*
-
-
 
