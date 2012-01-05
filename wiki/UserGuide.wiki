@@ -24,7 +24,7 @@ If this is the first time you have deposited data into the repository, you shoul
 The first time you deposit a dataset, you will be sent a link to a page where you can edit your personal information for online publication. 
 This record can contain name and contact information, as well as information about your research interests, publications, and links to related online information such as your home page, your Twitter account, or whatever other information you wish to publish.
 Enter details into the data entry form and click the *save* button at the bottom of the form to save your details into the repository. 
-Hover your mouse over the blue information icons *image placeholder*  for hints.
+Hover your mouse over the blue information icons http://ands-la-trobe.googlecode.com/svn/wiki/info.jpg  for hints.
 
 *image placeholder*
 
@@ -35,11 +35,9 @@ Information entered will be published through the CMSS repository and also the R
 After you deposit data into the repository, you will be sent a link to a page where you can edit information about the dataset.
 The form allows you to set an embargo date for the publication of the dataset, to declare copyright in the data, specify a licence, describe the dataset in general and to describe the individual samples which were analysed.
 Enter details into the data entry form and click the *save* button at the bottom of the form to save your details into the repository. 
-Hover your mouse over the blue information icons  *image placeholder* for hints.
+Hover your mouse over the blue information icons  http://ands-la-trobe.googlecode.com/svn/wiki/info.jpg for hints.
 
 *image placeholder*
-
-
 
 
 
