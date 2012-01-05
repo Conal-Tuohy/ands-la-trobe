@@ -1,4 +1,5 @@
 #summary CMSS Data Repository User Guide
+#labels DC19
 
 = About the repository =
 
@@ -41,4 +42,3 @@ Enter details into the data entry form and click the *save* button at the bottom
 Hover your mouse over the blue information icons  http://ands-la-trobe.googlecode.com/svn/wiki/info.jpg for hints.
 
 *image placeholder*
-
