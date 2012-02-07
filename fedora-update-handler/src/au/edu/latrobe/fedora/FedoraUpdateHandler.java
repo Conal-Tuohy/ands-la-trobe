@@ -46,7 +46,7 @@ public class FedoraUpdateHandler implements MessagingListener {
 	/*
 	 *  The Fedora MessagingClient used to listen to the Fedora JMS server
 	 */
-	private org.fcrepo.client.messaging.MessagingClient messagingClient;
+	private org.fcrepo.client.messaging.JmsMessagingClient messagingClient;
 	/*
 	 *  configuration of the FedoraUpdateHandler
 	 */
@@ -174,7 +174,7 @@ public class FedoraUpdateHandler implements MessagingListener {
 	 *@exception  MessagingException  Represents a failure to communicate with Fedora
 	 */
 	public void start() throws MessagingException {
-		System.out.println("Messaging Client starting...");
+		System.out.println("Creating Messaging Client ...");
 
 		// Start the client
 		messagingClient = new JmsMessagingClient(
@@ -183,9 +183,14 @@ public class FedoraUpdateHandler implements MessagingListener {
 				properties,
 				true
 				);
-		messagingClient.start();
-
-		System.out.println("Messaging Client started.");
+		try {
+			System.out.println("Starting Messaging Client ...");
+			messagingClient.start();
+			} catch (MessagingException me) {
+				System.out.println("Error communicating with Fedora.");
+				me.printStackTrace(System.out);
+				System.exit(1);
+			}
 	}
 
 
