@@ -41,5 +41,20 @@
   	<mkdir dir="${samples}/vamas-specimens"/>
   	<unzip src="vamas-specimens.zip" dest="${samples}/vamas-specimens" overwrite="false"/>
   </target>
+  
+  <target name="javadoc">
+	  <javadoc packagenames="au.edu.latrobe.cmss.vamas.*"
+				  sourcepath="src"
+				  defaultexcludes="yes"
+				  destdir="docs/api"
+				  author="true"
+				  version="true"
+				  use="true"
+				  windowtitle="VAMAS Parser">
+		 <doctitle><![CDATA[<h1>VAMAS Parser</h1>]]></doctitle>
+		 <bottom><![CDATA[<i>Copyright &#169; 2011 Conal Tuohy and Daniel Tosello. Apache 2 licence.</i>]]></bottom>
+		 <link href="http://code.google.com/p/ands-la-trobe/wiki/VAMASParser"/>
+	  </javadoc>
+	 </target>
 
 </project>
