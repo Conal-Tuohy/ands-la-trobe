@@ -18,7 +18,9 @@ Because the params are dynamically populated based on available metadata for the
 
 == SurfaceLab CLI tool ==
 
-Assuming that the appropriate dlls are available, the correct cscript.exe handler is used (on 64bit windows systems this is located at C:\windows\syswow64\cscript.exe) the following windows scripting host JScript code can extract header information automatically without running the SurfaceLab application manually.
+This process will only work on a system with a vaild SurfaceLab6 installation. Please see the documentation provided by ION-TOF with regards to installing the software and obtaining a vaild license.
+
+When this is done and the correct cscript.exe handler is used (on 64bit windows systems this is located at C:\windows\syswow64\cscript.exe) the following windows scripting host JScript code can extract header information automatically without running the SurfaceLab application manually.
 
 NOTE: This is tailored to use with XML Calabash as part of an XProc pipeline. 
 
@@ -61,7 +63,6 @@ objITMStream.Close();
 var objTemp = objDM.loadMeasurement(tempFileLoc);
 var data = objTemp.Header;
 var properties = new Enumerator(data);
-//<?xml version='1.0' encoding='ISO-8859-1'?>\n
 var output = "<values xmlns='http://hdl.handle.net/102.100.100/6929'>\n";
 for (properties.moveFirst(); !properties.atEnd(); properties.moveNext()) {
 	var property = properties.item();
@@ -70,7 +71,6 @@ for (properties.moveFirst(); !properties.atEnd(); properties.moveNext()) {
 
 output += "</values>";
 
-//WScript.StdOut.WriteLine(output);
 
 // 2 means it's a "text" stream
 objXMLBOMStream.Type = 2;
