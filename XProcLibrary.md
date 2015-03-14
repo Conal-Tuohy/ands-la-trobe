@@ -1,0 +1,83 @@
+# XProc Library #
+
+The DC19 project uses [XProc](XProc.md) scripts to automate data flow. These scripts make use of a shared library of common XProc steps:
+
+http://ands-la-trobe.googlecode.com/svn/trunk/pipelines/xproc/library.xpl
+
+The steps in this library are named with globally unique XML Qualified Names, and the namespace URI for these names is http://code.google.com/p/ands-la-trobe/wiki/XProcLibrary hence this page is the [namespace document](http://www.w3.org/TR/webarch/#namespace-document) for those steps.
+
+## lib:send-mail ##
+
+Sends an email specified in the following form:
+```
+<message 
+   subject="example email"
+   from="sender@example.com" 
+   to="addressee@example.com">
+Dear Addressee,
+
+...
+
+Sincerely,
+Sender
+</message>
+```
+
+## lib:check-embargo ##
+
+Checks a [FOXML](FOXML.md) record to see whether the record can be published or whether on the contrary the record must remain embargoed. If the record is embargoed, the step throws an exception.
+
+## lib:fedora-create-object ##
+
+Creates a Fedora object with a specified persistent identifier. Used to create Person records in response to ingestion of a Dataset.
+
+## lib:fedora-purge-datastream ##
+
+Remove a datastream by name from a Fedora object.
+
+## lib:fedora-tag-datastreams ##
+
+Accepts a reference to a Fedora object, and an XML document defining a map between file extensions and data types.
+
+```
+<map>
+	<type 
+		extension="vms" 
+		format-uri="http://www.iso.org/iso/iso_catalogue/catalogue_tc/catalogue_detail.htm?csnumber=24269" 
+		content-type="chemical/x-vamas-iso14976"/>
+	<type 
+		extension="dset" 
+		format-uri="http://hdl.handle.net/102.100.100/6973" 
+		content-type="application/x-kratos-vision-dataset"/>
+	<type 
+		extension="itm" 
+		format-uri="http://hdl.handle.net/102.100.100/6972" 
+		content-type="application/x-iontof-surfacelab-measurement"/>
+</map>
+```
+
+The step then checks the extensions of the datastreams contained in the object, and tags them with the appropriate type information.
+
+## lib:fedora-set-datastream-format ##
+
+Tags a single datastream with type information.
+
+## lib:fedora-save-datastream ##
+
+Saves a datastream into Fedora. If the datastream exists, it is overwritten. If it does not exist, it is created.
+
+## lib:crosswalk ##
+
+Executes an XSLT crosswalk.
+
+## lib:http-request ##
+
+Helper step to make an HTTP request.
+
+## lib:mint-handle ##
+
+Uses a PIDS server to mint a handle for a URI.
+
+## lib:ensure-fedora-object-has-handle ##
+
+Checks that a Fedora object contains a datastream called "handle" and if not, mints a handle and saves the result into the object as a datastream called "handle".

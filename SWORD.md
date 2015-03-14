@@ -1,0 +1,196 @@
+# Introduction #
+
+SWORD is a submission tool that allows users to add objects to a fedora repository with relative ease. It currently only supports PUSH operations, but is still in development.
+
+
+# Details #
+
+  * Got SWORD package from  http://sword-app.svn.sourceforge.net/viewvc/sword-app/fedora/
+    * (wget http://sword-app.svn.sourceforge.net/viewvc/sword-app/fedora/trunk.tar.gz?view=tar)
+  * untar to /ands/files/SWORD-fedora-1.1/
+  * modified config
+    * [conf/properties.xml](http://sword-app.svn.sourceforge.net/viewvc/sword-app/fedora/trunk/conf/properties.xml)
+      * modified pid\_namespace (e.g andsdb-dc19)
+      * modified temp\_dir (e.g /usr/share/tomcat6/temp)
+      * modified all uri locations
+        * external\_obj\_url (e.g http://andsdb-dc19-dev.latrobe.edu.au/fedora/get/##PID## )
+        * external\_ds\_url (e.g http://andsdb-dc19-dev.latrobe.edu.au/fedora/get/##PID##/##DS## )
+        * repository\_uri (e.g http://andsdb-dc19-dev.latrobe.edu.au/sword )
+        * deposit\_url (e.g http://andsdb-dc19-dev.latrobe.edu.au/sword/##COLLECTION_PID## )
+      * modified accepted data types
+        * e.g:
+          * `<accept>image/jpg</accept>`
+          * `<accept>application/x-zip-compressed</accept>`
+        * pending more info from conal. Sadly this must be done at compile at the moment.
+      * added the following entries to mime-types.xml
+        * `<type><mime-type>application/x-iontof-surfacelab-measurement</mime-type></extension>itm</extension></type>`
+        * `<type><mime-type>chemical/x-vamas-iso14976</mime-type></extension>vms</extension></type>`
+
+  * ran ant dist, installed into Tomcat6
+
+NOTE: it may be necessary to alter the temp path in build.xml
+
+NOTE: when reinstalling, it appears necessary to run:
+`ant clean`
+and also
+`rm -r -f /usr/share/tomcat/webapps/sword`
+before
+`ant dist`
+
+# Notes #
+
+Remember to modify firewall or proxy rules appropriately.
+
+SWORD will ingest .xml files present with a deposit and use metadata from them if they are in an appropriate format (e.g rif-cs.xml, DC.xml). However, DC.xml appears to break the deposit process, as SWORD will generate a default DC record with no extracted information when generating the initial internal FoxML record, and then attempt to append the real DC data in a subsequent block. This violates the OAI\_DC schema, causing an exception and terminating the process.
+
+For example, the following internally generated code:
+```
+<?xml version="1.0" encoding="UTF-8"?>^M
+<foxml:digitalObject xmlns:foxml="info:fedora/fedora-system:def/foxml#" PID="andsdb-dc19:13" VERSION="1.1">^M
+  <foxml:objectProperties>^M
+    <foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active" />^M
+    <foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Object created through the SWORD deposit system" />^M
+    <foxml:property NAME="info:fedora/fedora-system:def/model#ownerId" VALUE="sword" />^M
+    <foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2011-05-20T03:01:37.381Z" />^M
+    <foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2011-05-20T03:01:37.381Z" />^M
+  </foxml:objectProperties>^M
+  <foxml:datastream ID="DC" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">^M
+    <foxml:datastreamVersion ID="DC.0" LABEL="Dublin Core Metadata" MIMETYPE="text/xml">^M
+      <foxml:contentDigest TYPE="DISABLED" DIGEST="none" />^M
+      <foxml:xmlContent>^M
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/">^M
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Uploaded by the JISC funded SWORD project</dc:title>^M
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">sword</dc:creator>^M
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">application/zip</dc:format>^M
+        </oai_dc:dc>^M
+      </foxml:xmlContent>^M
+    </foxml:datastreamVersion>^M
+  </foxml:datastream>^M
+  <foxml:datastream ID="RELS-EXT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">^M
+    <foxml:datastreamVersion ID="RELS-EXT.0" LABEL="Relationships to other objects" MIMETYPE="text/xml">^M
+      <foxml:contentDigest TYPE="DISABLED" DIGEST="none" />^M
+      <foxml:xmlContent>^M
+        <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">^M
+          <rdf:Description rdf:about="info:fedora/andsdb-dc19:13">^M
+            <rel:isMemberOf xmlns:rel="info:fedora/fedora-system:def/relations-external#" rdf:resource="info:fedora/collection:open" />^M
+          </rdf:Description>^M
+        </rdf:RDF>^M
+      </foxml:xmlContent>^M
+    </foxml:datastreamVersion>^M
+  </foxml:datastream>^M
+  <foxml:datastream ID="group" STATE="A" CONTROL_GROUP="M" VERSIONABLE="true">^M
+    <foxml:datastreamVersion ID="group.0" LABEL="SWORD Generic File Upload" MIMETYPE="application/zip">^M
+      <foxml:contentDigest TYPE="DISABLED" DIGEST="none" />^M
+      <foxml:contentLocation TYPE="URL" REF="uploaded://33" />^M
+    </foxml:datastreamVersion>^M
+  </foxml:datastream>^M
+  <foxml:datastream ID="DC" STATE="A" CONTROL_GROUP="M" VERSIONABLE="true">^M
+    <foxml:datastreamVersion ID="DC.0" LABEL="SIP-sample-group/DC.xml" MIMETYPE="text/xml">^M
+      <foxml:contentDigest TYPE="DISABLED" DIGEST="none" />^M
+      <foxml:contentLocation TYPE="URL" REF="uploaded://34" />^M
+    </foxml:datastreamVersion>^M
+  </foxml:datastream>^M
+  <foxml:datastream ID="rif-cs" STATE="A" CONTROL_GROUP="M" VERSIONABLE="true">^M
+    <foxml:datastreamVersion ID="rif-cs.0" LABEL="SIP-sample-group/rif-cs.xml" MIMETYPE="text/xml">^M
+      <foxml:contentDigest TYPE="DISABLED" DIGEST="none" />^M
+      <foxml:contentLocation TYPE="URL" REF="uploaded://35" />^M
+    </foxml:datastreamVersion>^M
+  </foxml:datastream>^M
+</foxml:digitalObject>^M
+```
+
+Generates the following:
+```
+13:01:37,488 ERROR [org.purl.sword.server.fedora.fedoraObjects.FedoraObject] Had problems adding the object to the repository; org.fcrepo.server.errors.ObjectValidityException: DOValidatorXMLSchema returned validation exception.
+The underlying exception was a org.xml.sax.SAXException.
+The message was "URI=null Line=40: cvc-id.2: There are multiple occurrences of ID value 'DC'."
+org.purl.sword.base.SWORDException: Had problems adding the object to the repository;
+    at org.purl.sword.server.fedora.fedoraObjects.FedoraObject.ingest(FedoraObject.java:288)
+<snip />
+```
+
+However, the DC data is useful in that it is automatically indexed by fedora's search system. Thus we have decided to automatically update the DC record after submission using a combination of SWORD and JMI listeners.
+
+ADDENDUM: This note on the DC record is useful but redundant, as solr has since been included instead, as both index and user interface.
+
+Example Production properties.xml
+```
+
+<properties>
+    <!-- Fedora Properties the username and password for fedora are the ones supplied in the deposit and are not in this config file-->
+    <fedora>
+        <!-- This is the URL that should be returned to the client as a link to the object -->
+        <external_obj_url>http://example.com/fedora/get/##PID##</external_obj_url>
+        <!-- This is the URL that should point to a copy of the thing the deposited -->
+        <external_ds_url>http://example.com/fedora/get/##PID##/##DS##</external_ds_url>
+        <protocol>http</protocol>
+        <host>localhost</host>
+        <port>8080</port>
+        <!-- Namespace for pids specified in the fedora.fcfg attribute pidNamespace-->
+        <pid_namespace>CMSS</pid_namespace>
+    </fedora>
+    <general>
+        <!-- Return a URI for the repository (used in atom:generator) -->
+        <repository_uri>http://example.com/sword</repository_uri>
+        <!-- Directory where zip files are extracted and uploads are stored before ingest. This should be an absolute path -->
+        <temp_dir>/usr/share/tomcat/temp/</temp_dir>
+        <!-- This returns the directory where the sub service documents are stored relative to the web app directory -->
+        <sub-service-documents>/sub_service_documents</sub-service-documents>
+        <entry-location>/entries</entry-location>
+    </general>
+    <file_handlers>
+        <!--
+            Group of classes which handle ingesting specific files into Fedora
+            You can add your own classes as long as they implement
+                org.purl.sword.server.fedora.fileHandlers.FileHandler interface
+            and have a default constructor
+        -->
+        <handler class="org.purl.sword.server.fedora.fileHandlers.JpegHandler" />
+        <handler class="org.purl.sword.server.fedora.fileHandlers.METSFileHandler" />
+        <handler class="org.purl.sword.server.fedora.fileHandlers.ZipFileHandler" />
+        <handler class="org.purl.sword.server.fedora.fileHandlers.ZipMETSFileHandler" />
+    </file_handlers>
+    <files>
+        <!-- XML list of file extension to mime-type conversions -->
+        <mime-type>WEB-INF/mime-types.xml</mime-type>
+    </files>
+    <!-- This is where you configure the service document requests
+        For further details on what the mean go to: http://www.ukoln.ac.uk/repositories/digirep/index/SWORD_APP_Profile_1.0
+    -->
+    <service_document>
+        <level>1</level>
+        <noOp>true</noOp>
+        <verbose>true</verbose>
+        <workspace title="Fedora SWORD Workspace">
+            <!--
+                collection_pid is the pid of the collection where deposits will end up
+            -->
+            <collection collection_pid="collection:open" mediation="true" mediationSet="true">
+                <!--
+                    This is the URL which listens for deposit requests
+                    ##COLLECTION_PID## is overwritten at runtime to contain the value of collection_pid
+                -->
+                <deposit_url>http://example.com/sword/##COLLECTION_PID##</deposit_url>
+                <users/>
+                <title>Open Collection</title>
+                <abstract>This is a collection of objects which can be freely deposited to. This is aviable for the SWORD test project</abstract>
+                <policy>This collection accepts any deposit from anyone</policy>
+                <treatment>Preservation actions may occur on submited deposits</treatment>
+                <accepts> <!-- list of mime types that are accepted by the collection -->
+                    <accept>text/xml</accept>
+                    <accept>application/zip</accept>
+                    <accept>application/x-zip-compressed</accept>
+                    <accept>application/atom+xml</accept>
+                    <accept>image/gif</accept>
+                    <accept>image/jpeg</accept>
+                    <accept>image/jpg</accept>
+                </accepts>
+                <packaging>
+                    <package quality="0.9">http://purl.org/net/sword-types/METSDSpaceSIP</package>
+                    <package quality="0.9">http://www.loc.gov/METS/</package>
+                </packaging>
+            </collection>
+        </workspace>
+    </service_document>
+</properties>
+```

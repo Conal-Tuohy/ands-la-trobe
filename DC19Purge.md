@@ -1,0 +1,58 @@
+## Fedora ##
+
+Fedora stores data simultaneously in relational and filesystem databases. Both of these need to be cleared in order to purge the system of records.
+
+The fedora applicaion should not be running when the procedure is carried out if you don't want to see hundreds of null pointer exceptions in your servlet handler logs.
+
+### Database ###
+
+Issuing the following sequence of commands from with the DBMS will purge the database of records:
+
+```
+mysql -u fedora -p
+use fedora3;
+truncate datastreamPaths;
+truncate dcDates;
+truncate doFields;
+truncate doRegistry;
+truncate modelDeploymentMap;
+truncate objectPaths;
+truncate pidGen;
+```
+
+### Disk ###
+
+The following commands will purge the pairtree and objectStore.
+
+```
+cd $FEDORA_HOME/data
+rm -rf activemq-data/*
+rm -rf datastreamStore/*
+rm -rf objectStore/*
+```
+
+If the resourceIndex is enabled, you should do the following to purge it:
+
+```
+cd $FEDORA_HOME/data
+rm -rf resourceIndex/*
+```
+
+### Solr ###
+
+Solr can be purged with the following curl syntax:
+
+```
+curl -u admin -H 'Content-type:text/xml; charset=utf-8' -d '<delete><query>*</query></delete>' http://localhost/solr/update
+```
+
+Alternatively, the following commands will clear the solr index of data:
+
+```
+cd $SOLR_HOME/data
+rm -rf index/*
+```
+
+### jOAI ###
+
+The safest way to remove all data from the jOAI system is via the administration console, normally at /oai. From the Data Provider menu, select the Metadata Files Configuration page. Select 'Remove' for each listed directory and reindex to purge any remaining data.

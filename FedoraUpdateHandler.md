@@ -1,0 +1,107 @@
+# Fedora Update Handler #
+
+## Purpose ##
+
+Fedora Update Handler is a Java application for receiving and acting on notifications of updates to a Fedora Commons repository.
+
+The Fedora Update Handler may be used to keep other information systems up to date with the latest information present in the Fedora repository. For instance, the updated content may be indexed in a discovery system or replicated into another repository. The updated content might be validated or checksummed, or cross-walked or otherwise transformed. For instance, a datastream might be cross-walked into another format and the resulting document written back to the Fedora object as another datastream.
+
+## How it works ##
+
+When the Fedora Update Handler program starts, it connects to Fedora and subscribes to notification messages via the Java Message Service (JMS). Then, whenever a datastream in the repository is changed, Fedora sends a message, in the form of an Atom XML document, to the Fedora Update Handler application. In turn, the Fedora Update Handler application executes a user-specified external program, and passes the Atom message to that program via its standard input stream. The Fedora Update Handler is therefore a bridge between JMS and arbitrary console applications.
+
+## How to get the application ##
+
+Use [Subversion](http://subversion.apache.org/) to check out the Fedora Update Handler source code from the project's source code repository:
+
+```
+svn checkout http://ands-la-trobe.googlecode.com/svn/trunk/fedora-update-handler fedora-update-handler
+```
+
+## How to build the application ##
+
+First you will need to have installed [Java](http://www.java.com/en/download/manual.jsp) version 1.5 or later, and [Apache Ant](http://ant.apache.org/bindownload.cgi).
+
+Navigate into the folder and invoke the Ant tool to build the application:
+
+```
+cd fedora-update-handler
+ant
+```
+
+Ant will execute the build.xml file to build the application, which will be output to build/fedora-update-handler.jar
+
+## How to run the application ##
+
+To run the application you will need the following prerequisites:
+
+  * You will need to have installed [Java](http://www.java.com/en/download/manual.jsp) version 1.5 or later.
+  * You will need to enable [Fedora's message service](https://wiki.duraspace.org/display/FCR30/Messaging#Messaging-config).
+  * You will need to copy the fedora-update-handler.jar from the build folder into a folder along with all the jars in the lib folder.
+
+The application is packaged as an executable Java archive. The application may run on the Fedora host itself, or, if you explicitly specify a java.naming.provider.url configuration property, it may run on a different host and listen to Fedora notifications over the network.
+
+FedoraUpdateHandler expects either one or two parameters:
+
+> The first parameter is either start or stop, to create or destroy a subscription to a Fedora notifications.
+
+> If start is specified, the application will connect to, and if necessary create, a persistent queue on the Fedora server, with a name specified by the topic.fedora property. Once started, that queue will continue to exist even after FedoraUpdateHandler terminates or loses its connection to the Fedora server. Fedora will continue to add new notification messages to the queue until the queue is explicitly deleted. The next time the FedoraUpdateHandler application connects to Fedora it will retrieve those queued messages.
+
+> If the stop parameter is specified, the application will delete the queue from the server.
+
+> The second (and optional) parameter is the name of a Java properties XML file to configure the listener. It's possible to run several instances of the application at the same time, each performing different tasks, by specifying a different configuration file for each instance.
+
+e.g.
+
+To start listening to Fedora notifications, using the configuration file handle-ingest.xml:
+```
+java -jar FedoraUpdateHandler.jar start handle-ingest.xml
+```
+To start listening to Fedora notifications, using the configuration file handle-dc-update.xml:
+```
+java -jar FedoraUpdateHandler.jar start handle-dc-update.xml
+```
+To stop listening to Fedora notifications, using the configuration file handle-dc-update.xml:
+```
+java -jar FedoraUpdateHandler.jar stop handle-dc-update.xml
+```
+
+The application can be terminated by typing Control-C. Note that terminating the application will not stop Fedora queueing messages. To destroy the queue, it's necessary to run the application again specifying the stop parameter.
+
+## Configuring the application ##
+
+The application is configured using [a Java Properties XML file](http://download.oracle.com/javase/1.5.0/docs/api/java/util/Properties.html).
+
+The first four properties are documented at https://wiki.duraspace.org/display/FCR30/Messaging
+
+  * java.naming.factory.initial
+  * java.naming.provider.url
+  * connection.factory.name
+  * topic.fedora
+
+The property handler.jms.clientid identifies the listener to Fedora. This value must be unique (i.e. each simultaneous client must use a different value for this property).
+
+The property handler.command specifies the application which the listener will run to handle the event. FedoraUpdateHandler will execute this application and pipe the Fedora message (an Atom XML document) to the application's standard input stream.
+
+Any properties not defined in the properties file will use defaults as shown below:
+
+```
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties version="1.0">
+   <entry key="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</entry>
+   <entry key="java.naming.provider.url">failover://tcp://localhost:61616</entry>
+   <entry key="connection.factory.name">ConnectionFactory</entry>
+   <entry key="topic.fedora">fedora.apim.update</entry>
+   <entry key="handler.jms.clientid">FedoraUpdateHandler</entry>
+   <entry key="handler.command">cat</entry>
+</properties>
+```
+
+An example properties file to forward all notifications to an example mailbox:
+```
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties version="1.0">
+   <entry key="handler.jms.clientid">EmailForwarder</entry>
+   <entry key="handler.command">mail -s 'Fedora Update Notification' address@example.com</entry>
+</properties>
+```

@@ -1,0 +1,98 @@
+# XML Calabash installation #
+
+As per http://xmlcalabash.com/docs/, as brief as it is.
+
+Download latest calabash distro from http://xmlcalabash.com/download/
+unzipped to /home/fedora-user/pipelines/calabash
+
+## Simple test ##
+
+Wrote shell script `/home/fedora-user/pipelines/xproc-test/calabash.sh` to launch calabash:
+
+```
+#!/bin/sh
+java -Xmx1024m -cp /home/fedora-user/pipelines/calabash/calabash.jar:/home/fedora-user/pipelines/calabash/lib/commons-codec-1.3.jar:/home/fedora-user/pipelines/calabash/lib/commons-logging-1.1.1.jar:/home/fedora-user/pipelines/calabash/lib/commons-httpclient-3.1.jar:/home/fedora-user/pipelines/calabash/lib/saxon9he.jar com.xmlcalabash.drivers.Main $*
+```
+
+## Custom scripts ##
+
+[This location](http://code.google.com/p/ands-la-trobe/source/browse/#svn%2Ftrunk%2Fpipelines) contains the pipelines used by XMLCalabash on the CMSS production system.
+
+Check out the processing pipelines from the repository:
+
+```
+cd /home/fedora-user
+svn checkout https://ands-la-trobe.googlecode.com/svn/trunk/pipelines
+```
+
+The following pathways require no additional setup:
+
+```
+ingest-handler.xml
+metadata-update-handler.xml
+vamas-update-handler.xml
+```
+
+See below for details on setting up surfacelab-update-handler.xpl & SL.js
+
+The file init.sh should be added to /etc/rc.d/rc.local to enable the pipelines on system startup. It will initiate each pipeline in a screen session, each of which can be accessed with the following commands:
+
+```
+screen -r ingest
+screen -r metadata
+screen -r vamas
+```
+
+#### surfacelab-update-handler.xpl and SL.js ####
+
+The surfacelab-update-handler.xpl script executes SL.js as the core of of its processing, relies on the COM objects installed with SurfaceLab6 and will not operate without this software installed. Given that the software is a windows only application, XMLCalabash must be set up under Windows.
+
+As per http://xmlcalabash.com/docs/, download calabash distro from http://xmlcalabash.com/download/calabash-0.9.32.zip (or later).
+
+place contents in C:\XML\Calabash
+
+ensure that a C:\temp directory exists and is writable.
+
+check out surfacelab-update-handler.xpl, library.xpl and SL.js from svn to C:\XML\Calabash\Pipelines
+
+## Starting Calabash pipelines ##
+
+Note: this should be done only after JMI has been enabled on the Fedora Commons install.
+
+The following script can be used to start a pipeline:
+
+```
+#!/bin/bash
+# This script starts a fedora-update-handler service
+
+# The service is a JMS client which listens to "fedora.apim.update" messages from Fedora.
+# When an update event occurs, the fedora-update-handler executes an external program
+# and passes the event message (an Atom XML document) to the program's standard input.
+while true
+do
+        java -jar fedora-update-handler/fedora-update-handler.jar start $1
+        echo "Restarting in 5 seconds. Press [CTRL+C] to stop.."
+        sleep 5
+done
+```
+
+And the following can be used to stop one:
+
+```
+#!/bin/bash
+# This script stops a persistent subscription previously made by a fedora-update-handler service
+
+# The service is a JMS client which listens to "fedora.apim.update" messages from Fedora.
+# When an update event occurs, the fedora-update-handler executes an external program
+# and passes the event message (an Atom XML document) to the program's standard input.
+
+java -jar fedora-update-handler/fedora-update-handler.jar stop $1
+```
+
+Note that if you have checked out init.sh and added it to /etc/rc.d/rc.local it will start the packaged pipelines on system startup.
+
+The following Windows command will initiate the surfacelab-update-handler.xpl pipeline:
+
+```
+java -Xmx1024m -jar "C:\XML\fedora-update-handler\fedora.update-handler.jar" "C:\XML\Pipelines\surfacelab-update-handler.xml"
+```

@@ -1,0 +1,90 @@
+## SurfaceLab6 ##
+
+Surfacelab6 is ION-TOF's TOF-SIMS control and analysis software suite, and consists of two separate packages with a common interface: FPanel control suite and Measurement Explorer. These packages populate a shared data structure with measurements, analytical data and metadata.
+
+## SurfaceLabXML ##
+
+The SurfaceLabXML output given by our exporter script is currently in the following format:
+```
+<parameterName>StringValue</parameterName>
+```
+
+Note that Surfacelab6 potentially stores every variable 3 times, each in a String, Real and Integer format. We currently only export the String value. It is (surprisingly) more accurate than the others: real is in truncated format with a short mantissa, int is (of course) only precise to whole integers, and any param that is primarily a string will store a value of 0 for both the real and int.
+
+Because the params are dynamically populated based on available metadata for the current experiment, an exhaustive list is not available.
+
+## SurfaceLab CLI tool ##
+
+This process will only work on a system with a vaild SurfaceLab6 installation. Please see the documentation provided by ION-TOF with regards to installing the software and obtaining a vaild license.
+
+When this is done and the correct cscript.exe handler is used (on 64bit windows systems this is located at C:\windows\syswow64\cscript.exe) the following windows scripting host JScript code can extract header information automatically without running the SurfaceLab application manually.
+
+NOTE: This is tailored to use with XML Calabash as part of an XProc pipeline.
+
+```
+var objFSO = WScript.CreateObject("Scripting.FileSystemObject");
+
+//worst case, the stream we are updating should be blank to avoid false data. 
+//Creating temp.xml here and overwriting the previous file should guarantee that.
+objFSO.CreateTextFile('C:\\temp\\temp.xml', true);
+var objDM = WScript.CreateObject("IONTOF.DataManager");
+var objITMStream = WScript.CreateObject("ADODB.Stream");
+// to contain the XML output, with a Byte Order Mark, because that's how MS likes to write unicode text
+var objXMLBOMStream = WScript.CreateObject("ADODB.Stream");
+// to contain the XML output, without a BOM, because Calabash's XML parser doesn't like BOMs
+var objXMLStream = WScript.CreateObject("ADODB.Stream");
+var objXMLHTTP = WScript.CreateObject("MSXML2.XMLHTTP.6.0");
+var itmURI = WScript.Arguments.Item(0);
+var username = WScript.Arguments.Item(1);
+var password = WScript.Arguments.Item(2);
+
+var tempFileLoc = "C:\\temp\\temp.itm";
+
+objXMLHTTP.open("GET", itmURI, false, username, password);
+objXMLHTTP.send();
+while(objXMLHTTP.Status < 200) {
+	WScript.sleep(60);
+}
+objITMStream.Open();
+objITMStream.type = 1;
+objITMStream.Write(objXMLHTTP.ResponseBody);
+objITMStream.Position = 0;
+
+if(objFSO.Fileexists(tempFileLoc)){
+	objFSO.DeleteFile(tempFileLoc);
+}
+
+objITMStream.saveToFile(tempFileLoc);
+objITMStream.Close();
+
+var objTemp = objDM.loadMeasurement(tempFileLoc);
+var data = objTemp.Header;
+var properties = new Enumerator(data);
+var output = "<values xmlns='http://hdl.handle.net/102.100.100/6929'>\n";
+for (properties.moveFirst(); !properties.atEnd(); properties.moveNext()) {
+	var property = properties.item();
+	output += "\t<" + property.name + ">" + property.StringValue.replace(/\x00/g, "\t").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</" + property.name + ">\n";
+}
+
+output += "</values>";
+
+
+// 2 means it's a "text" stream
+objXMLBOMStream.Type = 2;
+objXMLBOMStream.Charset='UTF-8';
+objXMLBOMStream.Open();
+
+// This is the binary stream which we use to create a BOM-less XML file
+// 1 means it's a binary stream
+objXMLStream.Type = 1;
+objXMLStream.Open();
+
+objXMLBOMStream.writeText(output);
+// skip past the BOM
+objXMLBOMStream.Position = 3;
+objXMLBOMStream.copyTo(objXMLStream);
+objXMLStream.saveToFile('C:\\temp\\temp.xml', 2);
+objXMLBOMStream.close();
+objXMLStream.close();
+objFSO.DeleteFile(tempFileLoc);
+```

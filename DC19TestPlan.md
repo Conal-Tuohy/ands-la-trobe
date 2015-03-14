@@ -1,0 +1,87 @@
+# Introduction #
+
+A list of things to check when deploying or retesting this system.
+
+## Result testing ##
+
+### Sample test package ###
+
+Currently, a test deposit should contain the following:
+
+  * A boss.xml file containing a response from the RLI booking system.
+  * A corresponding dataset file (dset, vamas, itm/ita, etc).
+
+### local ingest (Sword/Fedora) ###
+
+#### Sword ingest ####
+
+By default (and if no mets.xml is present in the ingest package), Sword generates something similar to the following in the DC stream:
+
+```
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+  <dc:title>Uploaded by the JISC funded SWORD project</dc:title>
+  <dc:creator>fedoraAdmin</dc:creator>
+  <dc:format>application/zip</dc:format>
+  <dc:identifier>namespace:entryNumber/dc:identifier>
+</oai_dc:dc>
+```
+
+Note that this data is not used by the CMSS system, but is used to generate the initial fox-ml record in Fedora. Note also that future additions (e.g METS files in ingest packages) may change this output and its usefulness.
+
+#### Fedora ingest ####
+
+Fedora's primary role in this system is simply that of an object database, with the addition of JMS's notificaiton system. Messages from JMS trigger crosswalks.
+
+### crosswalks ###
+
+#### ingest-handler ####
+
+This crosswalk performs the following roles:
+
+  * Generate a handle (from hdl.handle.net)
+  * add 'handle' stream to the record
+    * Test by: checking presence/content of object datastreams
+
+  * retrieve data from boss.xml
+  * convert it into 'dataset' format
+  * add 'dataset' stream to the record
+    * Test by: checking presence/content of object datastreams
+
+  * recognise file types (eg. .itm, .dset, .vms)
+  * add appropriate tags so other crosswalks can handle these files
+
+#### metadata-update-handler ####
+
+This crosswalk performs the following roles:
+
+  * generate and test RIF-CS output
+  * store rif-cs locally for jOAI
+    * Test by: checking presence/content of data/rif-cs directory
+  * send RIF-CS to ANDS metadata store
+  * add 'rif-cs' stream to the record
+    * Test by: checking presence/content of object datastreams
+
+  * convert rif-cs to OAI\_DC
+  * replace existing DC stream
+    * Test by: checking content of DC datastream
+
+  * convert fox-ml to solr record
+  * push solr record to solr indexer
+  * add 'solr' stream to the record
+    * Test by: checking presence/content of solr datastream
+
+#### vamas-update-handler ####
+
+This crosswalk performs the following roles:
+
+  * push vamas file to Java XML converter
+  * add resulting 'vamas-xml' stream to the record
+    * Test by: checking presence/content of vamas-xml datastreams
+
+#### surfacelab-update-handler ####
+
+This crosswalk performs the following roles:
+
+  * push .itm file to Java XML converter
+  * add resulting 'surfacelab-xml' stream to the record
+    * Test by: checking presence/content of surfacelab-xml datastream

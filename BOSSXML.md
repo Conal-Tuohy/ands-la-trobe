@@ -1,0 +1,189 @@
+# BOSS XML #
+
+When datasets are deposited into the CMSS repository, a metadata record associated with the data is first exported from the BOSS RLI booking system, and packaged up in a submission package.
+
+The BOSS XML file uses the namespace URI http://hdl.handle.net/102.100.100/7003 which currently redirects to this page.
+
+The BOSS XML data file is a dump of fields from a relational database whose schema is not yet stable, so the [schema for BOSS XML](http://ands-la-trobe.googlecode.com/svn/trunk/schemas/boss.xsd) defines that those field names are encoded using the `name` attribute of generic `value` and `table` elements.
+
+A sample document appears below:
+
+```
+<job xmlns="http://hdl.handle.net/102.100.100/7003">
+	<logsheet>
+		<value name="Instrument">XPS-Ultra</value>
+		<value name="Job Number">XPS-Ultra-10010</value>
+		<value name="ProposalNumber">2011-07-29_15:52:36-XPS-kc3taylor</value>
+		<value name="Clips">1</value>
+		<value name="Composition"/>
+		<value name="CompositionKV"/>
+		<value name="ConstantHeightBar"/>
+		<value name="DepthProfiles"/>
+		<value name="EBeamHeater"/>
+		<value name="EBeamHeaterNumber"/>
+		<value name="fDay">5</value>
+		<value name="FlatBar">1</value>
+		<value name="FlatStub"/>
+		<value name="fMonth">8</value>
+		<value name="fPressureY">1</value>
+		<value name="fPressureYY">8</value>
+		<value name="Fracture"/>
+		<value name="fTime">16:30</value>
+		<value name="fYear">2011</value>
+		<value name="Gas"/>
+		<value name="GeneralDescription">Pure metal films, between 0.1 and 2mm in thickness, roughly 1cm X 1cm in size.</value>
+		<value name="HeatingCooling"/>
+		<value name="Images"/>
+		<value name="InstrumentTimeHours">7</value>
+		<value name="InstrumentTimeMinutes">15</value>
+		<value name="LineScans"/>
+		<value name="LoadLock"/>
+		<value name="LoadLockCooling"/>
+		<value name="LoadLockCoolingT"/>
+		<value name="LoadLockHeating"/>
+		<value name="LoadLockHeatingT"/>
+		<value name="Maps"/>
+		<value name="noSamples">4</value>
+		<value name="operator"/>
+		<value name="Other"/>
+		<value name="OtherSampleTreatment"/>
+		<value name="OtherSampleTreatmentText"/>
+		<value name="OtherSelect"/>
+		<value name="RecessedBar"/>
+		<value name="RecessedStub"/>
+		<value name="SAC"/>
+		<value name="SACCooling"/>
+		<value name="SACCoolingT"/>
+		<value name="SACHeating"/>
+		<value name="SACHeatingT"/>
+		<value name="Screws"/>
+		<value name="sDay">5</value>
+		<value name="sMonth">8</value>
+		<value name="Spectra">1</value>
+		<value name="sPressureY">7</value>
+		<value name="sPressureYY">9</value>
+		<value name="sTime">09:00</value>
+		<value name="sYear">2011</value>
+		<value name="Tape"/>
+		<table name="CMSSprobetable">
+			<row><column/></row>
+			<row><column/></row>
+			<row><column/></row></table>
+		<table name="depthprofilingtable">
+			<row>	
+				<column>5.0</column>	
+				<column>1.2</column>	
+				<column>3</column>
+			</row>
+			<row>	
+				<column>5.0</column>	
+				<column>1.2</column>	
+				<column>3</column>
+			</row>
+			<row>	
+				<column>5.0</column>	
+				<column>0.9</column>	
+				<column>3</column>
+			</row>
+			<row>	
+				<column>5.0</column>	
+				<column>1.0</column>	
+				<column>3</column>
+			</row></table>
+		<table name="probetable">
+			<row><column/></row>
+			<row><column/></row></table>
+		<table name="sampletable">
+			<row>	
+				<column>1</column>	
+				<column>Copper 0.1mm thick</column>	
+				<column>undivided solid</column>
+			</row>
+			<row>	
+				<column>2</column>	
+				<column>Iron 0.1mm thick</column>	
+				<column>undivided solid</column>
+			</row>
+			<row>	
+				<column>3</column>	
+				<column>Gold 0.127mm thick</column>	
+				<column>undivided solid</column>
+			</row>
+			<row>	
+				<column>4</column>	
+				<column>Silver 0.25mm thick</column>	
+				<column>undivided solid</column>
+			</row></table>
+		<table name="xraytable">
+			<row>	
+				<column>Mono Al</column>	
+				<column>10</column>	
+				<column>15</column>
+			</row></table>
+	</logsheet>
+	<request>
+		<value name="Users ID">kc3taylor</value>
+		<value name="RequestNumber">2011-07-29_15:52:36-XPS-kc3taylor</value>
+		<value name="date">2011-07-29</value>
+		<value name="technique">XPS</value>
+		<value name="description">Pure metal films, between 0.1 and 2mm in thickness, roughly 1cm X 1cm in size.</value>
+		<value name="numberofsamples">5</value>
+		<table name="samples">
+			<row>	
+				<column>1</column>	
+				<column>Copper 0.1mm thick</column>	
+				<column>undivided solid</column>
+			</row>
+			<row>	
+				<column>2</column>	
+				<column>Iron 0.1mm thick</column>	
+				<column>undivided solid</column>
+			</row>
+			<row>	
+				<column>3</column>	
+				<column>Gold 0.127mm thick</column>	
+				<column>undivided solid</column>
+			</row>
+			<row>	
+				<column>4</column>	
+				<column>Silver 0.25mm thick</column>	
+				<column>undivided solid</column>
+			</row>
+			<row>	
+				<column>5</column>	
+				<column>Aluminium 2mm thick</column>	
+				<column>undivided solid</column>
+			</row></table>
+		<value name="ultrahighvacuum">yes</value>
+		<value name="magnetic">no</value>
+		<value name="afteranalysis">returned</value>
+		<value name="hazardous">no</value>
+		<value name="dangerous">no</value>
+		<value name="analysis">All samples require wide scans, photoelectron peaks and valence band scans.</value>
+		<value name="analysisby">user</value>
+		<value name="accesspresent">no</value>
+		<value name="accesstype">local</value>
+		<value name="users">""</value>
+		<value name="sapA"/>
+		<value name="sapB"/>
+		<value name="status">approved</value>
+		<value name="billing">credit</value>
+		<value name="jobcat">internal (LTU)</value>
+		<value name="ASA"/>
+		<value name="Instrument">XPS-Ultra</value>
+		<value name="teachingCourseCode"/>
+		<value name="Users Title">Miss</value>
+		<value name="Users Name">Kaitlyn</value>
+		<value name="Users Surname">Taylor</value>
+		<value name="Users Institution">La Trobe University</value>
+		<value name="Users Department">Department of Physics</value>
+		<value name="Users Address">Street. Department of Physics
+City. La Trobe University
+State. Victoria
+Postcode. 3086</value>
+		<value name="Users Telephone">555-555-555</value>
+		<value name="Users Fax"/>
+		<value name="Users Email">kaitlyn.taylor@latrobe.edu.au</value>
+	</request>
+</job>
+```

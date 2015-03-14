@@ -1,0 +1,113 @@
+# tDAR Install #
+
+Source code. Adam Brin provided a tarball of the `src` folder of the `eolian` branch, but didn't include the pom.xml (Maven build file), so I downloaded it separately from their repository:
+```
+wget http://dev.tdar.org/fisheye/browse/~raw,r=2432/tDAR/branches/eolian/pom.xml
+```
+
+tDAR is a Java app, built with Maven.
+
+
+
+## Maven ##
+
+Yum appears (as of 12/7/11) to only have an ancient build of Maven available (2.0.8), and this is earlier than the minimun required version.
+
+Downloaded Maven 2.2.1 from http://www.apache.org/dyn/closer.cgi/maven/binaries/apache-maven-2.2.1-bin.tar.gz and installed manually (ln -s /bin -> usr/bin, /lib -> /var/lib/, etc).
+
+Followed instructions at: http://dev.tdar.org/confluence/display/TDAR/deploying+tDAR up to and including the step of running the Maven build.
+
+(When renaming the .production files, I moved any files which would have been overwritten into a "backup" folder).
+
+## tDAR configuration ##
+
+tDAR is configured with a bunch of property files.
+
+These have been changed as follows:
+===/ands/tDAR-install/src/main/resources/tdar.properties
+Should look a little like this:
+```
+file.store.location=/home/tdar/filestore
+personal.file.store.location=/home/tdar/personal-filestore
+web.root=src/main/webapp
+file.store.class=org.tdar.filestore.PairtreeFilestore
+run.periodic.events=true
+smtp.host=localhost
+sysadmin.email=root@localhost
+```
+
+
+### /ands/tDAR-install/src/main/resources/log4j.properties ###
+  * Replaced Adam Brin's email with Daniel and Conals'.
+  * Replaced file appender path /logs/tdar.log with /var/log/tdar/tdar.log
+
+### /ands/tDAR-install/src/main/resources/hibernate.properties ###
+
+  * added javax.persistence.jdbc.password
+  * changed hibernate.search.default.indexBase to /home/tdar/indexes
+
+### /ands/tDAR-install/src/main/webapp/includes/googlemaps-api-key.js ###
+
+  * generated new googlemaps key at http://code.google.com/intl/en/apis/maps/signup.html
+  * replaced var gmapsKey with new key
+
+## httpd config for tDAR ##
+
+```
+yum install httpd
+chkconfig httpd on
+```
+
+Added a proxy configuration file at `cat /etc/httpd/conf.d/proxy.conf` to proxy from port 80 to port 8080 (where Tomcat is listening):
+```
+<Location />
+ProxyPass        http://localhost:8080/   
+ProxyPassReverse http://localhost:8080/   
+</Location>
+```
+
+## Tomcat config for tDAR ##
+
+To simplify repeated deployment, I wrote a Tomcat Context XML file at /usr/share/tomcat6/conf/Catalina/localhost/ROOT.xml to load the web application directly from /home/tdar/app/ROOT.war:
+
+```
+<Context docBase="/home/tdar/app/ROOT.war"/>
+```
+
+Changed tomcat user to run as "tdar" user:
+
+  * edited /etc/tomcat6/tomcat6.conf to change TOMCAT\_USER="tomcat" to TOMCAT\_USER="tdar"
+  * chowned /usr/share/tomcat6/**to tdar:tdar**
+
+## Crowd ##
+tDAR uses Atlassian "Crowd" for authentication:
+
+http://confluence.atlassian.com/display/CROWD/Installing+Crowd+and+CrowdID OR http://confluence.atlassian.com/display/CROWD/Installing+Crowd+WAR+Distribution
+
+Installed Postgres-server via Yum, and added the Postgre JDBC driver from http://jdbc.postgresql.org/download/postgresql-8.4-701.jdbc4.jar to /usr/share/tomcat6/lib
+
+Followed directions at http://confluence.atlassian.com/display/CROWD/PostgreSQL for setting up database: Added user crowduser (with createdb and createuser) and database crowddb. Gave access to crowddb.`*` to crowduser.
+
+Got WAR dist from http://www.atlassian.com/software/crowd/CrowdDownloadCenter.jspa (use the 'show all' link on the top right of the download banner).
+
+altered /WEB-INF/classes/crowd.properties to reflect the WAR location (/ands/crowd/crowd-home). Note that this directory SHOULD NOT be the same as the WAR root.
+
+Created /usr/share/tomcat6/conf/Catalina/localhost/crowd.xml with the following info:
+
+```
+<Context path="/crowd" docBase="/ands/crowd" reloadable="false"/>
+```
+
+added Javamail (from http://www.oracle.com/technetwork/java/index-138643.html), Java commons logging (from http://commons.apache.org/logging/download_logging.cgi) and the Java Transactional API (1.0.1B, as requested by the app, from http://download.java.net/maven/2/javax/transaction/jta/1.0.1B/) to /usr/share/tomcat6/lib/.
+
+Access setup wizard via http://andsdb-sc18-dev.latrobe.edu.au/crowd/
+
+Note: on running the JDBC setup, Crowd reported that the correct name for the crowd database is simply 'crowd'. I logged back in to postgres and did:
+```
+alter table crowddb rename to crowd
+```
+
+tDAR should be configured as a generic application in the crowd applications panel within the crowd administration console. Ensure that the username and password match those in the /ands/tDAR-install/src/main/resources/crowd.properties file, and that the appropriate _application.login.url_ and _crowd.server.url_ locations are assigned (_application.login.url_ in our case is: http://andsdb-dc19-dev.latrobe.edu.au/login and _crowd.server.url_ is: http://andsdb-sc18-dev.latrobe.edu.au/crowd/services/ )
+
+
+tDAR has two groups that must be created within crowd: _tdar-users_ and _tdar-admins_. Users who register through tDAR will automatically be added to the _tdar-users_ group. Those who need admin privs should be added to the _tdar-admins_ group manually via the crowd admin console.

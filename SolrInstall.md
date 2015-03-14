@@ -1,0 +1,81 @@
+# Introduction #
+
+Solr needs to be installed and then configured to specify a custom schema to suit the domain (in our case, we've defined metadata fields relating to e.g. X-Ray Photoelectron Spectrosopy), and a custom display XSLT (in our case, customised to display boilerplate headers and styles, display our custom metadata fields, and to transclude information from data files stored in Fedora, and generate graphs).
+
+# Installation #
+
+  * created solr home directory at /home/fedora-user/solr
+  * extracted solr tar to temp directory (/home/fedora-user/files/apache-solr-1.4.1/)
+  * moved example config to /home/fedora-user/solr
+  * created /home/fedora-user/solr/data
+  * moved contents of /home/fedora-user/solr/solr to /home/fedora-user/solr
+  * chown fedora-user:fedora-user `*` -R
+  * chmod 775 to relevant files and dirs (especially /home/fedora-user/solr/data)
+  * added solr.xml to /usr/share/tomcat6/conf/Catalina/localhost with the following content:
+
+```
+<?xml version="1.0" encoding="utf-8"?>
+<Context docBase="/home/fedora-user/solr/solr.war" debug="0" crossContext="true">
+  <Environment name="solr/home" type="java.lang.String" value="/home/fedora-user/solr" override="true"/>
+</Context>
+```
+
+  * added reverse proxy entry to /etc/httpd/conf.d/solr.conf with the following content:
+
+```
+# Settings for accessing Solr
+
+# Don't access HTTP proxy requests
+# (this is a reverse proxy, not a forward proxy)
+ProxyRequests off
+
+# Any user may connect
+<Proxy *>
+Order deny,allow
+Allow from all
+</Proxy>
+
+# Access control for proxying to the admin interface
+<Location /solr/admin>
+AuthType Basic
+AuthName "Solr administration"
+AuthBasicProvider
+AuthUserFile /etc/httpd/.htpasswd
+Require user admin
+ProxyPass        http://localhost:8080/solr/admin
+ProxyPassReverse http://localhost:8080/solr/admin
+</Location>
+
+# Access control for proxying to the indexing interface
+<Location /solr/update>
+AuthType Basic
+AuthName "Solr indexer"
+AuthBasicProvider
+AuthUserFile /etc/httpd/.htpasswd
+Require user admin
+ProxyPass        http://localhost:8080/solr/update
+ProxyPassReverse http://localhost:8080/solr/update
+</Location>
+
+# Other parts of the Solr server are open to all
+<Location /solr>
+ProxyPass        http://localhost:8080/solr
+ProxyPassReverse http://localhost:8080/solr
+</Location>
+```
+
+  * generated /etc/conf/httpd/.htpasswd
+  * solr is now accessible via http://andsdb-dc19-dev.latrobe.edu.au/solr/
+
+# Configuration #
+
+Check out schema.xml, solrconfig.xml and cmss.xsl from svn into a temporary folder, and then copy this over the default Solr configuration files:
+```
+cd /tmp
+svn checkout https://ands-la-trobe.googlecode.com/svn/trunk/solr/conf conf
+cp -r -f conf /home/fedora-user/solr/
+```
+
+The solrconfig.xml file configures Solr to parse queries specified using multiple URL parameters. More information is available here:
+
+http://wiki.apache.org/solr/FunctionQuery#query

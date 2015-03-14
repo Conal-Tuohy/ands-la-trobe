@@ -1,0 +1,94 @@
+# Fedora (interfaces) #
+
+See http://fedora-commons.org/documentation/3.4/REST%20API.html
+
+## Ingest ##
+
+Normally we would aim to create items with SWORD, but we can also create by POSTing to `/objects/new` or `/objects/{pid}` (to create with a specific PID), with text/xml content
+
+## RIF-CS updates ##
+
+Can create (POST), read (GET) and update (PUT) RIF-CS datastreams at:
+`/objects/{pid}/datastreams/{dsID}`
+
+NB We can use PUT to create and update streams so we don't ever need POST. NB the GET method on the above URI will return metadata about the stream; to obtain the stream itself we need to append `/content` to the URI. This is a bug in the Fedora API, really, but it can be worked around in a proxy: whenever the proxy receives a GET request for a URI with that pattern, it can append `/content`, but for other methods it won't need to.
+
+If we use the same name for all rif-cs datastreams (e.g. "rif-cs") then we can create an httpd proxy which proxies from `/rif-cs/{pid}` to `/objects/{pid}/datastreams/rif-cs` which will then let us treat the values of rif-cs keys as (relative) URIs, and provide a RESTful access layer to just the rif-cs.
+
+## Search/Lookup ##
+The XForms UI can look up related Fedora objects using this API:
+
+http://fedora-commons.org/documentation/3.0b1/userdocs/server/webservices/apialite/index.html#findObjects
+
+e.g. http://andsdb-dc19-dev.latrobe.edu.au/fedora/search?pid=true&title=true&terms=&query=title~JISC&maxResults=80&xml=true
+
+## Notifications ##
+Fedora uses Apache ActiveMQ for messaging.
+
+We use this as a way to listen for edits of the datastreams in Fedora and keep a search indexes etc up to date.
+
+https://wiki.duraspace.org/display/FCR30/Messaging
+
+ActiveMQ supports a number of protocols including a supposedly "RESTful" HTTP interface that would be useable from XProc.
+
+
+http://activemq.apache.org/rest.html
+
+A bogus aspect of it is that the GET method is neither safe nor idempotent. So in fact it's not a REST interface at all.
+
+There's a related "AJAX" interface as well which appears to use HTTP POST:
+
+http://activemq.apache.org/ajax.html
+
+
+Using the JMS listener, we can listen for calls to API-M methods. Listening to `topic.apim.update` we are notified of:
+
+modifyDatastreamByValue
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<entry xmlns="http://www.w3.org/2005/Atom" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:fedora-types="http://www.fedora.info/definitions/1/0/types/">
+  <id>urn:uuid:d06a6623-472f-4135-947b-0aa53b7efd56</id>
+  <updated>2011-05-24T01:37:02.897Z</updated>
+  <author>
+    <name>fedoraAdmin</name>
+    <uri>http://andsdb-dc19-dev.latrobe.edu.au:80/fedora</uri>
+  </author>
+  <title type="text">modifyDatastreamByValue</title>
+  <category term="andsdb-dc19:4" scheme="fedora-types:pid" label="xsd:string"></category>
+  <category term="rif-cs" scheme="fedora-types:dsID" label="xsd:string"></category>
+  <category term="" scheme="fedora-types:altIDs" label="fedora-types:ArrayOfString"></category>
+  <category term="null" scheme="fedora-types:dsLabel" label="xsd:string"></category>
+  <category term="null" scheme="fedora-types:formatURI" label="xsd:string"></category>
+  <category term="[OMITTED]" scheme="fedora-types:dsContent" label="xsd:base64Binary"></category>
+  <category term="null" scheme="fedora-types:checksumType" label="xsd:string"></category>
+  <category term="null" scheme="fedora-types:checksum" label="xsd:string"></category>
+  <category term="null" scheme="fedora-types:logMessage" label="xsd:string"></category>
+  <summary type="text">andsdb-dc19:4</summary>
+  <content type="text">2011-05-24T01:37:02.896Z</content>
+  <category term="3.4.2" scheme="info:fedora/fedora-system:def/view#version"></category>
+  <category term="info:fedora/fedora-system:ATOM-APIM-1.0" scheme="http://www.fedora.info/definitions/1/0/types/formatURI"></category>
+</entry>
+```
+
+ingest:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<entry xmlns="http://www.w3.org/2005/Atom" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:fedora-types="http://www.fedora.info/definitions/1/0/types/">
+  <id>urn:uuid:1a05ff6f-04a1-49dc-a226-65cb01ce82ed</id>
+  <updated>2011-05-24T01:58:04.882Z</updated>
+  <author>
+    <name>sword</name>
+    <uri>http://andsdb-dc19-dev.latrobe.edu.au:80/fedora</uri>
+  </author>
+  <title type="text">ingest</title>
+  <category term="ingested by the sword program" scheme="fedora-types:logMessage" label="xsd:string"></category>
+  <category term="info:fedora/fedora-system:FOXML-1.1" scheme="fedora-types:format" label="xsd:string"></category>
+  <summary type="text">andsdb-dc19:14</summary>
+  <content type="text">andsdb-dc19:14</content>
+  <category term="3.4.2" scheme="info:fedora/fedora-system:def/view#version"></category>
+  <category term="info:fedora/fedora-system:ATOM-APIM-1.0" scheme="http://www.fedora.info/definitions/1/0/types/formatURI"></category>
+</entry>
+```
+
+Using the "failover" transport which layers reconnect logic on top of other transports.
+http://activemq.apache.org/failover-transport-reference.html

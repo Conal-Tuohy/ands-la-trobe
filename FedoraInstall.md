@@ -1,0 +1,233 @@
+# Introduction #
+
+Fedora Commons is a repository system which we are using to store RIF-CS and other objects and Metadata.
+
+# Prerequisites #
+
+  * Packages:
+    * Apache (httpd)
+    * Tomcat6 (tomcat6)
+    * MySQL (mysql, mysql-server)
+    * Java (java, java-sdk both @1.6+)
+
+  * Other changes
+    * User fedora-user (or equivalent) should contain the apache and tomcat users, as well as any developers working on the system
+
+# Details #
+
+  * download Fedora Commons 3.5 installer from http://www.fedora-commons.org/software to `/home/fedora-user/fedora-install/fcrepo-installer-3.5.jar`
+
+> You will need to set the following environmental variables. There are several locations from which this can be done, and they vary from system to system. Most commonly these should be applied to the user responsible for the execution of the fedora application (e.g. tomcat or fedora-user, depending on how your system is organized), and thus should be added to their relevant ~/.`*`rc file (e.g. ~/.bashrc)
+
+  * JAVA\_HOME
+  * FEDORA\_HOME (e.g. /home/fedora-user/fedora)
+  * PATH (add $FEDORA\_HOME/server/bin, $FEDORA\_HOME/client/bin and $JAVA\_HOME/bin. )
+  * CATALINA\_HOME (=/usr/share/tomcat6, or your $CATALINA\_HOME location)
+  * CLASSPATH (e.g. /usr/share/java:/etc/alternatives/javac:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86\_64/bin:/usr/share/java/tomcat6:$PATH.)
+
+Note also that tomcat builds a classpath according to details [here](http://tomcat.apache.org/tomcat-6.0-doc/class-loader-howto.html), so all required libs should be placed either in tomcat's common lib directories or within the /WEB-INF/lib/ directory of the webapp itself.
+
+  * modified mysql database using the following steps:
+    * set root passwords for localhost and hostname
+      * from shell, as root: `mysqladmin password`
+    * ran mysql\_secure\_install from shell to remove demo db & user
+    * added fedora user, taking note of the password which will be required later
+      * in mysql: `create user fedora with password ********`
+    * added fedora3 database
+      * in mysql: `create database fedora3`
+    * added authority database
+      * in mysql: `create database authority`
+    * Gave relevant permissions over these dbs to fedora user.
+      * in mysql: `use fedora3`
+      * in mysql: `grant all on * to 'fedora'@'localhost'`
+      * in mysql: `grant all on * to 'fedora'@'<hostname>'`
+      * in mysql: `use authority`
+      * in mysql: `grant all on * to 'fedora'@'localhost'`
+      * in mysql: `grant all on * to 'fedora'@'<hostname>'`
+
+NOTE: there were some issues with our install and java versions. RSUS-LTU locally listed both 1.5 and openjdk 1.6, but up2date-local installed only 1.5 by default. The following commands were used to install the newer versions:
+  * from shell, as root: `yum install java-1.6.0-openjdk.x86_64`
+  * from shell, as root: `yum install java-1.6.0-openjdk-devel.x86_64`
+  * from shell, as root: `yum install java-1.6.0-openjdk-javadoc.x86_64`
+
+  * ran installer:
+
+```
+java -jar fcrepo-installer-3.5.jar
+```
+
+Stepped through, entering the following data, which the installer saves as "install.properties":
+
+
+```
+ri.enabled=true
+messaging.enabled=true
+apia.auth.required=false
+database.jdbcDriverClass=com.mysql.jdbc.Driver
+ssl.available=false
+database.jdbcURL=jdbc\:mysql\://localhost/fedora3?useUnicode\=true&amp;characterEncoding\=UTF-8&amp;autoReconnect\=true
+messaging.uri=vm\:(broker\:(tcp\://localhost\:61616))
+database.password=<password>
+database.mysql.driver=included
+database.username=fedora
+fesl.authz.enabled=true
+tomcat.shutdown.port=8005
+deploy.local.services=false
+xacml.enabled=true
+database.mysql.jdbcDriverClass=com.mysql.jdbc.Driver
+tomcat.http.port=8080
+fedora.serverHost=<server.name>
+database=mysql
+database.driver=<path/to/file> (see below)
+fedora.serverContext=fedora
+llstore.type=akubra-fs
+tomcat.home=/usr/share/tomcat6
+fesl.authn.enabled=true
+fedora.home=/home/fedora-user/fedora
+database.mysql.jdbcURL=jdbc\:mysql\://localhost/fedora3?useUnicode\=true&amp;characterEncoding\=UTF-8&amp;autoReconnect\=true
+install.type=custom
+servlet.engine=existingTomcat
+fedora.admin.pass=<password>
+```
+
+> NOTE: Was missing /usr/share/tomcat6/common/lib/mysql-connector-java-5.1.6.jar for JDBC connector. Located and added manually (@ http://dev.mysql.com/downloads/connector/j/ ).
+
+> ADDENDUM: Was also missing apache packages commons-dbcp (http://commons.apache.org/dbcp/download_dbcp.cgi) and commons-pool (http://commons.apache.org/pool/download_pool.cgi) as well. These should be placed in the same directory as the mysql-connector-java.jar and this path should be reported in the appropriate place when running the fcrepo installer. As noted above, the system classpath is not used by tomcat. The libraries in question must be placed in a location accessible to tomcat. e.g:
+
+  * `cd /usr/share/tomcat6/lib`
+  * `ln -s /home/fedora-user/files/commons-dbcp-1.4/commons-dbcp-1.4.jar .`
+  * `ln -s /home/fedora-user/files/commons-pool-1.5.6/commons-pool-1.5.6.jar .`
+  * `ln -s /home/fedora-user/files/mysql-connector-java-5.1.18/mysql-connector-java-5.1.18-bin.jar .`
+
+
+> NOTE: target dir should be owned by tomcat. Directories created by or interacted with by the fedora installer will often have unusual permissions after the install is complete. In particular, check the contents of $FEDORA\_HOME/data, as a failure to write to this directory after startup will break database synchronization.
+
+## Custom file locations ##
+
+fedora/server/config/akubra-llstore.cfg contains paths for the datastreamStore and objectStore. Our install stores these databases on the /mnt/rdprojects nfs partition for mass storage. Similarly, the mysql databases should be in this location.
+
+  * move mysql dbs from /var/lib/mysql to /mnt/rdprojects/fedora/mysql
+  * add record to fstab:
+```
+rdprojects:/fs1/systems/server.name /mnt/rdprojects nfs defaults,soft,nolock,_netdev 0 0 
+rdprojects:/fs1/systems/server.name/fedora/data /path/to/fedora/data nfs defaults,soft,nolock,_netdev 0 0
+rdprojects:/fs1/systems/server.name/fedora/mysql /var/lib/mysql nfs defaults,soft,nolock,_netdev 0 0
+```
+
+
+## Reverse Proxy ##
+
+LTU has a mildly restrictive firewall, but it is useful to have fedora on (the externally inaccessable) port 8080. The following proxy files can help.
+
+```
+# Settings for accessing Fedora
+
+# Don't access HTTP proxy requests
+# (this is a reverse proxy, not a forward proxy)
+ProxyRequests off
+
+# Any user may connect
+<Proxy *>
+Order deny,allow
+Allow from all
+</Proxy>
+
+
+# URL rewriting required to handle editor forms and work around bug in Fedora "RESTful" interface
+
+RewriteEngine on
+
+##################################################################################
+#
+# Fedora REST interface tweak
+#
+##################################################################################
+
+# Rewrite all GET and HEAD requests to redirect from
+# /fedora-rest/{pid}/{dsid} to:
+# /fedora/objects/{pid}/datastreams/{dsid}/content
+# but other HTTP methods to:
+# /fedora/objects/{pid}/datastreams/{dsid}
+# This is because of a bug in Fedora; the URIs for getting and putting the same resource are different!
+# This makes them the same.
+# For more information about the technique used here, see
+# http://stackoverflow.com/questions/1298171/apache-as-reverse-proxy-for-couchdb
+
+RewriteCond %{REQUEST_METHOD} GET|HEAD
+RewriteRule /fedora-objects/(.*)/datastreams/(.*) http://localhost:8080/fedora/objects/$1/datastreams/$2/content [P]
+RewriteCond %{REQUEST_METHOD} PUT
+RewriteRule /fedora-objects/(.*)/datastreams/(.*) http://localhost:8080/fedora/objects/$1/datastreams/$2 [P]
+
+
+#################################################################################
+#
+# Proxy to Tomcat
+#
+#################################################################################
+
+# Proxy from /fedora-objects to /fedora/objects on Tomcat's port 8080
+# These redirections will work with the rewrite rules above.
+
+<Location /fedora-objects>
+ProxyPass        http://localhost:8080/fedora/objects
+ProxyPassReverse http://localhost:8080/fedora/objects
+</Location>
+
+
+# Proxy other requests to Fedora listening on port 8080
+# This is so we have an unmodified version of Fedora's http interface,
+# alongside the modified version under /fedora-objects
+<Location /fedora>
+ProxyPass        http://localhost:8080/fedora
+ProxyPassReverse http://localhost:8080/fedora
+</Location>
+```
+
+```
+# Settings for accessing Fedora
+
+# Don't access HTTP proxy requests
+# (this is a reverse proxy, not a forward proxy)
+ProxyRequests off
+
+# Any user may connect
+<Proxy *>
+Order deny,allow
+Allow from all
+</Proxy>
+
+
+# URL rewriting required to handle content negotiation and work around bug in Fedora "RESTful" interface
+
+RewriteEngine on
+
+RewriteRule ^/search/(dataset|person|group|project)/$ /fedora/search?pid=true&label=true&state=true&ownerId=true&cDate=true&mDate=true&dcmDate=true&title=true&creator=true&subject=true&description=true&publisher=true&contributor=true&date=true&format=true&identifier=true&source=true&language=true&relation=true&coverage=true&rights=true&terms=&query=type\~$1&maxResults=100&xml=true [P]
+RewriteRule ^/search/(dataset|person|group|project)/(.*) /fedora/search?pid=true&label=true&state=true&ownerId=true&cDate=true&mDate=true&dcmDate=true&title=true&creator=true&subject=true&description=true&publisher=true&contributor=true&date=true&format=true&identifier=true&source=true&language=true&relation=true&coverage=true&rights=true&terms=&query=title\~$2+type\~$1&maxResults=100&xml=true [P]
+```
+
+## Fedora.fcfg ##
+
+fedoraServerHost, pidNamespace, and adminEmailList are all contained in `fedora/server/config/fedora.fcfg` and need to be manually set to appropriate values for your installation.
+
+In some cases (fedora 3.3-3.5(?)), in the case that FeSL and XACML are enabled, datastreamContentDispositionInlineEnabled must be set to false or every datastream request will return a http 401 response.
+
+### MIME Types ###
+
+Disabled the auto-generation of file extensions (when downloading files) by editing `fedora/server/config/fedora.fcfg` and changing the value of `/server/param[@name='datastreamExtensionMappingLabel']/@value` from "always" to "ifmissing".
+
+(see http://code.google.com/p/ands-la-trobe/issues/detail?id=41 for requirement)
+
+## Access Control ##
+
+https://wiki.duraspace.org/display/FEDORA35/Spring+Security
+
+"Fedora security configuration via spring was introduced in Fedora 3.5. In general, security in Fedora is provided by a series of servlet filters. Each filter provides some security-related purpose, such as policy enforcement, authentication, or ssl redirection. The set of active security-related filters and their individual configuration settings is determined by Spring, using configuration files present in FEDORA\_HOME/server/config/spring/web/. This method of configuring security replaces the pre-3.5 technique of specifying security-related servlet filters directly in web.xml."
+
+### Embargos ###
+http://fedora-commons.1317035.n2.nabble.com/fcrepo-user-Some-library-use-case-solicitations-td5683099.html
+
+### LDAP auth ###
+https://wiki.duraspace.org/display/FEDORA35/Security
+
+### XACML policy guide ###
+https://wiki.duraspace.org/display/FEDORA35/Fedora+XACML+Policy+Writing+Guide

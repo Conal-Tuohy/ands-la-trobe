@@ -1,0 +1,43 @@
+# Squire #
+
+Squire is a user interface for depositing and editing object datastreams and metadata. It's a Java version of VALET, provided to the ARROW project as a contribution from VTLS.
+
+In our system deposit/ingest is to be performed using a custom SWORD client talking to Fedora's SWORD server.
+
+Metadata editing is to be done using a few custom XForms reading and writing XML data from Fedora's RESTful web service interface.
+
+  * [Squire poster](http://smartech.gatech.edu/handle/1853/28459)
+  * [VALET/Squire @ Google Code](http://code.google.com/p/valet/wiki/ARROW_Contribution?tm=6)
+
+# Fedora Generic Search #
+
+Need to install and configure it to index Fedora objects by selected properties of their "rif-cs" datastream so that we can search for registry objects by type and by name, and by key.
+
+https://wiki.duraspace.org/display/FCSVCS/Generic+Search+Service+2.2#GenericSearchService2.2-new22
+
+## Notes ##
+
+  * Work done on this by Muradora team appears to be lost with the closure of the project.
+  * sourceforge page does not list the 2.2 release, despite having it available for download (http://downloads.sourceforge.net/fedora-commons/genericsearch-2.2.zip)
+  * The Islandora project has a page showing how to configure gsearch to index other data streams: https://wiki.duraspace.org/display/ISLANDORA/Islandora+Guide#IslandoraGuide-GSearch
+
+## Deployment ##
+
+  * placed fedoragsearch.war in /usr/share/tomcat6/webapps
+    * autobuilt dir structure
+  * added entry to reverse proxy list (/etc/httpd/conf.d/fedoragsearch.conf)
+
+  * changed port numbers in configvalues.xml
+    * changed all instances of 8080 to 80
+
+## Configuration ##
+
+> After installation, configuration details can be viewed at the deployment location http://andsdb-dc19-dev.latrobe.edu.au/fedoragsearch/
+
+  * ran ant -f configvalues.xml configOnWebServer
+    * Invalid tomcat path reported. Changed configvalues.xml:
+      * changed {fedora.path}/tomcat to {env.CATALINA\_PATH}, reran succesfully.
+
+## Final note ##
+
+This system doesn't appear to work very well. Better results have been achieved by using fedora's native search over DC.
